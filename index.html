@@ -1,0 +1,1933 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LogLab - Interaktives Arbeitsblatt zu Logarithmengesetzen</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #efe8dc;
+      --bg-deep: #d7c7af;
+      --surface: #fffdf8;
+      --surface-strong: #ffffff;
+      --ink: #17313c;
+      --muted: #5d6c75;
+      --line: rgba(23, 49, 60, 0.12);
+      --shadow: 0 18px 50px rgba(31, 40, 46, 0.13);
+      --shadow-soft: 0 10px 26px rgba(31, 40, 46, 0.08);
+      --gold: #c97a2b;
+      --gold-soft: #fff0dd;
+      --teal: #1b8a89;
+      --teal-soft: #dbf3f0;
+      --blue: #2f5ea8;
+      --blue-soft: #e4ecfb;
+      --rose: #a64c49;
+      --rose-soft: #f8e4e3;
+      --emerald: #447a57;
+      --emerald-soft: #e5f1e8;
+      --focus: #0b7cff;
+      --radius: 22px;
+      --radius-sm: 14px;
+      --max: 1180px;
+      --gap: clamp(1rem, 2vw, 1.5rem);
+      font-family: "Trebuchet MS", "Segoe UI", ui-sans-serif, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(201, 122, 43, 0.16), transparent 30%),
+        radial-gradient(circle at top right, rgba(47, 94, 168, 0.14), transparent 28%),
+        linear-gradient(180deg, #f8f3ea 0%, var(--bg) 38%, #f3ece0 100%);
+      line-height: 1.5;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.35) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.22) 1px, transparent 1px);
+      background-size: 26px 26px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.28), transparent 80%);
+      opacity: 0.3;
+      z-index: -1;
+    }
+
+    img, svg { max-width: 100%; display: block; }
+    a { color: inherit; }
+    button, input {
+      font: inherit;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      transform: translateY(-160%);
+      background: var(--ink);
+      color: #fff;
+      padding: 0.75rem 1rem;
+      border-radius: 999px;
+      z-index: 20;
+    }
+    .skip-link:focus-visible { transform: translateY(0); }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(16px);
+      background: rgba(239, 232, 220, 0.82);
+      border-bottom: 1px solid rgba(23, 49, 60, 0.08);
+    }
+    .topbar__inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0.9rem clamp(1rem, 3vw, 1.8rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .brand {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .brand__mark {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 11px;
+      background:
+        linear-gradient(145deg, #17313c, #2f5ea8 72%);
+      box-shadow: 0 10px 20px rgba(23, 49, 60, 0.22);
+    }
+    .brand small {
+      display: block;
+      color: var(--muted);
+      text-transform: none;
+      font-weight: 600;
+      letter-spacing: 0;
+    }
+    .chapter-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 0.55rem;
+    }
+    .chapter-nav a {
+      text-decoration: none;
+      padding: 0.58rem 0.95rem;
+      border-radius: 999px;
+      border: 1px solid rgba(23, 49, 60, 0.12);
+      background: rgba(255,255,255,0.72);
+      color: var(--ink);
+      transition: transform .18s ease, border-color .18s ease, background-color .18s ease;
+    }
+    .chapter-nav a:hover {
+      transform: translateY(-1px);
+      border-color: rgba(23, 49, 60, 0.24);
+      background: #fff;
+    }
+
+    .hero {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: clamp(1.1rem, 3vw, 1.9rem) clamp(1rem, 3vw, 1.8rem) clamp(2rem, 4vw, 3rem);
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: clamp(1rem, 3vw, 2rem);
+      align-items: stretch;
+    }
+    .hero__lead,
+    .panel,
+    .rule-card,
+    .task-card,
+    .info-card {
+      background: rgba(255, 253, 248, 0.88);
+      border: 1px solid rgba(23, 49, 60, 0.09);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-soft);
+    }
+    .hero__lead {
+      padding: clamp(1.2rem, 3vw, 2rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100%;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      width: fit-content;
+      margin: 0 0 0.75rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      background: #17313c;
+      color: #fff;
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, .section-title, .task-title {
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.12;
+      margin: 0;
+    }
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4.7rem);
+      max-width: 12ch;
+      letter-spacing: -0.02em;
+    }
+    .lede {
+      font-size: clamp(1.02rem, 2vw, 1.16rem);
+      color: var(--muted);
+      max-width: 62ch;
+      margin: 1rem 0 0;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.4rem;
+    }
+    .button {
+      appearance: none;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 0.8rem 1.2rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease;
+    }
+    .button:hover {
+      transform: translateY(-1px);
+    }
+    .button--primary {
+      color: #fff;
+      background: linear-gradient(145deg, #17313c, #2f5ea8);
+      box-shadow: 0 12px 24px rgba(23, 49, 60, 0.18);
+    }
+    .button--secondary {
+      color: var(--ink);
+      border-color: rgba(23, 49, 60, 0.14);
+      background: rgba(255,255,255,0.72);
+    }
+
+    .hero__aside {
+      display: grid;
+      gap: var(--gap);
+      align-content: stretch;
+    }
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+    .metric {
+      padding: 1rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255,255,255,0.75);
+      border: 1px solid rgba(23, 49, 60, 0.08);
+    }
+    .metric dt {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .metric dd {
+      margin: 0.3rem 0 0;
+      font-size: 1.6rem;
+      font-weight: 800;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+    .hero-note {
+      padding: 1.2rem;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.95), rgba(255,255,255,0.7));
+      border: 1px solid rgba(23, 49, 60, 0.1);
+      display: grid;
+      gap: 0.8rem;
+      align-content: start;
+    }
+    .hero-note h2 {
+      font-size: 1.4rem;
+    }
+    .hero-note p {
+      margin: 0;
+      color: var(--muted);
+    }
+    .hero-bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.55rem;
+    }
+    .hero-bullets li {
+      display: flex;
+      gap: 0.55rem;
+      align-items: flex-start;
+    }
+    .hero-bullets li::before {
+      content: "•";
+      color: var(--gold);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-top: 0.05rem;
+    }
+
+    main {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 clamp(1rem, 3vw, 1.8rem) 4rem;
+      display: grid;
+      gap: clamp(2rem, 4vw, 3rem);
+    }
+    .chapter {
+      display: grid;
+      gap: 1rem;
+    }
+    .section-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.3rem);
+    }
+    .section-kicker {
+      color: var(--muted);
+      margin: 0.2rem 0 0;
+      max-width: 64ch;
+    }
+
+    .rule-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--gap);
+    }
+    .rule-card {
+      padding: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .rule-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 100%;
+      height: 7px;
+      background: var(--accent, var(--gold));
+    }
+    .rule-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      width: fit-content;
+      margin: 0 0 0.8rem;
+      padding: 0.35rem 0.65rem;
+      border-radius: 999px;
+      color: var(--accent, var(--gold));
+      background: color-mix(in srgb, var(--accent, var(--gold)) 13%, white);
+      font-weight: 800;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .formula {
+      font-size: clamp(1.35rem, 3vw, 1.95rem);
+      font-family: Georgia, "Times New Roman", serif;
+      margin: 0 0 0.75rem;
+    }
+    .rule-copy {
+      color: var(--muted);
+      margin: 0 0 0.75rem;
+    }
+    .rule-list {
+      margin: 0;
+      padding-left: 1.1rem;
+      color: var(--muted);
+      display: grid;
+      gap: 0.35rem;
+    }
+    .rule-note {
+      margin-top: 0.85rem;
+      padding: 0.75rem 0.85rem;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.75);
+      border: 1px solid rgba(23, 49, 60, 0.08);
+      color: var(--ink);
+    }
+
+    .panel {
+      padding: clamp(1rem, 2.2vw, 1.4rem);
+    }
+    .law-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.65rem;
+      margin-bottom: 1rem;
+    }
+    .tab {
+      appearance: none;
+      border: 1px solid rgba(23, 49, 60, 0.12);
+      background: rgba(255,255,255,0.75);
+      border-radius: 16px;
+      padding: 0.9rem 1rem;
+      text-align: left;
+      cursor: pointer;
+      transition: transform .18s ease, border-color .18s ease, background-color .18s ease, box-shadow .18s ease;
+    }
+    .tab:hover {
+      transform: translateY(-1px);
+      border-color: rgba(23, 49, 60, 0.25);
+      box-shadow: 0 12px 24px rgba(31, 40, 46, 0.08);
+    }
+    .tab[aria-selected="true"] {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(145deg, var(--accent, #17313c), color-mix(in srgb, var(--accent, #17313c) 68%, white));
+      box-shadow: 0 14px 30px rgba(31, 40, 46, 0.16);
+    }
+    .tab__name {
+      display: block;
+      font-weight: 800;
+      font-size: 1rem;
+    }
+    .tab__tag {
+      display: block;
+      font-size: 0.84rem;
+      opacity: 0.82;
+      margin-top: 0.15rem;
+    }
+
+    .lab-grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+      gap: var(--gap);
+      align-items: start;
+    }
+    .lab-form,
+    .lab-output {
+      padding: 1rem;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(23, 49, 60, 0.1);
+    }
+    .lab-form {
+      display: grid;
+      gap: 0.85rem;
+    }
+    .lab-form__hint {
+      margin: 0;
+      color: var(--muted);
+    }
+    .field-grid {
+      display: grid;
+      gap: 0.8rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .field {
+      display: grid;
+      gap: 0.3rem;
+    }
+    .field--wide {
+      grid-column: 1 / -1;
+    }
+    .field label {
+      font-weight: 700;
+    }
+    .field small {
+      color: var(--muted);
+    }
+    .field input {
+      width: 100%;
+      border: 1px solid rgba(23, 49, 60, 0.14);
+      background: #fff;
+      border-radius: 14px;
+      padding: 0.78rem 0.9rem;
+    }
+    .field input[disabled] {
+      background: #f3f5f6;
+      color: #85929a;
+    }
+    .lab-buttons,
+    .task-buttons,
+    .builder-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .button--tiny {
+      padding: 0.62rem 0.9rem;
+      font-size: 0.94rem;
+    }
+    .button--ghost {
+      border-color: rgba(23, 49, 60, 0.14);
+      background: rgba(255,255,255,0.8);
+      color: var(--ink);
+    }
+    .button--muted {
+      border-color: rgba(23, 49, 60, 0.12);
+      background: rgba(23, 49, 60, 0.06);
+      color: var(--ink);
+    }
+    .button[disabled] {
+      cursor: not-allowed;
+      opacity: 0.5;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .lab-output {
+      display: grid;
+      gap: 0.9rem;
+      align-content: start;
+    }
+    .lab-output__status {
+      padding: 0.8rem 0.9rem;
+      border-radius: 14px;
+      background: rgba(23, 49, 60, 0.06);
+      color: var(--ink);
+      font-weight: 700;
+    }
+    .lab-output__status[data-tone="good"] {
+      background: var(--emerald-soft);
+    }
+    .lab-output__status[data-tone="warn"] {
+      background: var(--rose-soft);
+    }
+    .lab-math {
+      display: grid;
+      gap: 0.8rem;
+    }
+    .math-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+    .math-box {
+      padding: 0.9rem;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid rgba(23, 49, 60, 0.09);
+    }
+    .math-box span {
+      display: block;
+      font-size: 0.84rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.35rem;
+    }
+    .math-box strong,
+    .big-number {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.15rem, 2.5vw, 1.55rem);
+    }
+    .step-list {
+      margin: 0;
+      padding-left: 1.15rem;
+      display: grid;
+      gap: 0.55rem;
+      color: var(--muted);
+    }
+    .step-list strong {
+      color: var(--ink);
+    }
+    .lab-summary {
+      display: grid;
+      gap: 0.5rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .summary-card {
+      padding: 0.75rem 0.85rem;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.85);
+      border: 1px solid rgba(23, 49, 60, 0.08);
+    }
+    .summary-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.84rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .summary-card strong {
+      display: block;
+      font-size: 1.1rem;
+      margin-top: 0.25rem;
+      word-break: break-word;
+    }
+
+    .training-top {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: minmax(0, 1fr) 310px;
+      align-items: start;
+    }
+    .task-card {
+      padding: clamp(1rem, 2.2vw, 1.4rem);
+      display: grid;
+      gap: 0.95rem;
+    }
+    .task-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.4rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: rgba(23, 49, 60, 0.06);
+      color: var(--ink);
+    }
+    .badge[data-kind="choice"] { background: var(--gold-soft); color: #8a531c; }
+    .badge[data-kind="builder"] { background: var(--teal-soft); color: #0f6665; }
+    .badge[data-kind="domain"] { background: var(--blue-soft); color: #23497f; }
+    .badge[data-kind="error"] { background: var(--rose-soft); color: #8b3f3d; }
+    .task-count {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+    .task-title {
+      font-size: clamp(1.45rem, 2.8vw, 2rem);
+    }
+    .task-prompt {
+      margin: 0;
+      color: var(--muted);
+      max-width: 70ch;
+    }
+    .choice-grid {
+      display: grid;
+      gap: 0.7rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .choice {
+      padding: 0.9rem 1rem;
+      border-radius: 16px;
+      border: 1px solid rgba(23, 49, 60, 0.12);
+      background: rgba(255,255,255,0.75);
+      text-align: left;
+      cursor: pointer;
+      display: grid;
+      gap: 0.2rem;
+      transition: transform .18s ease, border-color .18s ease, background-color .18s ease;
+    }
+    .choice:hover {
+      transform: translateY(-1px);
+      border-color: rgba(23, 49, 60, 0.24);
+      background: #fff;
+    }
+    .choice[aria-pressed="true"] {
+      border-color: transparent;
+      background: linear-gradient(145deg, rgba(23, 49, 60, 0.94), rgba(47, 94, 168, 0.94));
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(23, 49, 60, 0.15);
+    }
+    .choice small {
+      color: inherit;
+      opacity: 0.85;
+    }
+    .builder-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+    .builder-token {
+      border: 1px solid rgba(23, 49, 60, 0.14);
+      background: #fff;
+      border-radius: 999px;
+      padding: 0.55rem 0.85rem;
+      cursor: pointer;
+      transition: transform .18s ease, border-color .18s ease, background-color .18s ease;
+    }
+    .builder-token:hover {
+      transform: translateY(-1px);
+      border-color: rgba(23, 49, 60, 0.28);
+    }
+    .builder-token[data-active="true"] {
+      background: var(--teal-soft);
+      border-color: var(--teal);
+      color: #0f6665;
+      font-weight: 800;
+    }
+    .builder-answer {
+      min-height: 4.1rem;
+      padding: 0.85rem;
+      border-radius: 16px;
+      background: rgba(23, 49, 60, 0.05);
+      border: 1px dashed rgba(23, 49, 60, 0.18);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .builder-answer__placeholder {
+      color: var(--muted);
+    }
+    .builder-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.38rem 0.65rem;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid rgba(23, 49, 60, 0.11);
+      font-weight: 700;
+    }
+    .task-feedback {
+      padding: 0.9rem 1rem;
+      border-radius: 16px;
+      background: rgba(23, 49, 60, 0.06);
+      color: var(--ink);
+    }
+    .task-feedback[data-tone="good"] {
+      background: var(--emerald-soft);
+    }
+    .task-feedback[data-tone="warn"] {
+      background: var(--rose-soft);
+    }
+    .task-feedback[data-tone="info"] {
+      background: rgba(47, 94, 168, 0.12);
+    }
+    .task-feedback p {
+      margin: 0.25rem 0 0;
+      color: var(--muted);
+    }
+    .hint-stack {
+      display: grid;
+      gap: 0.45rem;
+    }
+    .hint-item {
+      padding: 0.75rem 0.85rem;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(23, 49, 60, 0.08);
+      color: var(--muted);
+    }
+    .session-card {
+      padding: 1rem;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(23, 49, 60, 0.1);
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      gap: 0.8rem;
+      align-self: start;
+    }
+    .session-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.65rem;
+    }
+    .session-stat {
+      padding: 0.85rem 0.9rem;
+      border-radius: 14px;
+      background: rgba(23, 49, 60, 0.05);
+    }
+    .session-stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .session-stat strong {
+      display: block;
+      margin-top: 0.25rem;
+      font-size: 1.55rem;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+    .session-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .footer {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 1rem 2rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 1040px) {
+      .hero,
+      .lab-grid,
+      .training-top {
+        grid-template-columns: 1fr;
+      }
+      .rule-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 760px) {
+      .topbar__inner {
+        flex-direction: column;
+        align-items: start;
+      }
+      .hero-metrics,
+      .lab-summary,
+      .session-grid,
+      .choice-grid,
+      .field-grid {
+        grid-template-columns: 1fr;
+      }
+      .law-tabs {
+        grid-template-columns: 1fr;
+      }
+      .math-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      :root {
+        --shadow: none;
+        --shadow-soft: none;
+      }
+      body {
+        background: #fff;
+      }
+      body::before,
+      .topbar,
+      .hero-actions,
+      .lab-form,
+      .lab-buttons,
+      .task-buttons,
+      .builder-bank,
+      .builder-actions,
+      .choice-grid,
+      .session-card,
+      .skip-link,
+      .footer,
+      button,
+      input {
+        display: none !important;
+      }
+      main {
+        padding-bottom: 0;
+      }
+      .hero,
+      .rule-card,
+      .panel,
+      .task-card {
+        box-shadow: none !important;
+        background: #fff !important;
+      }
+      .chapter {
+        break-inside: avoid;
+      }
+      .lab-grid,
+      .training-top {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Zum Inhalt springen</a>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="brand" href="#start" aria-label="LogLab Start">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span>
+          LogLab
+          <small>Interaktives Arbeitsblatt</small>
+        </span>
+      </a>
+      <nav class="chapter-nav" aria-label="Kapitel-Navigation">
+        <a href="#gesetze">Gesetze</a>
+        <a href="#labor">Labor</a>
+        <a href="#training">Training</a>
+      </nav>
+    </div>
+  </header>
+
+  <header class="hero" id="start">
+    <section class="hero__lead">
+      <div>
+        <p class="eyebrow">Klasse 10 · Logarithmengesetze</p>
+        <h1>Logarithmen nicht nur auswendig lernen, sondern sichtbar machen.</h1>
+        <p class="lede">
+          Dieses Onepage-Arbeitsblatt führt die drei Standardgesetze in klaren Schritten ein,
+          zeigt im Labor beide Seiten der Gleichung mit echten Zahlen und trainiert die Anwendung
+          mit gemischten Aufgaben, Hinweise und einer Sitzungsauswertung ohne Speicherung.
+        </p>
+      </div>
+      <div class="hero-actions">
+        <a class="button button--primary" href="#labor">Zum Arbeitslabor</a>
+        <a class="button button--secondary" href="#training">Zum Aufgabentrainer</a>
+      </div>
+    </section>
+    <aside class="hero__aside">
+      <dl class="hero-metrics" aria-label="Überblick">
+        <div class="metric">
+          <dt>Gesetze</dt>
+          <dd>3</dd>
+        </div>
+        <div class="metric">
+          <dt>Aufgabentypen</dt>
+          <dd>2</dd>
+        </div>
+        <div class="metric">
+          <dt>Hinweise</dt>
+          <dd>stufig</dd>
+        </div>
+        <div class="metric">
+          <dt>Speicher</dt>
+          <dd>0</dd>
+        </div>
+      </dl>
+      <div class="hero-note">
+        <h2>Was drin steckt</h2>
+        <ul class="hero-bullets">
+          <li>Produkt-, Quotienten- und Potenzgesetz mit Voraussetzungen</li>
+          <li>Numerisches Labor mit direktem Seitenvergleich</li>
+          <li>Trainer mit Multiple Choice und tastaturbedienbaren Termbausteinen</li>
+          <li>Druckansicht ohne Navigation und ohne Bedienelemente</li>
+        </ul>
+      </div>
+    </aside>
+  </header>
+
+  <main id="main">
+    <section class="chapter" id="gesetze" aria-labelledby="gesetze-title">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title" id="gesetze-title">Gesetze</h2>
+          <p class="section-kicker">
+            Die drei Regeln werden jeweils mit Formel, Voraussetzungen, Beispiel und einer typischen
+            Fehlvorstellung gezeigt. Die Summe bleibt draußen: <strong>log<sub>a</sub>(x + y)</strong>
+            ist im Allgemeinen <strong>nicht</strong> gleich <strong>log<sub>a</sub>(x) + log<sub>a</sub>(y)</strong>.
+          </p>
+        </div>
+      </div>
+      <div class="rule-grid" id="rule-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="chapter" id="labor" aria-labelledby="labor-title">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title" id="labor-title">Labor</h2>
+          <p class="section-kicker">
+            Wähle ein Gesetz und verändere die Zahlen. Beide Seiten werden direkt berechnet,
+            deutsch formatiert und mit klaren Zwischenschritten gegenübergestellt.
+          </p>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="law-tabs" id="law-tabs" role="tablist" aria-label="Logarithmengesetz wählen"></div>
+        <div class="lab-grid">
+          <form class="lab-form" id="lab-form" novalidate>
+            <p class="lab-form__hint" id="lab-hint"></p>
+            <div class="field-grid">
+              <label class="field" for="lab-base">
+                <span id="label-base">Basis a</span>
+                <small>a &gt; 0 und a ≠ 1</small>
+                <input id="lab-base" type="number" step="0.1" min="0.1" inputmode="decimal">
+              </label>
+              <label class="field" for="lab-x">
+                <span id="label-x">Erstes Argument x</span>
+                <small>positiv</small>
+                <input id="lab-x" type="number" step="0.1" min="0.1" inputmode="decimal">
+              </label>
+              <label class="field" for="lab-y" id="lab-y-wrap">
+                <span id="label-y">Zweites Argument y</span>
+                <small>positiv</small>
+                <input id="lab-y" type="number" step="0.1" min="0.1" inputmode="decimal">
+              </label>
+              <label class="field" for="lab-r" id="lab-r-wrap">
+                <span id="label-r">Exponent r</span>
+                <small>hier als ganze Zahl</small>
+                <input id="lab-r" type="number" step="1" min="-6" max="6" inputmode="numeric">
+              </label>
+            </div>
+            <div class="lab-buttons">
+              <button class="button button--primary button--tiny" type="button" id="lab-random">Zufallswert</button>
+              <button class="button button--secondary button--tiny" type="button" id="lab-reset">Zurücksetzen</button>
+            </div>
+          </form>
+          <div class="lab-output" aria-live="polite">
+            <div class="lab-summary" id="lab-summary"></div>
+            <div class="lab-output__status" id="lab-status" data-tone="info">Bereit für einen ersten Vergleich.</div>
+            <div class="math-row">
+              <div class="math-box">
+                <span>Linke Seite</span>
+                <strong id="lab-left" class="big-number">—</strong>
+              </div>
+              <div class="math-box">
+                <span>Rechte Seite</span>
+                <strong id="lab-right" class="big-number">—</strong>
+              </div>
+            </div>
+            <div class="math-box">
+              <span>Rechenschritte</span>
+              <ol class="step-list" id="lab-steps"></ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter" id="training" aria-labelledby="training-title">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title" id="training-title">Training</h2>
+          <p class="section-kicker">
+            Der Trainer mischt Zusammenfassen, Zerlegen, Potenzregel und Fehlerdiagnose.
+            Antworten erfolgen per Multiple Choice oder per Termbaustein.
+          </p>
+        </div>
+      </div>
+      <div class="training-top">
+        <article class="task-card" aria-labelledby="task-title">
+          <div class="task-meta">
+            <span class="badge" id="task-kind" data-kind="choice">Aufgabe</span>
+            <span class="task-count" id="task-count">0 / 0</span>
+          </div>
+          <h3 class="task-title" id="task-title">Aufgabe wird geladen …</h3>
+          <p class="task-prompt" id="task-prompt"></p>
+          <div id="task-body"></div>
+          <div class="builder-actions">
+            <button class="button button--primary button--tiny" type="button" id="task-check">Prüfen</button>
+            <button class="button button--secondary button--tiny" type="button" id="task-hint">Hinweis</button>
+            <button class="button button--secondary button--tiny" type="button" id="task-solution">Lösung</button>
+            <button class="button button--muted button--tiny" type="button" id="task-next">Nächste Aufgabe</button>
+          </div>
+          <div class="hint-stack" id="task-hints"></div>
+          <div class="task-feedback" id="task-feedback" data-tone="info" aria-live="polite">
+            Wähle eine Aufgabe und prüfe deine Antwort.
+          </div>
+        </article>
+        <aside class="session-card" aria-labelledby="session-title">
+          <h3 class="task-title" id="session-title">Sitzungsstatistik</h3>
+          <div class="session-grid">
+            <div class="session-stat">
+              <span>Gelöst</span>
+              <strong id="stat-solved">0</strong>
+            </div>
+            <div class="session-stat">
+              <span>Versuche</span>
+              <strong id="stat-attempts">0</strong>
+            </div>
+            <div class="session-stat">
+              <span>Hinweise</span>
+              <strong id="stat-hints">0</strong>
+            </div>
+            <div class="session-stat">
+              <span>Serie</span>
+              <strong id="stat-streak">0</strong>
+            </div>
+          </div>
+          <p class="session-note" id="stat-rate">Trefferquote: 0 %</p>
+          <div class="builder-actions">
+            <button class="button button--secondary button--tiny" type="button" id="session-reset">Sitzung zurücksetzen</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <p class="footer">
+    Lokal, ohne Bibliotheken, ohne Speicherung und ohne Netzwerkzugriffe. Für GitHub Pages reicht das
+    Repository-Root mit dieser <code>index.html</code>.
+  </p>
+
+  <div class="visually-hidden" id="live-region" aria-live="polite" aria-atomic="true"></div>
+
+  <script>
+    const fmt = new Intl.NumberFormat('de-DE', { maximumFractionDigits: 6 });
+    const roundTo = (value, digits = 6) => {
+      if (!Number.isFinite(value)) return '—';
+      const factor = 10 ** digits;
+      const rounded = Math.round((value + Number.EPSILON) * factor) / factor;
+      const text = rounded.toFixed(digits).replace(/\.?0+$/, '');
+      return text.replace('.', ',');
+    };
+    const pretty = value => Number.isFinite(value) ? fmt.format(value) : '—';
+    const logBase = (base, value) => Math.log(value) / Math.log(base);
+    const approxEqual = (a, b) => Number.isFinite(a) && Number.isFinite(b) && Math.abs(a - b) <= 1e-9 * Math.max(1, Math.abs(a), Math.abs(b));
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+    const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+    const shuffle = array => {
+      const out = [...array];
+      for (let i = out.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [out[i], out[j]] = [out[j], out[i]];
+      }
+      return out;
+    };
+
+    const rules = [
+      {
+        key: 'product',
+        title: 'Produktgesetz',
+        accent: '#c97a2b',
+        formula: 'log<sub>a</sub>(x · y) = log<sub>a</sub>(x) + log<sub>a</sub>(y)',
+        intro: 'Ein Produkt im Argument wird zu einer Summe von Logarithmen.',
+        pre: ['a > 0', 'a ≠ 1', 'x > 0', 'y > 0'],
+        example: 'log<sub>2</sub>(8 · 4) = 5',
+        pitfall: 'log<sub>a</sub>(x + y) ist nicht gleich log<sub>a</sub>(x) + log<sub>a</sub>(y).'
+      },
+      {
+        key: 'quotient',
+        title: 'Quotientengesetz',
+        accent: '#1b8a89',
+        formula: 'log<sub>a</sub>(x / y) = log<sub>a</sub>(x) - log<sub>a</sub>(y)',
+        intro: 'Ein Quotient im Argument wird zu einer Differenz von Logarithmen.',
+        pre: ['a > 0', 'a ≠ 1', 'x > 0', 'y > 0'],
+        example: 'log<sub>3</sub>(81 / 9) = 2',
+        pitfall: 'Das Minus gehört nur zwischen die Logarithmen, nicht in die Basis.'
+      },
+      {
+        key: 'power',
+        title: 'Potenzgesetz',
+        accent: '#2f5ea8',
+        formula: 'log<sub>a</sub>(x<sup>r</sup>) = r · log<sub>a</sub>(x)',
+        intro: 'Der Exponent wird vor den Logarithmus gezogen.',
+        pre: ['a > 0', 'a ≠ 1', 'x > 0'],
+        example: 'log<sub>10</sub>(1000<sup>2</sup>) = 6',
+        pitfall: 'Der Exponent darf nicht in die Basis rutschen.'
+      }
+    ];
+
+    const labTemplates = {
+      product: {
+        title: 'Produktgesetz',
+        hint: 'Links steht ein Produkt im Argument. Rechts wird das Produkt in eine Summe zerlegt.',
+        labels: ['Basis a', 'Erstes Argument x', 'Zweites Argument y', 'Exponent r'],
+        visible: ['base', 'x', 'y'],
+        defaults: { a: 2, x: 8, y: 4, r: 2 }
+      },
+      quotient: {
+        title: 'Quotientengesetz',
+        hint: 'Links steht ein Quotient im Argument. Rechts wird er als Differenz geschrieben.',
+        labels: ['Basis a', 'Zähler x', 'Nenner y', 'Exponent r'],
+        visible: ['base', 'x', 'y'],
+        defaults: { a: 3, x: 81, y: 9, r: 2 }
+      },
+      power: {
+        title: 'Potenzgesetz',
+        hint: 'Der Exponent wird als Faktor vor den Logarithmus gezogen.',
+        labels: ['Basis a', 'Argument x', 'Quellwert y', 'Exponent r'],
+        visible: ['base', 'x', 'r'],
+        defaults: { a: 10, x: 1000, y: 4, r: 2 }
+      }
+    };
+
+    const tasks = [
+      {
+        id: 't1',
+        kind: 'choice',
+        topic: 'Produkt',
+        prompt: 'Welche Regel passt zu <code>log<sub>a</sub>(x · y)</code>?',
+        options: ['Produktgesetz', 'Quotientengesetz', 'Potenzgesetz', 'Basiswechsel'],
+        answer: 0,
+        hints: ['Im Argument stehen zwei Faktoren.', 'Auf der rechten Seite entsteht eine Summe.'],
+        solution: 'log<sub>a</sub>(x · y) = log<sub>a</sub>(x) + log<sub>a</sub>(y)',
+        explanation: 'Das Produktgesetz zerlegt ein Produkt in die Summe zweier Logarithmen.'
+      },
+      {
+        id: 't2',
+        kind: 'choice',
+        topic: 'Quotient',
+        prompt: 'Welche Schreibweise ist richtig?',
+        options: [
+          'log<sub>a</sub>(x / y) = log<sub>a</sub>(x) - log<sub>a</sub>(y)',
+          'log<sub>a</sub>(x / y) = log<sub>a</sub>(x) + log<sub>a</sub>(y)',
+          'log<sub>a</sub>(x / y) = log<sub>a</sub>(x · y)',
+          'log<sub>a</sub>(x / y) = r · log<sub>a</sub>(x)'
+        ],
+        answer: 0,
+        hints: ['Beim Quotienten wird nicht addiert.', 'Das Minus ist das Signal des Quotientengesetzes.'],
+        solution: 'log<sub>a</sub>(x / y) = log<sub>a</sub>(x) - log<sub>a</sub>(y)',
+        explanation: 'Im Quotientengesetz wandert der Nenner als subtrahierter Logarithmus auf die rechte Seite.'
+      },
+      {
+        id: 't3',
+        kind: 'choice',
+        topic: 'Potenz',
+        prompt: 'Welche Umformung gehört zur Potenzregel?',
+        options: [
+          'log<sub>a</sub>(x<sup>r</sup>) = r · log<sub>a</sub>(x)',
+          'log<sub>a</sub>(x<sup>r</sup>) = log<sub>a</sub>(x) + r',
+          'log<sub>a</sub>(x<sup>r</sup>) = log<sub>a</sub>(x) - r',
+          'log<sub>a</sub>(x<sup>r</sup>) = x · log<sub>a</sub>(r)'
+        ],
+        answer: 0,
+        hints: ['Der Exponent wird zum Faktor.', 'Die Basis bleibt im Logarithmus stehen.'],
+        solution: 'log<sub>a</sub>(x<sup>r</sup>) = r · log<sub>a</sub>(x)',
+        explanation: 'Der Exponent wird nicht in das Argument hineingezogen, sondern vor den Logarithmus gesetzt.'
+      },
+      {
+        id: 't4',
+        kind: 'error',
+        topic: 'Fehlerdiagnose',
+        prompt: 'Welche Aussage ist im Allgemeinen falsch?',
+        options: [
+          'log<sub>a</sub>(x + y) = log<sub>a</sub>(x) + log<sub>a</sub>(y)',
+          'log<sub>a</sub>(x · y) = log<sub>a</sub>(x) + log<sub>a</sub>(y)',
+          'log<sub>a</sub>(x / y) = log<sub>a</sub>(x) - log<sub>a</sub>(y)',
+          'log<sub>a</sub>(x<sup>r</sup>) = r · log<sub>a</sub>(x)'
+        ],
+        answer: 0,
+        hints: ['Das Gesetz für Summen gibt es nicht.', 'Produkte, Quotienten und Potenzen sind die drei Standardfälle.'],
+        solution: 'Die Summe im Argument ist kein Logarithmengesetz.',
+        explanation: 'Nur Produkt, Quotient und Potenz lassen sich mit den Logarithmengesetzen direkt umformen.'
+      },
+      {
+        id: 't5',
+        kind: 'domain',
+        topic: 'Voraussetzung',
+        prompt: 'Welche Bedingung muss immer gelten, damit <code>log<sub>a</sub>(x)</code> definiert ist?',
+        options: [
+          'a > 0, a ≠ 1 und x > 0',
+          'a < 0 und x > 0',
+          'a = 1 und x beliebig',
+          'x darf auch 0 sein'
+        ],
+        answer: 0,
+        hints: ['Die Basis muss positiv sein.', 'Die Basis darf nicht 1 sein und das Argument muss positiv sein.'],
+        solution: 'a > 0, a ≠ 1 und x > 0',
+        explanation: 'Ohne positive Basis, Basis ungleich 1 und positive Argumente ist der Logarithmus nicht definiert.'
+      },
+      {
+        id: 't6',
+        kind: 'builder',
+        topic: 'Zusammenfassen',
+        prompt: 'Baue die zusammengefasste Form der Produktregel.',
+        tokens: [
+          { id: 'loga', label: 'log<sub>a</sub>' },
+          { id: 'open', label: '(' },
+          { id: 'x', label: 'x' },
+          { id: 'mul', label: '·' },
+          { id: 'y', label: 'y' },
+          { id: 'close', label: ')' }
+        ],
+        answers: [['loga', 'open', 'x', 'mul', 'y', 'close']],
+        hints: ['Das Produkt bleibt als Argument erhalten.', 'Die Rechenzeichen sitzen im Inneren der Klammer.'],
+        solution: 'log<sub>a</sub>(x · y)',
+        explanation: 'Die Bausteine ergeben die kompakte Produktform.'
+      },
+      {
+        id: 't7',
+        kind: 'builder',
+        topic: 'Zerlegen',
+        prompt: 'Baue die zerlegte Form der Produktregel.',
+        tokens: [
+          { id: 'logaX', label: 'log<sub>a</sub>(x)' },
+          { id: 'plus', label: '+' },
+          { id: 'logaY', label: 'log<sub>a</sub>(y)' }
+        ],
+        answers: [['logaX', 'plus', 'logaY']],
+        hints: ['Es entstehen zwei Logarithmen.', 'Zwischen beiden steht ein Pluszeichen.'],
+        solution: 'log<sub>a</sub>(x) + log<sub>a</sub>(y)',
+        explanation: 'Beim Zerlegen eines Produkts wächst die Summe der beiden Logarithmen.'
+      },
+      {
+        id: 't8',
+        kind: 'builder',
+        topic: 'Potenzregel',
+        prompt: 'Baue die rechte Seite der Potenzregel.',
+        tokens: [
+          { id: 'r', label: 'r' },
+          { id: 'dot', label: '·' },
+          { id: 'logaX2', label: 'log<sub>a</sub>(x)' }
+        ],
+        answers: [['r', 'dot', 'logaX2']],
+        hints: ['Der Exponent wird zum Faktor.', 'Die Logarithmenbasis bleibt erhalten.'],
+        solution: 'r · log<sub>a</sub>(x)',
+        explanation: 'Die Potenzregel zieht den Exponenten vor den Logarithmus.'
+      },
+      {
+        id: 't9',
+        kind: 'choice',
+        topic: 'Fehlerdiagnose',
+        prompt: 'Was ist an <code>log<sub>a</sub>(x + y)</code> problematisch?',
+        options: [
+          'Es gibt kein allgemeines Summegesetz.',
+          'Die Basis ist immer falsch.',
+          'Der Logarithmus darf nie positive Argumente haben.',
+          'Der Ausdruck ist nur bei y = 1 erlaubt.'
+        ],
+        answer: 0,
+        hints: ['Die Regeln gelten nur für Produkt, Quotient und Potenz.', 'Eine Summe lässt sich nicht direkt zerlegen.'],
+        solution: 'Es gibt kein allgemeines Summegesetz.',
+        explanation: 'Für Summen gibt es im Schulstoff keine Logarithmusregel.'
+      },
+      {
+        id: 't10',
+        kind: 'choice',
+        topic: 'Domain',
+        prompt: 'Was ist an <code>log<sub>1</sub>(x)</code> falsch?',
+        options: [
+          'Die Basis 1 ist verboten, weil sie keine eindeutige Potenzfunktion ergibt.',
+          'x darf dann nicht positiv sein.',
+          'Der Quotient ist zu klein.',
+          'Man muss immer mit dem Exponenten starten.'
+        ],
+        answer: 0,
+        hints: ['Die Basis darf nicht 1 sein.', 'Sonst wäre die Umkehrfunktion nicht eindeutig.'],
+        solution: 'Die Basis 1 ist verboten.',
+        explanation: 'Bei Basis 1 ist der Logarithmus nicht sinnvoll definiert.'
+      },
+      {
+        id: 't11',
+        kind: 'choice',
+        topic: 'Zerlegen',
+        prompt: 'Welche Umformung passt zu <code>log<sub>3</sub>(81 / 9)</code>?',
+        options: [
+          'log<sub>3</sub>(81) - log<sub>3</sub>(9)',
+          'log<sub>3</sub>(81) + log<sub>3</sub>(9)',
+          '2 · log<sub>3</sub>(81)',
+          'log<sub>3</sub>(90)'
+        ],
+        answer: 0,
+        hints: ['Der Quotient wird zur Differenz.', 'Im Nenner steht ein Subtrahend.'],
+        solution: 'log<sub>3</sub>(81) - log<sub>3</sub>(9)',
+        explanation: 'Das Quotientengesetz erlaubt das Zerlegen eines Bruchs in eine Differenz.'
+      },
+      {
+        id: 't12',
+        kind: 'choice',
+        topic: 'Kombination',
+        prompt: 'Welcher Ausdruck entspricht <code>2 · log<sub>a</sub>(x)</code>?',
+        options: [
+          'log<sub>a</sub>(x<sup>2</sup>)',
+          'log<sub>a</sub>(2x)',
+          'log<sub>a</sub>(x + 2)',
+          'log<sub>a</sub>(x / 2)'
+        ],
+        answer: 0,
+        hints: ['Der Faktor wandert als Exponent ins Argument.', 'Die Zahl 2 gehört oben an x.'],
+        solution: 'log<sub>a</sub>(x<sup>2</sup>)',
+        explanation: 'Mit dem Potenzgesetz kann der Faktor 2 in einen Exponenten verwandelt werden.'
+      }
+    ];
+
+    const state = {
+      law: 'product',
+      lab: { ...labTemplates.product.defaults },
+      taskOrder: shuffle(tasks.map((_, index) => index)),
+      taskPointer: 0,
+      currentTask: null,
+      selectedChoice: null,
+      selectedTokens: [],
+      hintsShown: 0,
+      locked: false,
+      solvedIds: new Set(),
+      attempts: 0,
+      solved: 0,
+      hints: 0,
+      streak: 0,
+      bestStreak: 0
+    };
+
+    const els = {
+      ruleGrid: document.getElementById('rule-grid'),
+      lawTabs: document.getElementById('law-tabs'),
+      labHint: document.getElementById('lab-hint'),
+      labBase: document.getElementById('lab-base'),
+      labX: document.getElementById('lab-x'),
+      labY: document.getElementById('lab-y'),
+      labR: document.getElementById('lab-r'),
+      labYWrap: document.getElementById('lab-y-wrap'),
+      labRWrap: document.getElementById('lab-r-wrap'),
+      labelBase: document.getElementById('label-base'),
+      labelX: document.getElementById('label-x'),
+      labelY: document.getElementById('label-y'),
+      labelR: document.getElementById('label-r'),
+      labSummary: document.getElementById('lab-summary'),
+      labLeft: document.getElementById('lab-left'),
+      labRight: document.getElementById('lab-right'),
+      labSteps: document.getElementById('lab-steps'),
+      labStatus: document.getElementById('lab-status'),
+      labRandom: document.getElementById('lab-random'),
+      labReset: document.getElementById('lab-reset'),
+      taskKind: document.getElementById('task-kind'),
+      taskCount: document.getElementById('task-count'),
+      taskTitle: document.getElementById('task-title'),
+      taskPrompt: document.getElementById('task-prompt'),
+      taskBody: document.getElementById('task-body'),
+      taskFeedback: document.getElementById('task-feedback'),
+      taskHints: document.getElementById('task-hints'),
+      taskCheck: document.getElementById('task-check'),
+      taskHint: document.getElementById('task-hint'),
+      taskSolution: document.getElementById('task-solution'),
+      taskNext: document.getElementById('task-next'),
+      sessionReset: document.getElementById('session-reset'),
+      statSolved: document.getElementById('stat-solved'),
+      statAttempts: document.getElementById('stat-attempts'),
+      statHints: document.getElementById('stat-hints'),
+      statStreak: document.getElementById('stat-streak'),
+      statRate: document.getElementById('stat-rate'),
+      liveRegion: document.getElementById('live-region')
+    };
+
+    const announce = text => {
+      els.liveRegion.textContent = text;
+    };
+
+    const renderRules = () => {
+      els.ruleGrid.innerHTML = rules.map(rule => `
+        <article class="rule-card" style="--accent:${rule.accent}">
+          <div class="rule-chip">${rule.title}</div>
+          <p class="formula">${rule.formula}</p>
+          <p class="rule-copy">${rule.intro}</p>
+          <ul class="rule-list">
+            <li><strong>Voraussetzungen:</strong> ${rule.pre.join(', ')}</li>
+            <li><strong>Beispiel:</strong> ${rule.example}</li>
+          </ul>
+          <div class="rule-note"><strong>Merke:</strong> ${rule.pitfall}</div>
+        </article>
+      `).join('');
+    };
+
+    const renderLawTabs = () => {
+      els.lawTabs.innerHTML = Object.entries(labTemplates).map(([key, law]) => `
+        <button
+          class="tab"
+          type="button"
+          role="tab"
+          aria-selected="${state.law === key ? 'true' : 'false'}"
+          aria-controls="lab-form"
+          data-law="${key}"
+          style="--accent:${rules.find(rule => rule.key === key).accent}"
+        >
+          <span class="tab__name">${law.title}</span>
+          <span class="tab__tag">${key === 'product' ? 'Produkt' : key === 'quotient' ? 'Quotient' : 'Potenz'}</span>
+        </button>
+      `).join('');
+    };
+
+    const syncLabInputs = () => {
+      const template = labTemplates[state.law];
+      els.labHint.textContent = template.hint;
+      els.labelBase.textContent = template.labels[0];
+      els.labelX.textContent = template.labels[1];
+      els.labelY.textContent = template.labels[2];
+      els.labelR.textContent = template.labels[3];
+      els.labYWrap.hidden = !template.visible.includes('y');
+      els.labRWrap.hidden = !template.visible.includes('r');
+      els.labBase.value = state.lab.a;
+      els.labX.value = state.lab.x;
+      els.labY.value = state.lab.y;
+      els.labR.value = state.lab.r;
+    };
+
+    const renderLabSummary = () => {
+      const template = labTemplates[state.law];
+      const cards = [
+        { label: 'Gesetz', value: template.title },
+        { label: 'Basis', value: `a = ${pretty(state.lab.a)}` },
+        { label: 'Argumente', value: state.law === 'power'
+          ? `x = ${pretty(state.lab.x)}, r = ${pretty(state.lab.r)}`
+          : `x = ${pretty(state.lab.x)}, y = ${pretty(state.lab.y)}` }
+      ];
+      els.labSummary.innerHTML = cards.map(card => `
+        <div class="summary-card">
+          <span>${card.label}</span>
+          <strong>${card.value}</strong>
+        </div>
+      `).join('');
+    };
+
+    const buildLabComputation = () => {
+      const { a, x, y, r } = state.lab;
+      const law = state.law;
+      const baseValid = Number.isFinite(a) && a > 0 && a !== 1;
+      const xValid = Number.isFinite(x) && x > 0;
+      const yValid = Number.isFinite(y) && y > 0;
+
+      if (!baseValid) {
+        return {
+          tone: 'warn',
+          status: 'Die Basis muss größer als 0 und ungleich 1 sein.',
+          left: '—',
+          right: '—',
+          steps: ['<strong>Prüfen:</strong> a > 0 und a ≠ 1 sind Pflicht.'],
+          error: true
+        };
+      }
+      if (law !== 'power' && (!xValid || !yValid)) {
+        return {
+          tone: 'warn',
+          status: 'Für Produkt und Quotient müssen x und y positiv sein.',
+          left: '—',
+          right: '—',
+          steps: ['<strong>Prüfen:</strong> x > 0 und y > 0 sind Pflicht.'],
+          error: true
+        };
+      }
+      if (law === 'power' && !xValid) {
+        return {
+          tone: 'warn',
+          status: 'Für die Potenzregel muss x positiv sein.',
+          left: '—',
+          right: '—',
+          steps: ['<strong>Prüfen:</strong> x > 0 ist Pflicht.'],
+          error: true
+        };
+      }
+
+      let inner;
+      let rhs;
+      let lhsLabel;
+      let rhsLabel;
+      const steps = [];
+
+      if (law === 'product') {
+        inner = x * y;
+        lhsLabel = `log<sub>${pretty(a)}</sub>(${pretty(x)} · ${pretty(y)})`;
+        rhs = logBase(a, x) + logBase(a, y);
+        rhsLabel = `${pretty(logBase(a, x))} + ${pretty(logBase(a, y))}`;
+        steps.push(`<strong>1.</strong> Produkt bilden: ${pretty(x)} · ${pretty(y)} = ${pretty(inner)}.`);
+        steps.push(`<strong>2.</strong> Links: ${lhsLabel} = ${pretty(logBase(a, inner))}.`);
+        steps.push(`<strong>3.</strong> Rechts: ${pretty(logBase(a, x))} + ${pretty(logBase(a, y))} = ${pretty(rhs)}.`);
+      } else if (law === 'quotient') {
+        inner = x / y;
+        lhsLabel = `log<sub>${pretty(a)}</sub>(${pretty(x)} / ${pretty(y)})`;
+        rhs = logBase(a, x) - logBase(a, y);
+        rhsLabel = `${pretty(logBase(a, x))} - ${pretty(logBase(a, y))}`;
+        steps.push(`<strong>1.</strong> Quotient bilden: ${pretty(x)} / ${pretty(y)} = ${pretty(inner)}.`);
+        steps.push(`<strong>2.</strong> Links: ${lhsLabel} = ${pretty(logBase(a, inner))}.`);
+        steps.push(`<strong>3.</strong> Rechts: ${pretty(logBase(a, x))} - ${pretty(logBase(a, y))} = ${pretty(rhs)}.`);
+      } else {
+        inner = Math.pow(x, r);
+        lhsLabel = `log<sub>${pretty(a)}</sub>(${pretty(x)}<sup>${pretty(r)}</sup>)`;
+        rhs = r * logBase(a, x);
+        rhsLabel = `${pretty(r)} · ${pretty(logBase(a, x))}`;
+        steps.push(`<strong>1.</strong> Potenz bilden: ${pretty(x)}<sup>${pretty(r)}</sup> = ${pretty(inner)}.`);
+        steps.push(`<strong>2.</strong> Links: ${lhsLabel} = ${pretty(logBase(a, inner))}.`);
+        steps.push(`<strong>3.</strong> Rechts: ${pretty(r)} · ${pretty(logBase(a, x))} = ${pretty(rhs)}.`);
+      }
+
+      const lhs = logBase(a, inner);
+      const rightValue = rhs;
+      const ok = Number.isFinite(lhs) && Number.isFinite(rightValue) && approxEqual(lhs, rightValue);
+      return {
+        tone: ok ? 'good' : 'warn',
+        status: ok
+          ? `Beide Seiten stimmen überein: ${roundTo(lhs)}.`
+          : 'Die Zahlen passen nicht zusammen. Prüfe Basis, Argumente und Exponent.',
+        left: `${lhsLabel} = ${pretty(lhs)}`,
+        right: `${rhsLabel} = ${pretty(rightValue)}`,
+        steps,
+        error: !ok,
+        equal: ok
+      };
+    };
+
+    const renderLab = () => {
+      renderLabSummary();
+      const comp = buildLabComputation();
+      els.labStatus.dataset.tone = comp.tone;
+      els.labStatus.textContent = comp.status;
+      els.labLeft.innerHTML = comp.left;
+      els.labRight.innerHTML = comp.right;
+      els.labSteps.innerHTML = comp.steps.map(step => `<li>${step}</li>`).join('');
+    };
+
+    const updateLab = () => {
+      state.lab.a = Number(String(els.labBase.value).replace(',', '.'));
+      state.lab.x = Number(String(els.labX.value).replace(',', '.'));
+      state.lab.y = Number(String(els.labY.value).replace(',', '.'));
+      state.lab.r = Number(String(els.labR.value).replace(',', '.'));
+      renderLab();
+    };
+
+    const setLaw = law => {
+      state.law = law;
+      syncLabInputs();
+      renderLawTabs();
+      renderLab();
+      announce(`${labTemplates[law].title} ausgewählt.`);
+    };
+
+    const randomizeLab = () => {
+      const baseChoices = [2, 3, 5, 10];
+      const a = baseChoices[randInt(0, baseChoices.length - 1)];
+      const mode = state.law;
+      const powerValue = randInt(2, 4);
+      if (mode === 'product') {
+        const m = randInt(1, 3);
+        const n = randInt(1, 3);
+        state.lab = { a, x: a ** m, y: a ** n, r: powerValue };
+      } else if (mode === 'quotient') {
+        const big = randInt(2, 4);
+        const small = randInt(1, big - 1);
+        state.lab = { a, x: a ** big, y: a ** small, r: powerValue };
+      } else {
+        state.lab = { a, x: a ** randInt(1, 3), y: a ** randInt(1, 3), r: randInt(2, 4) };
+      }
+      syncLabInputs();
+      renderLab();
+      announce('Zufallswerte eingesetzt.');
+    };
+
+    const resetLab = () => {
+      state.lab = { ...labTemplates[state.law].defaults };
+      syncLabInputs();
+      renderLab();
+      announce('Labor zurückgesetzt.');
+    };
+
+    const currentTask = () => tasks[state.taskOrder[state.taskPointer]];
+
+    const clearTaskState = () => {
+      state.selectedChoice = null;
+      state.selectedTokens = [];
+      state.hintsShown = 0;
+      state.locked = false;
+    };
+
+    const renderTaskBody = task => {
+      if (task.kind === 'choice' || task.kind === 'domain' || task.kind === 'error') {
+        els.taskBody.innerHTML = `
+          <div class="choice-grid">
+            ${task.options.map((option, index) => `
+              <button
+                type="button"
+                class="choice"
+                data-choice="${index}"
+                aria-pressed="${state.selectedChoice === index ? 'true' : 'false'}"
+              >
+                <strong>${String.fromCharCode(65 + index)}.</strong>
+                <small>${option}</small>
+              </button>
+            `).join('')}
+          </div>
+        `;
+      } else {
+        els.taskBody.innerHTML = `
+          <div class="builder-bank" aria-label="Termbausteine">
+            ${task.tokens.map(token => `
+              <button
+                type="button"
+                class="builder-token"
+                data-token="${token.id}"
+                aria-label="${token.label.replace(/<[^>]+>/g, '')}"
+              >${token.label}</button>
+            `).join('')}
+          </div>
+          <p class="lab-form__hint">Tastatur: per Tab auf die Bausteine gehen und mit Enter hinzufügen.</p>
+          <div class="builder-answer" id="builder-answer" aria-label="Deine Zusammenstellung"></div>
+          <div class="lab-buttons">
+            <button type="button" class="button button--ghost button--tiny" id="builder-back">Letzten Baustein entfernen</button>
+            <button type="button" class="button button--secondary button--tiny" id="builder-clear">Alles löschen</button>
+          </div>
+        `;
+      }
+    };
+
+    const renderBuilderAnswer = task => {
+      const answer = document.getElementById('builder-answer');
+      if (!answer) return;
+      if (state.selectedTokens.length === 0) {
+        answer.innerHTML = '<span class="builder-answer__placeholder">Hier erscheinen die gewählten Bausteine.</span>';
+        return;
+      }
+      answer.innerHTML = state.selectedTokens.map(tokenId => {
+        const token = task.tokens.find(entry => entry.id === tokenId);
+        return `<span class="builder-chip">${token.label}</span>`;
+      }).join('');
+    };
+
+    const answerMatches = task => {
+      const norm = values => [...values].sort().join('|');
+      const selected = norm(state.selectedTokens);
+      return task.answers.some(answer => norm(answer) === selected);
+    };
+
+    const renderTask = () => {
+      state.currentTask = currentTask();
+      clearTaskState();
+      const task = state.currentTask;
+      els.taskKind.textContent = task.topic;
+      els.taskKind.dataset.kind = task.kind;
+      els.taskCount.textContent = `${state.taskPointer + 1} / ${tasks.length}`;
+      els.taskTitle.textContent = task.topic;
+      els.taskPrompt.innerHTML = task.prompt;
+      renderTaskBody(task);
+      els.taskHints.innerHTML = '';
+      els.taskFeedback.dataset.tone = 'info';
+      els.taskFeedback.innerHTML = '<strong>Bereit.</strong><p>Wähle eine Antwort oder stelle den Term zusammen.</p>';
+      els.taskCheck.disabled = false;
+      els.taskHint.disabled = false;
+      els.taskSolution.disabled = false;
+      els.taskNext.disabled = false;
+      updateTaskControls();
+      renderBuilderAnswer(task);
+      announce(`Neue Aufgabe: ${task.topic}.`);
+    };
+
+    const updateTaskControls = () => {
+      const task = state.currentTask;
+      if (!task) return;
+      const tokenButtons = els.taskBody.querySelectorAll('.builder-token');
+      const choiceButtons = els.taskBody.querySelectorAll('.choice');
+      tokenButtons.forEach(button => {
+        button.disabled = state.locked;
+        button.dataset.active = state.selectedTokens.includes(button.dataset.token) ? 'true' : 'false';
+      });
+      choiceButtons.forEach(button => {
+        button.disabled = state.locked;
+        button.setAttribute('aria-pressed', state.selectedChoice === Number(button.dataset.choice) ? 'true' : 'false');
+      });
+      const builderBack = document.getElementById('builder-back');
+      const builderClear = document.getElementById('builder-clear');
+      if (builderBack) builderBack.disabled = state.locked || state.selectedTokens.length === 0;
+      if (builderClear) builderClear.disabled = state.locked || state.selectedTokens.length === 0;
+    };
+
+    const showFeedback = (tone, title, body = '') => {
+      els.taskFeedback.dataset.tone = tone;
+      els.taskFeedback.innerHTML = `<strong>${title}</strong>${body ? `<p>${body}</p>` : ''}`;
+    };
+
+    const revealHints = () => {
+      const task = state.currentTask;
+      if (state.hintsShown >= task.hints.length) return;
+      const hint = task.hints[state.hintsShown];
+      state.hintsShown += 1;
+      state.hints += 1;
+      const entry = document.createElement('div');
+      entry.className = 'hint-item';
+      entry.innerHTML = `<strong>Hinweis ${state.hintsShown}:</strong> ${hint}`;
+      els.taskHints.appendChild(entry);
+      if (state.hintsShown >= task.hints.length) {
+        els.taskHint.textContent = 'Keine weiteren Hinweise';
+        els.taskHint.disabled = true;
+      }
+      refreshStats();
+      announce(`Hinweis ${state.hintsShown} eingeblendet.`);
+    };
+
+    const revealSolution = () => {
+      const task = state.currentTask;
+      showFeedback('info', 'Lösung', `<p>${task.solution}</p><p>${task.explanation}</p>`);
+      announce('Lösung eingeblendet.');
+    };
+
+    const checkTask = () => {
+      const task = state.currentTask;
+      if (state.locked) return;
+
+      if (task.kind === 'builder') {
+        if (state.selectedTokens.length === 0) {
+          showFeedback('warn', 'Noch keine Bausteine gewählt.', 'Wähle mindestens einen Termbaustein aus.');
+          return;
+        }
+      } else if (state.selectedChoice === null) {
+        showFeedback('warn', 'Noch keine Antwort gewählt.', 'Wähle eine Option, bevor du prüfst.');
+        return;
+      }
+
+      state.attempts += 1;
+      const correct = task.kind === 'builder'
+        ? answerMatches(task)
+        : state.selectedChoice === task.answer;
+
+      if (correct) {
+        state.locked = true;
+        if (!state.solvedIds.has(task.id)) {
+          state.solvedIds.add(task.id);
+          state.solved += 1;
+        }
+        state.streak += 1;
+        state.bestStreak = Math.max(state.bestStreak, state.streak);
+        showFeedback('good', 'Richtig.', `${task.solution} ${task.explanation}`);
+        els.taskCheck.disabled = true;
+        els.taskHint.disabled = true;
+        els.taskSolution.disabled = false;
+        refreshStats();
+        announce('Antwort richtig.');
+      } else {
+        state.streak = 0;
+        showFeedback('warn', 'Noch nicht richtig.', 'Nutze einen Hinweis oder überprüfe die Bausteine und die Eingaben.');
+        refreshStats();
+        announce('Antwort noch nicht richtig.');
+      }
+      updateTaskControls();
+    };
+
+    const nextTask = () => {
+      state.taskPointer += 1;
+      if (state.taskPointer >= state.taskOrder.length) {
+        state.taskOrder = shuffle(tasks.map((_, index) => index));
+        state.taskPointer = 0;
+      }
+      renderTask();
+      refreshStats();
+    };
+
+    const resetSession = () => {
+      state.taskOrder = shuffle(tasks.map((_, index) => index));
+      state.taskPointer = 0;
+      state.solvedIds.clear();
+      state.attempts = 0;
+      state.solved = 0;
+      state.hints = 0;
+      state.streak = 0;
+      state.bestStreak = 0;
+      renderTask();
+      refreshStats();
+      announce('Sitzung zurückgesetzt.');
+    };
+
+    const refreshStats = () => {
+      els.statSolved.textContent = state.solved;
+      els.statAttempts.textContent = state.attempts;
+      els.statHints.textContent = state.hints;
+      els.statStreak.textContent = state.streak;
+      const rate = state.attempts === 0 ? 0 : Math.round((state.solved / state.attempts) * 100);
+      els.statRate.textContent = `Trefferquote: ${rate} % · Beste Serie: ${state.bestStreak}`;
+    };
+
+    const initLab = () => {
+      renderLawTabs();
+      syncLabInputs();
+      renderLab();
+    };
+
+    const setupLabInteractions = () => {
+      els.lawTabs.addEventListener('click', event => {
+        const button = event.target.closest('[data-law]');
+        if (!button) return;
+        setLaw(button.dataset.law);
+      });
+
+      els.lawTabs.addEventListener('keydown', event => {
+        const buttons = [...els.lawTabs.querySelectorAll('[data-law]')];
+        const index = buttons.findIndex(button => button.dataset.law === state.law);
+        if (index === -1) return;
+        let next = null;
+        if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = buttons[(index + 1) % buttons.length];
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = buttons[(index - 1 + buttons.length) % buttons.length];
+        if (event.key === 'Home') next = buttons[0];
+        if (event.key === 'End') next = buttons[buttons.length - 1];
+        if (next) {
+          event.preventDefault();
+          setLaw(next.dataset.law);
+          next.focus();
+        }
+      });
+
+      ['input', 'change'].forEach(type => {
+        [els.labBase, els.labX, els.labY, els.labR].forEach(input => input.addEventListener(type, updateLab));
+      });
+      els.labRandom.addEventListener('click', randomizeLab);
+      els.labReset.addEventListener('click', resetLab);
+    };
+
+    const setupTaskInteractions = () => {
+      els.taskCheck.addEventListener('click', checkTask);
+      els.taskHint.addEventListener('click', revealHints);
+      els.taskSolution.addEventListener('click', revealSolution);
+      els.taskNext.addEventListener('click', nextTask);
+      els.sessionReset.addEventListener('click', resetSession);
+
+      els.taskBody.addEventListener('click', event => {
+        const choice = event.target.closest('[data-choice]');
+        const token = event.target.closest('[data-token]');
+        if (!state.currentTask || state.locked) return;
+
+        if (choice) {
+          state.selectedChoice = Number(choice.dataset.choice);
+          renderTaskBody(state.currentTask);
+          renderBuilderAnswer(state.currentTask);
+          updateTaskControls();
+        }
+        if (token) {
+          state.selectedTokens.push(token.dataset.token);
+          renderBuilderAnswer(state.currentTask);
+          updateTaskControls();
+        }
+
+        const back = event.target.closest('#builder-back');
+        const clear = event.target.closest('#builder-clear');
+        if (back && state.selectedTokens.length) {
+          state.selectedTokens.pop();
+          renderBuilderAnswer(state.currentTask);
+          updateTaskControls();
+        }
+        if (clear) {
+          state.selectedTokens = [];
+          renderBuilderAnswer(state.currentTask);
+          updateTaskControls();
+        }
+      });
+
+      els.taskBody.addEventListener('keydown', event => {
+        if (!state.currentTask || state.locked) return;
+        if (event.key === 'Backspace' && state.currentTask.kind === 'builder') {
+          state.selectedTokens.pop();
+          renderBuilderAnswer(state.currentTask);
+          updateTaskControls();
+        }
+      });
+    };
+
+    const renderTaskShell = () => {
+      renderTask();
+      refreshStats();
+    };
+
+    renderRules();
+    initLab();
+    setupLabInteractions();
+    setupTaskInteractions();
+    renderTaskShell();
+  </script>
+</body>
+</html>

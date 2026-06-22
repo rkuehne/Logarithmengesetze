@@ -1,20 +1,20 @@
 # LogLab - Interaktives Arbeitsblatt zu Logarithmengesetzen
 
-Ein vollstÃ¤ndig lokales Onepage-Arbeitsblatt fÃ¼r Klasse 10 zu Produkt-, Quotienten- und Potenzgesetz der Logarithmen.
+Ein vollständig lokales Onepage-Arbeitsblatt für Klasse 10 zu Produkt-, Quotienten- und Potenzgesetz der Logarithmen.
 
 ## Inhalte
 
-- kompakte Regelkarten mit Voraussetzungen und typischen Fehlern
-- Zahlenlabor zum direkten Vergleich beider Seiten eines Gesetzes
-- gemischter Aufgabentrainer mit Auswahl- und Termbausteinaufgaben
-- gestufte Hinweise, LÃ¶sungen und Sitzungsstatistik
-- responsive und druckfreundliche Darstellung
+- klare Regelkarten mit Voraussetzungen und typischen Fehlern
+- numerisches Labor zum direkten Vergleich beider Seiten
+- gemischter Aufgabentrainer mit Multiple Choice und Termbausteinen
+- gestufte Hinweise, Lösungen und Sitzungsstatistik
+- responsives Layout mit Druckansicht
 
-Die Anwendung besteht nur aus `index.html`. Sie lÃ¤dt keine externen Bibliotheken, Ã¼bertrÃ¤gt keine Daten und verwendet keinen dauerhaften Browserspeicher.
+Die Anwendung besteht nur aus `index.html`. Sie lädt keine externen Bibliotheken, überträgt keine Daten und verwendet keinen dauerhaften Browserspeicher.
 
-## Lokal Ã¶ffnen
+## Lokal öffnen
 
-FÃ¼r eine schnelle Vorschau kann `index.html` direkt im Browser geÃ¶ffnet werden. Alternativ lÃ¤sst sich im Projektordner ein lokaler Server starten:
+Für eine schnelle Vorschau kann `index.html` direkt im Browser geöffnet werden. Alternativ lässt sich im Projektordner ein lokaler Server starten:
 
 ```powershell
 python -m http.server 8000
@@ -24,9 +24,9 @@ Danach ist die Seite unter `http://localhost:8000` erreichbar.
 
 ## GitHub Pages
 
-1. Dieses Repository zu GitHub Ã¼bertragen.
-2. In den Repository-Einstellungen **Pages** Ã¶ffnen.
-3. Als Quelle **Deploy from a branch** auswÃ¤hlen.
+1. Dieses Repository zu GitHub übertragen.
+2. In den Repository-Einstellungen **Pages** öffnen.
+3. Als Quelle **Deploy from a branch** auswählen.
 4. Branch `main` und Ordner `/ (root)` festlegen.
 
-GitHub Pages verÃ¶ffentlicht anschlieÃŸend die `index.html` aus dem Repository-Root. Ein Build-Schritt ist nicht erforderlich.
+GitHub Pages veröffentlicht anschließend die `index.html` aus dem Repository-Root. Ein Build-Schritt ist nicht erforderlich.
