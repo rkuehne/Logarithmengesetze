@@ -31,7 +31,8 @@
       --radius-sm: 14px;
       --max: 1180px;
       --gap: clamp(1rem, 2vw, 1.5rem);
-      font-family: "Trebuchet MS", "Segoe UI", ui-sans-serif, sans-serif;
+      --font-body: "Aptos", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      --font-display: "Aptos Display", "Aptos", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     }
 
     * { box-sizing: border-box; }
@@ -39,6 +40,7 @@
     body {
       margin: 0;
       min-height: 100vh;
+      font-family: var(--font-body);
       color: var(--ink);
       background:
         radial-gradient(circle at top left, rgba(201, 122, 43, 0.16), transparent 30%),
@@ -188,7 +190,7 @@
       text-transform: uppercase;
     }
     h1, h2, h3, .section-title, .task-title {
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: var(--font-display);
       line-height: 1.12;
       margin: 0;
     }
@@ -261,7 +263,6 @@
       margin: 0.3rem 0 0;
       font-size: 1.6rem;
       font-weight: 800;
-      font-family: Georgia, "Times New Roman", serif;
     }
     .hero-note {
       padding: 1.2rem;
@@ -362,7 +363,7 @@
     }
     .formula {
       font-size: clamp(1.35rem, 3vw, 1.95rem);
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: var(--font-display);
       margin: 0 0 0.75rem;
     }
     .rule-copy {
@@ -432,6 +433,26 @@
       grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
       gap: var(--gap);
       align-items: start;
+    }
+    .lab-heading {
+      padding: 1rem 1.1rem;
+      border-radius: 18px;
+      background: linear-gradient(145deg, rgba(23, 49, 60, 0.94), rgba(47, 94, 168, 0.94));
+      color: #fff;
+      box-shadow: 0 14px 30px rgba(23, 49, 60, 0.12);
+    }
+    .lab-heading__label {
+      margin: 0;
+      font-size: 0.84rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.82;
+    }
+    .lab-heading__formula {
+      margin: 0.35rem 0 0;
+      font-size: clamp(1.2rem, 2.8vw, 1.8rem);
+      line-height: 1.2;
+      font-weight: 800;
     }
     .lab-form,
     .lab-output {
@@ -548,8 +569,8 @@
     }
     .math-box strong,
     .big-number {
-      font-family: Georgia, "Times New Roman", serif;
       font-size: clamp(1.15rem, 2.5vw, 1.55rem);
+      font-weight: 800;
     }
     .step-list {
       margin: 0;
@@ -671,45 +692,73 @@
     }
     .builder-token {
       border: 1px solid rgba(23, 49, 60, 0.14);
-      background: #fff;
+      background: linear-gradient(180deg, #ffffff, #f6f8fb);
       border-radius: 999px;
       padding: 0.55rem 0.85rem;
-      cursor: pointer;
-      transition: transform .18s ease, border-color .18s ease, background-color .18s ease;
+      cursor: grab;
+      transition: transform .18s ease, border-color .18s ease, background-color .18s ease, box-shadow .18s ease;
+      box-shadow: 0 8px 18px rgba(31, 40, 46, 0.06);
     }
     .builder-token:hover {
       transform: translateY(-1px);
       border-color: rgba(23, 49, 60, 0.28);
     }
-    .builder-token[data-active="true"] {
-      background: var(--teal-soft);
-      border-color: var(--teal);
-      color: #0f6665;
-      font-weight: 800;
+    .builder-token:active {
+      cursor: grabbing;
+    }
+    .builder-token[hidden] {
+      display: none !important;
+    }
+    .builder-token[data-dragging="true"] {
+      opacity: 0.45;
+      transform: scale(0.98);
     }
     .builder-answer {
-      min-height: 4.1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(8.4rem, 1fr));
+      gap: 0.65rem;
       padding: 0.85rem;
-      border-radius: 16px;
-      background: rgba(23, 49, 60, 0.05);
+      border-radius: 18px;
+      background: rgba(23, 49, 60, 0.04);
       border: 1px dashed rgba(23, 49, 60, 0.18);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      align-items: center;
     }
-    .builder-answer__placeholder {
+    .builder-slot {
+      min-height: 4.35rem;
+      width: 100%;
+      padding: 0.6rem 0.7rem;
+      border-radius: 16px;
+      border: 1px dashed rgba(23, 49, 60, 0.18);
+      background: rgba(255,255,255,0.9);
+      display: grid;
+      gap: 0.15rem;
+      align-content: center;
+      text-align: left;
+      cursor: pointer;
+      transition: transform .18s ease, border-color .18s ease, background-color .18s ease, box-shadow .18s ease;
+    }
+    .builder-slot:hover {
+      transform: translateY(-1px);
+      border-color: rgba(23, 49, 60, 0.28);
+      box-shadow: 0 10px 20px rgba(31, 40, 46, 0.06);
+    }
+    .builder-slot[data-filled="true"] {
+      border-style: solid;
+      border-color: rgba(23, 49, 60, 0.14);
+      background: linear-gradient(180deg, #ffffff, #f3f8ff);
+    }
+    .builder-slot[data-over="true"] {
+      border-color: var(--focus);
+      box-shadow: 0 0 0 3px rgba(11, 124, 255, 0.14);
+    }
+    .builder-slot__index {
+      font-size: 0.8rem;
       color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
-    .builder-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      padding: 0.38rem 0.65rem;
-      border-radius: 999px;
-      background: #fff;
-      border: 1px solid rgba(23, 49, 60, 0.11);
-      font-weight: 700;
+    .builder-slot__value {
+      font-weight: 800;
+      line-height: 1.2;
     }
     .task-feedback {
       padding: 0.9rem 1rem;
@@ -772,7 +821,7 @@
       display: block;
       margin-top: 0.25rem;
       font-size: 1.55rem;
-      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 800;
     }
     .session-note {
       margin: 0;
@@ -901,7 +950,7 @@
         <p class="lede">
           Dieses Onepage-Arbeitsblatt führt die drei Standardgesetze in klaren Schritten ein,
           zeigt im Labor beide Seiten der Gleichung mit echten Zahlen und trainiert die Anwendung
-          mit gemischten Aufgaben, Hinweise und einer Sitzungsauswertung ohne Speicherung.
+          mit gemischten Aufgaben, Drag-and-Drop und einer Sitzungsauswertung ohne Speicherung.
         </p>
       </div>
       <div class="hero-actions">
@@ -933,7 +982,7 @@
         <ul class="hero-bullets">
           <li>Produkt-, Quotienten- und Potenzgesetz mit Voraussetzungen</li>
           <li>Numerisches Labor mit direktem Seitenvergleich</li>
-          <li>Trainer mit Multiple Choice und tastaturbedienbaren Termbausteinen</li>
+          <li>Trainer mit Multiple Choice und Drag-and-Drop-Bausteinen</li>
           <li>Druckansicht ohne Navigation und ohne Bedienelemente</li>
         </ul>
       </div>
@@ -966,6 +1015,10 @@
         </div>
       </div>
       <div class="panel">
+        <div class="lab-heading" aria-live="polite">
+          <p class="lab-heading__label" id="lab-heading-label">Produktgesetz</p>
+          <h3 class="lab-heading__formula" id="lab-heading-formula">log<sub>a</sub>(x · y) = log<sub>a</sub>(x) + log<sub>a</sub>(y)</h3>
+        </div>
         <div class="law-tabs" id="law-tabs" role="tablist" aria-label="Logarithmengesetz wählen"></div>
         <div class="lab-grid">
           <form class="lab-form" id="lab-form" novalidate>
@@ -1025,7 +1078,7 @@
           <h2 class="section-title" id="training-title">Training</h2>
           <p class="section-kicker">
             Der Trainer mischt Zusammenfassen, Zerlegen, Potenzregel und Fehlerdiagnose.
-            Antworten erfolgen per Multiple Choice oder per Termbaustein.
+            Antworten erfolgen per Multiple Choice oder per Drag-and-Drop.
           </p>
         </div>
       </div>
@@ -1144,6 +1197,7 @@
     const labTemplates = {
       product: {
         title: 'Produktgesetz',
+        headline: 'log<sub>a</sub>(x · y) = log<sub>a</sub>(x) + log<sub>a</sub>(y)',
         hint: 'Links steht ein Produkt im Argument. Rechts wird das Produkt in eine Summe zerlegt.',
         labels: ['Basis a', 'Erstes Argument x', 'Zweites Argument y', 'Exponent r'],
         visible: ['base', 'x', 'y'],
@@ -1151,6 +1205,7 @@
       },
       quotient: {
         title: 'Quotientengesetz',
+        headline: 'log<sub>a</sub>(x / y) = log<sub>a</sub>(x) - log<sub>a</sub>(y)',
         hint: 'Links steht ein Quotient im Argument. Rechts wird er als Differenz geschrieben.',
         labels: ['Basis a', 'Zähler x', 'Nenner y', 'Exponent r'],
         visible: ['base', 'x', 'y'],
@@ -1158,6 +1213,7 @@
       },
       power: {
         title: 'Potenzgesetz',
+        headline: 'log<sub>a</sub>(x<sup>r</sup>) = r · log<sub>a</sub>(x)',
         hint: 'Der Exponent wird als Faktor vor den Logarithmus gezogen.',
         labels: ['Basis a', 'Argument x', 'Quellwert y', 'Exponent r'],
         visible: ['base', 'x', 'r'],
@@ -1254,7 +1310,10 @@
           { id: 'y', label: 'y' },
           { id: 'close', label: ')' }
         ],
-        answers: [['loga', 'open', 'x', 'mul', 'y', 'close']],
+        answers: [
+          ['loga', 'open', 'x', 'mul', 'y', 'close'],
+          ['loga', 'open', 'y', 'mul', 'x', 'close']
+        ],
         hints: ['Das Produkt bleibt als Argument erhalten.', 'Die Rechenzeichen sitzen im Inneren der Klammer.'],
         solution: 'log<sub>a</sub>(x · y)',
         explanation: 'Die Bausteine ergeben die kompakte Produktform.'
@@ -1269,7 +1328,10 @@
           { id: 'plus', label: '+' },
           { id: 'logaY', label: 'log<sub>a</sub>(y)' }
         ],
-        answers: [['logaX', 'plus', 'logaY']],
+        answers: [
+          ['logaX', 'plus', 'logaY'],
+          ['logaY', 'plus', 'logaX']
+        ],
         hints: ['Es entstehen zwei Logarithmen.', 'Zwischen beiden steht ein Pluszeichen.'],
         solution: 'log<sub>a</sub>(x) + log<sub>a</sub>(y)',
         explanation: 'Beim Zerlegen eines Produkts wächst die Summe der beiden Logarithmen.'
@@ -1284,10 +1346,28 @@
           { id: 'dot', label: '·' },
           { id: 'logaX2', label: 'log<sub>a</sub>(x)' }
         ],
-        answers: [['r', 'dot', 'logaX2']],
+        answers: [
+          ['r', 'dot', 'logaX2'],
+          ['logaX2', 'dot', 'r']
+        ],
         hints: ['Der Exponent wird zum Faktor.', 'Die Logarithmenbasis bleibt erhalten.'],
         solution: 'r · log<sub>a</sub>(x)',
         explanation: 'Die Potenzregel zieht den Exponenten vor den Logarithmus.'
+      },
+      {
+        id: 't13',
+        kind: 'builder',
+        topic: 'Quotientengesetz',
+        prompt: 'Baue die zerlegte Form der Quotientenregel.',
+        tokens: [
+          { id: 'logaXq', label: 'log<sub>a</sub>(x)' },
+          { id: 'minus', label: '−' },
+          { id: 'logaYq', label: 'log<sub>a</sub>(y)' }
+        ],
+        answers: [['logaXq', 'minus', 'logaYq']],
+        hints: ['Der Nenner wird abgezogen.', 'Zwischen den Logarithmen steht ein Minuszeichen.'],
+        solution: 'log<sub>a</sub>(x) - log<sub>a</sub>(y)',
+        explanation: 'Beim Quotientengesetz wandert der Nenner als Subtrahend auf die rechte Seite.'
       },
       {
         id: 't9',
@@ -1363,6 +1443,7 @@
       currentTask: null,
       selectedChoice: null,
       selectedTokens: [],
+      builderOrder: [],
       hintsShown: 0,
       locked: false,
       solvedIds: new Set(),
@@ -1387,6 +1468,8 @@
       labelX: document.getElementById('label-x'),
       labelY: document.getElementById('label-y'),
       labelR: document.getElementById('label-r'),
+      labHeadingLabel: document.getElementById('lab-heading-label'),
+      labHeadingFormula: document.getElementById('lab-heading-formula'),
       labSummary: document.getElementById('lab-summary'),
       labLeft: document.getElementById('lab-left'),
       labRight: document.getElementById('lab-right'),
@@ -1448,6 +1531,12 @@
           <span class="tab__tag">${key === 'product' ? 'Produkt' : key === 'quotient' ? 'Quotient' : 'Potenz'}</span>
         </button>
       `).join('');
+    };
+
+    const renderLabHeading = () => {
+      const template = labTemplates[state.law];
+      els.labHeadingLabel.textContent = template.title;
+      els.labHeadingFormula.innerHTML = template.headline;
     };
 
     const syncLabInputs = () => {
@@ -1569,6 +1658,7 @@
     };
 
     const renderLab = () => {
+      renderLabHeading();
       renderLabSummary();
       const comp = buildLabComputation();
       els.labStatus.dataset.tone = comp.tone;
@@ -1624,12 +1714,35 @@
 
     const currentTask = () => tasks[state.taskOrder[state.taskPointer]];
 
-    const clearTaskState = () => {
+    const scrambleBuilderOrder = task => {
+      const ids = task.tokens.map(token => token.id);
+      if (ids.length <= 1) return ids;
+      const accepted = (task.answers ?? []).map(answer => answer.join('|'));
+      let order = shuffle(ids);
+      let guard = 0;
+      while (accepted.includes(order.join('|')) && guard < 32) {
+        order = shuffle(ids);
+        guard += 1;
+      }
+      if (accepted.includes(order.join('|'))) {
+        order = [...ids.slice(1), ids[0]];
+      }
+      return order;
+    };
+
+    const clearTaskState = task => {
       state.selectedChoice = null;
-      state.selectedTokens = [];
+      state.selectedTokens = task && task.kind === 'builder'
+        ? Array(task.tokens.length).fill(null)
+        : [];
+      state.builderOrder = task && task.kind === 'builder'
+        ? scrambleBuilderOrder(task)
+        : [];
       state.hintsShown = 0;
       state.locked = false;
     };
+
+    const getTokenById = (task, tokenId) => task.tokens.find(token => token.id === tokenId);
 
     const renderTaskBody = task => {
       if (task.kind === 'choice' || task.kind === 'domain' || task.kind === 'error') {
@@ -1648,52 +1761,112 @@
             `).join('')}
           </div>
         `;
-      } else {
-        els.taskBody.innerHTML = `
-          <div class="builder-bank" aria-label="Termbausteine">
-            ${task.tokens.map(token => `
-              <button
-                type="button"
-                class="builder-token"
-                data-token="${token.id}"
-                aria-label="${token.label.replace(/<[^>]+>/g, '')}"
-              >${token.label}</button>
-            `).join('')}
-          </div>
-          <p class="lab-form__hint">Tastatur: per Tab auf die Bausteine gehen und mit Enter hinzufügen.</p>
-          <div class="builder-answer" id="builder-answer" aria-label="Deine Zusammenstellung"></div>
-          <div class="lab-buttons">
-            <button type="button" class="button button--ghost button--tiny" id="builder-back">Letzten Baustein entfernen</button>
-            <button type="button" class="button button--secondary button--tiny" id="builder-clear">Alles löschen</button>
-          </div>
-        `;
-      }
-    };
-
-    const renderBuilderAnswer = task => {
-      const answer = document.getElementById('builder-answer');
-      if (!answer) return;
-      if (state.selectedTokens.length === 0) {
-        answer.innerHTML = '<span class="builder-answer__placeholder">Hier erscheinen die gewählten Bausteine.</span>';
         return;
       }
-      answer.innerHTML = state.selectedTokens.map(tokenId => {
-        const token = task.tokens.find(entry => entry.id === tokenId);
-        return `<span class="builder-chip">${token.label}</span>`;
+
+      const bankHtml = state.builderOrder.map(tokenId => {
+        const token = getTokenById(task, tokenId);
+        if (!token) return '';
+        const used = state.selectedTokens.includes(tokenId);
+        const plainLabel = token.label.replace(/<[^>]+>/g, '');
+        return `
+          <button
+            type="button"
+            class="builder-token"
+            data-bank-token
+            data-token-id="${token.id}"
+            aria-label="${plainLabel}"
+            draggable="${used || state.locked ? 'false' : 'true'}"
+            ${used ? 'hidden' : ''}
+          >${token.label}</button>
+        `;
       }).join('');
+
+      const slotHtml = state.selectedTokens.map((tokenId, index) => {
+        const token = tokenId ? getTokenById(task, tokenId) : null;
+        const plainLabel = token ? token.label.replace(/<[^>]+>/g, '') : '';
+        return `
+          <button
+            type="button"
+            class="builder-slot"
+            data-slot="${index}"
+            data-filled="${token ? 'true' : 'false'}"
+            ${token ? `data-token-id="${token.id}" draggable="${state.locked ? 'false' : 'true'}"` : 'draggable="false"'}
+            aria-label="${token ? `Platz ${index + 1}, ${plainLabel}` : `Platz ${index + 1}, leer`}"
+          >
+            <span class="builder-slot__index">${index + 1}</span>
+            <span class="builder-slot__value">${token ? token.label : 'Ziehe hierher'}</span>
+          </button>
+        `;
+      }).join('');
+
+      els.taskBody.innerHTML = `
+        <div class="builder-bank" aria-label="Termbausteine">
+          ${bankHtml}
+        </div>
+        <p class="lab-form__hint">Ziehe die Bausteine in die Lücken. Ein Klick setzt sie in den nächsten freien Platz.</p>
+        <div class="builder-answer" id="builder-answer" aria-label="Deine Reihenfolge">
+          ${slotHtml}
+        </div>
+        <div class="lab-buttons">
+          <button type="button" class="button button--ghost button--tiny" id="builder-clear">Alles löschen</button>
+        </div>
+      `;
+    };
+
+    const placeBuilderToken = (task, tokenId, slotIndex) => {
+      if (!tokenId || state.locked) return false;
+      if (!task.tokens.some(token => token.id === tokenId)) return false;
+      const nextSlots = [...state.selectedTokens];
+      const sourceIndex = nextSlots.indexOf(tokenId);
+      if (sourceIndex !== -1) {
+        nextSlots[sourceIndex] = null;
+      }
+      const targetIndex = typeof slotIndex === 'number' && slotIndex >= 0 && slotIndex < nextSlots.length
+        ? slotIndex
+        : nextSlots.findIndex(value => value === null);
+      if (targetIndex === -1) return false;
+      nextSlots[targetIndex] = tokenId;
+      state.selectedTokens = nextSlots;
+      return true;
+    };
+
+    const clearBuilderSlot = slotIndex => {
+      if (state.locked) return false;
+      if (slotIndex < 0 || slotIndex >= state.selectedTokens.length) return false;
+      if (!state.selectedTokens[slotIndex]) return false;
+      const nextSlots = [...state.selectedTokens];
+      nextSlots[slotIndex] = null;
+      state.selectedTokens = nextSlots;
+      return true;
+    };
+
+    const clearBuilderAll = () => {
+      if (state.locked) return false;
+      state.selectedTokens = Array(state.selectedTokens.length).fill(null);
+      return true;
     };
 
     const answerMatches = task => {
-      const norm = values => [...values].sort().join('|');
-      const selected = norm(state.selectedTokens);
-      return task.answers.some(answer => norm(answer) === selected);
+      if (task.kind !== 'builder') return false;
+      const selected = state.selectedTokens.filter(Boolean);
+      if (selected.length !== task.tokens.length) return false;
+      return (task.answers ?? []).some(answer =>
+        answer.length === selected.length && answer.every((tokenId, index) => tokenId === selected[index])
+      );
     };
 
     const renderTask = () => {
-      state.currentTask = currentTask();
-      clearTaskState();
-      const task = state.currentTask;
-      els.taskKind.textContent = task.topic;
+      const task = currentTask();
+      state.currentTask = task;
+      clearTaskState(task);
+      els.taskKind.textContent = task.kind === 'builder'
+        ? 'Drag & Drop'
+        : task.kind === 'choice'
+          ? 'Auswahl'
+          : task.kind === 'domain'
+            ? 'Voraussetzung'
+            : 'Fehlerdiagnose';
       els.taskKind.dataset.kind = task.kind;
       els.taskCount.textContent = `${state.taskPointer + 1} / ${tasks.length}`;
       els.taskTitle.textContent = task.topic;
@@ -1701,33 +1874,51 @@
       renderTaskBody(task);
       els.taskHints.innerHTML = '';
       els.taskFeedback.dataset.tone = 'info';
-      els.taskFeedback.innerHTML = '<strong>Bereit.</strong><p>Wähle eine Antwort oder stelle den Term zusammen.</p>';
+      els.taskFeedback.innerHTML = task.kind === 'builder'
+        ? '<strong>Bereit.</strong><p>Ziehe die Bausteine in die Lücken.</p>'
+        : '<strong>Bereit.</strong><p>Wähle eine Antwort oder stelle den Term zusammen.</p>';
       els.taskCheck.disabled = false;
       els.taskHint.disabled = false;
       els.taskSolution.disabled = false;
       els.taskNext.disabled = false;
       updateTaskControls();
-      renderBuilderAnswer(task);
       announce(`Neue Aufgabe: ${task.topic}.`);
     };
 
     const updateTaskControls = () => {
       const task = state.currentTask;
       if (!task) return;
-      const tokenButtons = els.taskBody.querySelectorAll('.builder-token');
       const choiceButtons = els.taskBody.querySelectorAll('.choice');
-      tokenButtons.forEach(button => {
-        button.disabled = state.locked;
-        button.dataset.active = state.selectedTokens.includes(button.dataset.token) ? 'true' : 'false';
-      });
       choiceButtons.forEach(button => {
         button.disabled = state.locked;
         button.setAttribute('aria-pressed', state.selectedChoice === Number(button.dataset.choice) ? 'true' : 'false');
       });
-      const builderBack = document.getElementById('builder-back');
+
+      if (task.kind !== 'builder') return;
+
+      const usedTokens = new Set(state.selectedTokens.filter(Boolean));
+      const bankTokens = els.taskBody.querySelectorAll('[data-bank-token]');
+      bankTokens.forEach(button => {
+        const tokenId = button.dataset.tokenId;
+        const used = usedTokens.has(tokenId);
+        button.hidden = used;
+        button.disabled = state.locked || used;
+        button.draggable = !state.locked && !used;
+      });
+
+      const slots = els.taskBody.querySelectorAll('[data-slot]');
+      slots.forEach(slot => {
+        const filled = Boolean(slot.dataset.tokenId);
+        slot.disabled = state.locked;
+        slot.draggable = filled && !state.locked;
+        slot.dataset.filled = filled ? 'true' : 'false';
+        delete slot.dataset.over;
+      });
+
       const builderClear = document.getElementById('builder-clear');
-      if (builderBack) builderBack.disabled = state.locked || state.selectedTokens.length === 0;
-      if (builderClear) builderClear.disabled = state.locked || state.selectedTokens.length === 0;
+      if (builderClear) {
+        builderClear.disabled = state.locked || state.selectedTokens.every(tokenId => tokenId === null);
+      }
     };
 
     const showFeedback = (tone, title, body = '') => {
@@ -1764,8 +1955,12 @@
       if (state.locked) return;
 
       if (task.kind === 'builder') {
-        if (state.selectedTokens.length === 0) {
-          showFeedback('warn', 'Noch keine Bausteine gewählt.', 'Wähle mindestens einen Termbaustein aus.');
+        if (state.selectedTokens.every(tokenId => tokenId === null)) {
+          showFeedback('warn', 'Noch keine Bausteine gewählt.', 'Ziehe zuerst Bausteine in die Reihenfolge.');
+          return;
+        }
+        if (state.selectedTokens.some(tokenId => tokenId === null)) {
+          showFeedback('warn', 'Noch nicht vollständig.', 'Fülle alle Plätze oder lösche die Reihe noch einmal.');
           return;
         }
       } else if (state.selectedChoice === null) {
@@ -1836,6 +2031,7 @@
 
     const initLab = () => {
       renderLawTabs();
+      renderLabHeading();
       syncLabInputs();
       renderLab();
     };
@@ -1879,41 +2075,115 @@
 
       els.taskBody.addEventListener('click', event => {
         const choice = event.target.closest('[data-choice]');
-        const token = event.target.closest('[data-token]');
+        const bankToken = event.target.closest('[data-bank-token]');
+        const slot = event.target.closest('[data-slot]');
+        const clear = event.target.closest('#builder-clear');
         if (!state.currentTask || state.locked) return;
 
         if (choice) {
           state.selectedChoice = Number(choice.dataset.choice);
           renderTaskBody(state.currentTask);
-          renderBuilderAnswer(state.currentTask);
           updateTaskControls();
-        }
-        if (token) {
-          state.selectedTokens.push(token.dataset.token);
-          renderBuilderAnswer(state.currentTask);
-          updateTaskControls();
+          return;
         }
 
-        const back = event.target.closest('#builder-back');
-        const clear = event.target.closest('#builder-clear');
-        if (back && state.selectedTokens.length) {
-          state.selectedTokens.pop();
-          renderBuilderAnswer(state.currentTask);
-          updateTaskControls();
-        }
+        if (state.currentTask.kind !== 'builder') return;
+
         if (clear) {
-          state.selectedTokens = [];
-          renderBuilderAnswer(state.currentTask);
+          clearBuilderAll();
+          renderTaskBody(state.currentTask);
           updateTaskControls();
+          announce('Alle Bausteine entfernt.');
+          return;
         }
+
+        if (bankToken) {
+          const placed = placeBuilderToken(state.currentTask, bankToken.dataset.tokenId);
+          if (!placed) {
+            showFeedback('warn', 'Kein freier Platz.', 'Ziehe den Baustein direkt auf einen Slot oder lösche zuerst einen Platz.');
+            return;
+          }
+          renderTaskBody(state.currentTask);
+          updateTaskControls();
+          announce('Baustein eingefügt.');
+          return;
+        }
+
+        if (slot) {
+          const slotIndex = Number(slot.dataset.slot);
+          if (clearBuilderSlot(slotIndex)) {
+            renderTaskBody(state.currentTask);
+            updateTaskControls();
+            announce(`Platz ${slotIndex + 1} geleert.`);
+          }
+        }
+      });
+
+      els.taskBody.addEventListener('dragstart', event => {
+        const source = event.target.closest('[data-bank-token], [data-slot]');
+        if (!state.currentTask || state.locked || state.currentTask.kind !== 'builder' || !source) return;
+        const tokenId = source.dataset.tokenId;
+        if (!tokenId || !event.dataTransfer) return;
+        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.setData('text/plain', tokenId);
+        source.dataset.dragging = 'true';
+      });
+
+      els.taskBody.addEventListener('dragend', event => {
+        const source = event.target.closest('[data-bank-token], [data-slot]');
+        if (source) delete source.dataset.dragging;
+        els.taskBody.querySelectorAll('[data-slot]').forEach(slotElement => delete slotElement.dataset.over);
+      });
+
+      els.taskBody.addEventListener('dragover', event => {
+        if (!state.currentTask || state.locked || state.currentTask.kind !== 'builder') return;
+        const slotElement = event.target.closest('[data-slot]');
+        if (!slotElement) return;
+        event.preventDefault();
+        slotElement.dataset.over = 'true';
+      });
+
+      els.taskBody.addEventListener('dragleave', event => {
+        const slotElement = event.target.closest('[data-slot]');
+        if (slotElement) delete slotElement.dataset.over;
+      });
+
+      els.taskBody.addEventListener('drop', event => {
+        if (!state.currentTask || state.locked || state.currentTask.kind !== 'builder') return;
+        const slotElement = event.target.closest('[data-slot]');
+        if (!slotElement || !event.dataTransfer) return;
+        event.preventDefault();
+        const tokenId = event.dataTransfer.getData('text/plain');
+        const slotIndex = Number(slotElement.dataset.slot);
+        if (placeBuilderToken(state.currentTask, tokenId, slotIndex)) {
+          renderTaskBody(state.currentTask);
+          updateTaskControls();
+          announce(`Baustein in Platz ${slotIndex + 1} abgelegt.`);
+        }
+        delete slotElement.dataset.over;
       });
 
       els.taskBody.addEventListener('keydown', event => {
         if (!state.currentTask || state.locked) return;
-        if (event.key === 'Backspace' && state.currentTask.kind === 'builder') {
-          state.selectedTokens.pop();
-          renderBuilderAnswer(state.currentTask);
-          updateTaskControls();
+        if (state.currentTask.kind !== 'builder') return;
+        if (event.key === 'Backspace' || event.key === 'Delete') {
+          const slotElement = event.target.closest('[data-slot]');
+          if (slotElement) {
+            const slotIndex = Number(slotElement.dataset.slot);
+            if (clearBuilderSlot(slotIndex)) {
+              renderTaskBody(state.currentTask);
+              updateTaskControls();
+            }
+            return;
+          }
+          const lastFilled = [...state.selectedTokens]
+            .map((tokenId, index) => ({ tokenId, index }))
+            .reverse()
+            .find(entry => entry.tokenId);
+          if (lastFilled && clearBuilderSlot(lastFilled.index)) {
+            renderTaskBody(state.currentTask);
+            updateTaskControls();
+          }
         }
       });
     };
