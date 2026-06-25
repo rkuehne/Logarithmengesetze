@@ -31,8 +31,8 @@
       --radius-sm: 14px;
       --max: 1180px;
       --gap: clamp(1rem, 2vw, 1.5rem);
-      --font-body: "Verdana", "Geneva", "Segoe UI", sans-serif;
-      --font-display: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+      --font-body: "Aptos", "Segoe UI", "Calibri", sans-serif;
+      --font-display: "Cambria", "Georgia", "Times New Roman", serif;
     }
 
     * { box-sizing: border-box; }
@@ -829,7 +829,331 @@
       font-size: 0.96rem;
     }
 
-    .visually-hidden {
+    .training-section {
+      display: grid;
+      gap: 1rem;
+    }
+    .lesson-shell {
+      display: grid;
+      gap: 1rem;
+    }
+    .lesson-header {
+      padding: 1.25rem;
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, #17313c, #2f5ea8);
+      color: #fff;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 0.65rem;
+    }
+    .lesson-header .eyebrow {
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+      margin-bottom: 0;
+    }
+    .lesson-header h3 {
+      margin: 0;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      line-height: 1.1;
+    }
+    .lesson-intro {
+      margin: 0;
+      max-width: 72ch;
+      color: rgba(255, 255, 255, 0.92);
+    }
+    .lesson-meta {
+      display: grid;
+      gap: 0.6rem;
+      margin-top: 0.15rem;
+    }
+    .hearts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      align-items: center;
+      min-height: 1.6rem;
+    }
+    .heart {
+      font-size: 1.25rem;
+      line-height: 1;
+      color: #fff;
+      opacity: 0.35;
+    }
+    .heart.is-full {
+      opacity: 1;
+    }
+    .progress-track {
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.18);
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ffe066, #8ff0a4);
+      border-radius: inherit;
+      transition: width 0.2s ease;
+    }
+    .progress-label {
+      margin: 0;
+      font-weight: 800;
+    }
+    .task-card {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(23, 49, 60, 0.1);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-soft);
+      padding: clamp(1rem, 2.5vw, 1.4rem);
+      display: grid;
+      gap: 1rem;
+    }
+    .task-topline {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .task-type-pill,
+    .task-law-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.38rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .task-type-pill {
+      background: var(--teal-soft);
+      color: #0f6665;
+    }
+    .task-law-pill {
+      background: var(--gold-soft);
+      color: #8a531c;
+    }
+    .formula-display {
+      padding: 0.8rem 0.95rem;
+      border-radius: 14px;
+      background: rgba(47, 94, 168, 0.08);
+      color: var(--ink);
+      font-family: var(--font-display);
+      font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+    }
+    .task-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .task-actions .button {
+      min-height: 44px;
+    }
+    .feedback-banner {
+      min-height: 3.2rem;
+      padding: 0.95rem 1rem;
+      border-radius: 16px;
+      background: rgba(47, 94, 168, 0.12);
+      border: 1px solid transparent;
+      display: grid;
+      gap: 0.25rem;
+    }
+    .feedback-banner strong {
+      font-size: 1rem;
+    }
+    .feedback-banner span {
+      color: var(--muted);
+    }
+    .feedback-banner.success {
+      background: var(--emerald-soft);
+      border-color: rgba(68, 122, 87, 0.25);
+    }
+    .feedback-banner.error {
+      background: var(--rose-soft);
+      border-color: rgba(166, 76, 73, 0.25);
+    }
+    .feedback-banner.hint {
+      background: var(--blue-soft);
+      border-color: rgba(47, 94, 168, 0.18);
+    }
+    .lesson-stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+    .lesson-stats span {
+      padding: 0.9rem 1rem;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(23, 49, 60, 0.08);
+      display: grid;
+      gap: 0.25rem;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+    .lesson-stats strong {
+      display: block;
+      font-size: 1.6rem;
+      color: var(--ink);
+      font-family: var(--font-display);
+    }
+    .wordbank {
+      display: grid;
+      gap: 0.85rem;
+    }
+    .wordbank__hint {
+      margin: 0;
+      color: var(--muted);
+    }
+    .wordbank__panels {
+      display: grid;
+      gap: 0.85rem;
+    }
+    .answer-zone,
+    .tile-pool {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      padding: 0.85rem;
+      border-radius: 16px;
+      border: 1px dashed rgba(23, 49, 60, 0.18);
+      background: rgba(255, 255, 255, 0.72);
+      min-height: 4.25rem;
+    }
+    .answer-zone {
+      background: rgba(47, 94, 168, 0.06);
+    }
+    .answer-zone__placeholder,
+    .pool__placeholder {
+      color: var(--muted);
+      align-self: center;
+    }
+    .term-tile {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      border: 2px solid rgba(23, 49, 60, 0.14);
+      background: #fff;
+      border-radius: 14px;
+      padding: 0.7rem 0.9rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(31, 40, 46, 0.06);
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+    .term-tile:hover {
+      transform: translateY(-1px);
+      border-color: rgba(23, 49, 60, 0.26);
+      box-shadow: 0 10px 22px rgba(31, 40, 46, 0.08);
+    }
+    .term-tile[data-distractor="true"] {
+      opacity: 0.88;
+    }
+    .choice-grid {
+      display: grid;
+      gap: 0.7rem;
+    }
+    .choice-card,
+    .match-card {
+      min-height: 44px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.7rem;
+      padding: 0.85rem 1rem;
+      border: 2px solid rgba(23, 49, 60, 0.14);
+      background: #fff;
+      border-radius: 16px;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(31, 40, 46, 0.05);
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+    }
+    .choice-card:hover,
+    .match-card:hover {
+      transform: translateY(-1px);
+      border-color: rgba(23, 49, 60, 0.24);
+      box-shadow: 0 10px 22px rgba(31, 40, 46, 0.08);
+    }
+    .choice-card[data-selected="true"],
+    .match-card[data-selected="true"],
+    .match-card[data-paired="true"] {
+      border-color: var(--focus);
+      box-shadow: 0 0 0 3px rgba(11, 124, 255, 0.14);
+    }
+    .choice-card[data-correct="true"] {
+      border-color: rgba(68, 122, 87, 0.3);
+      background: var(--emerald-soft);
+    }
+    .choice-card small {
+      display: block;
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 0.2rem;
+    }
+    .matching-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .matching-column {
+      display: grid;
+      gap: 0.6rem;
+      align-content: start;
+    }
+    .matching-column h4 {
+      margin: 0 0 0.15rem;
+      font-size: 1rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .matching-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .pair-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.45rem 0.7rem;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid rgba(23, 49, 60, 0.12);
+      font-weight: 700;
+    }
+    .completion-card {
+      padding: 1.2rem;
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, rgba(23, 49, 60, 0.96), rgba(47, 94, 168, 0.96));
+      color: #fff;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 0.75rem;
+    }
+    .completion-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.45rem;
+    }
+    .completion-card li {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.65rem 0.8rem;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+    .completion-card button {
+      justify-self: start;
+    }    .visually-hidden {
       position: absolute;
       width: 1px;
       height: 1px;
@@ -1072,61 +1396,67 @@
       </div>
     </section>
 
-    <section class="chapter" id="training" aria-labelledby="training-title">
+    <section class="chapter training-section" id="training" aria-labelledby="training-title">
       <div class="section-header">
         <div>
           <h2 class="section-title" id="training-title">Training</h2>
           <p class="section-kicker">
-            Der Trainer mischt Zusammenfassen, Zerlegen, Potenzregel und Fehlerdiagnose.
-            Antworten erfolgen per Multiple Choice oder per Drag-and-Drop.
+            Löse kurze Aufgaben, erhalte sofort Feedback und wiederhole Fehler direkt am Ende der Lektion.
           </p>
         </div>
       </div>
-      <div class="training-top">
-        <article class="task-card" aria-labelledby="task-title">
-          <div class="task-meta">
-            <span class="badge" id="task-kind" data-kind="choice">Aufgabe</span>
-            <span class="task-count" id="task-count">0 / 0</span>
+      <div class="lesson-shell">
+        <header class="lesson-header">
+          <p class="eyebrow">Training</p>
+          <h3>Logarithmengesetze trainieren</h3>
+          <p class="lesson-intro">
+            Arbeite dich durch Wortbaukasten, Zuordnungen und Multiple Choice. Falsche Aufgaben
+            kommen später noch einmal dran.
+          </p>
+          <div class="lesson-meta" aria-label="Lektionsfortschritt">
+            <div class="hearts" id="hearts" aria-label="Herzen"></div>
+            <div class="progress-track" aria-hidden="true">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p class="progress-label" id="progressLabel">Aufgabe 1 / 1</p>
           </div>
-          <h3 class="task-title" id="task-title">Aufgabe wird geladen …</h3>
-          <p class="task-prompt" id="task-prompt"></p>
-          <div id="task-body"></div>
-          <div class="builder-actions">
-            <button class="button button--primary button--tiny" type="button" id="task-check">Prüfen</button>
-            <button class="button button--secondary button--tiny" type="button" id="task-hint">Hinweis</button>
-            <button class="button button--secondary button--tiny" type="button" id="task-solution">Lösung</button>
-            <button class="button button--muted button--tiny" type="button" id="task-next">Nächste Aufgabe</button>
+        </header>
+
+        <article class="task-card" id="taskCard" tabindex="-1" aria-labelledby="taskPrompt">
+          <div class="task-topline">
+            <span class="task-type-pill" id="taskTypeLabel">Aufgabe</span>
+            <span class="task-law-pill" id="taskLawLabel">Logarithmengesetz</span>
           </div>
-          <div class="hint-stack" id="task-hints"></div>
-          <div class="task-feedback" id="task-feedback" data-tone="info" aria-live="polite">
-            Wähle eine Aufgabe und prüfe deine Antwort.
+          <h3 id="taskPrompt">Aufgabe wird geladen …</h3>
+          <div class="formula-display" id="taskFormula"></div>
+          <div id="taskMount"></div>
+          <div class="task-actions">
+            <button type="button" id="checkBtn" class="button button--primary">Prüfen</button>
+            <button type="button" id="hintBtn" class="button button--secondary">Hinweis</button>
+            <button type="button" id="clearBtn" class="button button--secondary">Zurücksetzen</button>
           </div>
         </article>
-        <aside class="session-card" aria-labelledby="session-title">
-          <h3 class="task-title" id="session-title">Sitzungsstatistik</h3>
-          <div class="session-grid">
-            <div class="session-stat">
-              <span>Gelöst</span>
-              <strong id="stat-solved">0</strong>
-            </div>
-            <div class="session-stat">
-              <span>Versuche</span>
-              <strong id="stat-attempts">0</strong>
-            </div>
-            <div class="session-stat">
-              <span>Hinweise</span>
-              <strong id="stat-hints">0</strong>
-            </div>
-            <div class="session-stat">
-              <span>Serie</span>
-              <strong id="stat-streak">0</strong>
-            </div>
-          </div>
-          <p class="session-note" id="stat-rate">Trefferquote: 0 %</p>
-          <div class="builder-actions">
-            <button class="button button--secondary button--tiny" type="button" id="session-reset">Sitzung zurücksetzen</button>
-          </div>
+
+        <div id="feedbackBanner" class="feedback-banner" role="status" aria-live="polite"></div>
+
+        <aside class="lesson-stats" aria-label="Sitzungsstatistik">
+          <span>Gelöst: <strong id="statSolved">0</strong></span>
+          <span>Versuche: <strong id="statAttempts">0</strong></span>
+          <span>Wiederholungen: <strong id="statReviews">0</strong></span>
+          <span>Serie: <strong id="statStreak">0</strong></span>
         </aside>
+
+        <section class="completion-card" id="completionCard" hidden>
+          <h3>Lektion geschafft!</h3>
+          <p>Du hast die Logarithmengesetze trainiert und Fehler direkt wiederholt.</p>
+          <ul>
+            <li>Gelöste Aufgaben: <strong id="doneSolved">0</strong></li>
+            <li>Versuche: <strong id="doneAttempts">0</strong></li>
+            <li>Beste Serie: <strong id="doneBestStreak">0</strong></li>
+            <li>Wiederholte Fehler: <strong id="doneReviews">0</strong></li>
+          </ul>
+          <button type="button" class="button button--primary" id="restartLessonBtn">Nochmal üben</button>
+        </section>
       </div>
     </section>
   </main>
@@ -1221,237 +1551,442 @@
       }
     };
 
-    const tasks = [
-      {
-        id: 't1',
-        kind: 'choice',
-        topic: 'Produkt',
-        prompt: 'Welche Regel passt zu <code>log<sub>a</sub>(x · y)</code>?',
-        options: ['Produktgesetz', 'Quotientengesetz', 'Potenzgesetz', 'Basiswechsel'],
-        answer: 0,
-        hints: ['Im Argument stehen zwei Faktoren.', 'Auf der rechten Seite entsteht eine Summe.'],
-        solution: 'log<sub>a</sub>(x · y) = log<sub>a</sub>(x) + log<sub>a</sub>(y)',
-        explanation: 'Das Produktgesetz zerlegt ein Produkt in die Summe zweier Logarithmen.'
-      },
-      {
-        id: 't2',
-        kind: 'choice',
-        topic: 'Quotient',
-        prompt: 'Welche Schreibweise ist richtig?',
-        options: [
-          'log<sub>a</sub>(x / y) = log<sub>a</sub>(x) - log<sub>a</sub>(y)',
-          'log<sub>a</sub>(x / y) = log<sub>a</sub>(x) + log<sub>a</sub>(y)',
-          'log<sub>a</sub>(x / y) = log<sub>a</sub>(x · y)',
-          'log<sub>a</sub>(x / y) = r · log<sub>a</sub>(x)'
+    const LAW_LABELS = {
+      product: "Produktgesetz",
+      quotient: "Quotientengesetz",
+      power: "Potenzgesetz",
+      mix: "Logarithmengesetze"
+    };
+
+    const TASK_TYPE_LABELS = {
+      wordbank: "Bausteine",
+      match: "Zuordnen",
+      choice: "Auswahl"
+    };
+
+    const MAX_HEARTS = 3;
+
+    const cloneTask = task => (typeof structuredClone === 'function'
+      ? structuredClone(task)
+      : JSON.parse(JSON.stringify(task)));
+    const plainText = value => String(value).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+    const arraysEqual = (left, right) => left.length === right.length && left.every((value, index) => value === right[index]);
+    const containsPattern = (patterns, candidate) => patterns.some(pattern => arraysEqual(pattern, candidate));
+    const taskTypeText = task => TASK_TYPE_LABELS[task.type] ?? 'Aufgabe';
+    const taskLawText = task => LAW_LABELS[task.law] ?? LAW_LABELS.mix;
+    const makeTile = (id, label) => ({ id, label });
+    const makeItem = (id, label) => ({ id, label });
+    const makeOption = (id, label) => ({ id, label });
+    const makePair = (leftId, rightId) => ({ leftId, rightId });
+
+    const wordbankTask = (id, law, prompt, formula, instructions, tiles, answers, hints, solution, explanation) => ({
+      id,
+      type: 'wordbank',
+      law,
+      prompt,
+      formula,
+      instructions,
+      tiles: tiles.map(([tileId, label]) => makeTile(tileId, label)),
+      answers,
+      hints,
+      solution,
+      explanation
+    });
+
+    const matchTask = (id, law, prompt, formula, instructions, leftItems, rightItems, pairs, hints, solution, explanation) => ({
+      id,
+      type: 'match',
+      law,
+      prompt,
+      formula,
+      instructions,
+      leftItems: leftItems.map(([itemId, label]) => makeItem(itemId, label)),
+      rightItems: rightItems.map(([itemId, label]) => makeItem(itemId, label)),
+      pairs: pairs.map(([leftId, rightId]) => makePair(leftId, rightId)),
+      hints,
+      solution,
+      explanation
+    });
+
+    const choiceTask = (id, law, prompt, formula, instructions, options, correctOptionIds, hints, solution, explanation) => ({
+      id,
+      type: 'choice',
+      law,
+      prompt,
+      formula,
+      instructions,
+      options: options.map(([optionId, label]) => makeOption(optionId, label)),
+      correctOptionIds,
+      hints,
+      solution,
+      explanation
+    });
+
+    const LESSON_TASKS = [
+      wordbankTask(
+        'wb-product-expand',
+        'product',
+        'Ordne die Bausteine zur rechten Seite des Produktgesetzes.',
+        'log<sub>a</sub>(x · y) = ?',
+        'Ziehe oder klicke die Bausteine in die Antwortzeile.',
+        [
+          ['wb-product-expand-1', 'log<sub>a</sub>(x)'],
+          ['wb-product-expand-2', '+'],
+          ['wb-product-expand-3', 'log<sub>a</sub>(y)']
         ],
-        answer: 0,
-        hints: ['Beim Quotienten wird nicht addiert.', 'Das Minus ist das Signal des Quotientengesetzes.'],
-        solution: 'log<sub>a</sub>(x / y) = log<sub>a</sub>(x) - log<sub>a</sub>(y)',
-        explanation: 'Im Quotientengesetz wandert der Nenner als subtrahierter Logarithmus auf die rechte Seite.'
-      },
-      {
-        id: 't3',
-        kind: 'choice',
-        topic: 'Potenz',
-        prompt: 'Welche Umformung gehört zur Potenzregel?',
-        options: [
-          'log<sub>a</sub>(x<sup>r</sup>) = r · log<sub>a</sub>(x)',
-          'log<sub>a</sub>(x<sup>r</sup>) = log<sub>a</sub>(x) + r',
-          'log<sub>a</sub>(x<sup>r</sup>) = log<sub>a</sub>(x) - r',
-          'log<sub>a</sub>(x<sup>r</sup>) = x · log<sub>a</sub>(r)'
+        [
+          ['wb-product-expand-1', 'wb-product-expand-2', 'wb-product-expand-3'],
+          ['wb-product-expand-3', 'wb-product-expand-2', 'wb-product-expand-1']
         ],
-        answer: 0,
-        hints: ['Der Exponent wird zum Faktor.', 'Die Basis bleibt im Logarithmus stehen.'],
-        solution: 'log<sub>a</sub>(x<sup>r</sup>) = r · log<sub>a</sub>(x)',
-        explanation: 'Der Exponent wird nicht in das Argument hineingezogen, sondern vor den Logarithmus gesetzt.'
-      },
-      {
-        id: 't4',
-        kind: 'error',
-        topic: 'Fehlerdiagnose',
-        prompt: 'Welche Aussage ist im Allgemeinen falsch?',
-        options: [
-          'log<sub>a</sub>(x + y) = log<sub>a</sub>(x) + log<sub>a</sub>(y)',
-          'log<sub>a</sub>(x · y) = log<sub>a</sub>(x) + log<sub>a</sub>(y)',
-          'log<sub>a</sub>(x / y) = log<sub>a</sub>(x) - log<sub>a</sub>(y)',
-          'log<sub>a</sub>(x<sup>r</sup>) = r · log<sub>a</sub>(x)'
+        [
+          'Ein Produkt wird zur Summe.',
+          'Jeder Faktor bekommt seinen eigenen Logarithmus.'
         ],
-        answer: 0,
-        hints: ['Das Gesetz für Summen gibt es nicht.', 'Produkte, Quotienten und Potenzen sind die drei Standardfälle.'],
-        solution: 'Die Summe im Argument ist kein Logarithmengesetz.',
-        explanation: 'Nur Produkt, Quotient und Potenz lassen sich mit den Logarithmengesetzen direkt umformen.'
-      },
-      {
-        id: 't5',
-        kind: 'domain',
-        topic: 'Voraussetzung',
-        prompt: 'Welche Bedingung muss immer gelten, damit <code>log<sub>a</sub>(x)</code> definiert ist?',
-        options: [
-          'a > 0, a ≠ 1 und x > 0',
-          'a < 0 und x > 0',
-          'a = 1 und x beliebig',
-          'x darf auch 0 sein'
+        'log<sub>a</sub>(x) + log<sub>a</sub>(y)',
+        'Das Produktgesetz zerlegt ein Produkt in zwei Logarithmen, die addiert werden.'
+      ),
+      wordbankTask(
+        'wb-product-contract',
+        'product',
+        'Baue die kompakte Produktform wieder zusammen.',
+        'log<sub>a</sub>(x) + log<sub>a</sub>(y) = ?',
+        'Aus der Summe soll wieder ein Produkt im Logarithmus werden.',
+        [
+          ['wb-product-contract-1', 'log<sub>a</sub>('],
+          ['wb-product-contract-2', 'x'],
+          ['wb-product-contract-3', '·'],
+          ['wb-product-contract-4', 'y'],
+          ['wb-product-contract-5', ')']
         ],
-        answer: 0,
-        hints: ['Die Basis muss positiv sein.', 'Die Basis darf nicht 1 sein und das Argument muss positiv sein.'],
-        solution: 'a > 0, a ≠ 1 und x > 0',
-        explanation: 'Ohne positive Basis, Basis ungleich 1 und positive Argumente ist der Logarithmus nicht definiert.'
-      },
-      {
-        id: 't6',
-        kind: 'builder',
-        topic: 'Zusammenfassen',
-        prompt: 'Baue die zusammengefasste Form der Produktregel.',
-        tokens: [
-          { id: 'loga', label: 'log<sub>a</sub>' },
-          { id: 'open', label: '(' },
-          { id: 'x', label: 'x' },
-          { id: 'mul', label: '·' },
-          { id: 'y', label: 'y' },
-          { id: 'close', label: ')' }
+        [
+          ['wb-product-contract-1', 'wb-product-contract-2', 'wb-product-contract-3', 'wb-product-contract-4', 'wb-product-contract-5']
         ],
-        answers: [
-          ['loga', 'open', 'x', 'mul', 'y', 'close'],
-          ['loga', 'open', 'y', 'mul', 'x', 'close']
+        [
+          'Beide Faktoren gehören wieder unter ein gemeinsames log.',
+          'Innen entsteht ein Produkt.'
         ],
-        hints: ['Das Produkt bleibt als Argument erhalten.', 'Die Rechenzeichen sitzen im Inneren der Klammer.'],
-        solution: 'log<sub>a</sub>(x · y)',
-        explanation: 'Die Bausteine ergeben die kompakte Produktform.'
-      },
-      {
-        id: 't7',
-        kind: 'builder',
-        topic: 'Zerlegen',
-        prompt: 'Baue die zerlegte Form der Produktregel.',
-        tokens: [
-          { id: 'logaX', label: 'log<sub>a</sub>(x)' },
-          { id: 'plus', label: '+' },
-          { id: 'logaY', label: 'log<sub>a</sub>(y)' }
+        'log<sub>a</sub>(x · y)',
+        'Aus der Summe wird innen wieder ein Produkt.'
+      ),
+      wordbankTask(
+        'wb-quotient-expand',
+        'quotient',
+        'Ordne die Bausteine zur rechten Seite des Quotientengesetzes.',
+        'log<sub>a</sub>(x / y) = ?',
+        'Beim Quotientengesetz wird rechts subtrahiert.',
+        [
+          ['wb-quotient-expand-1', 'log<sub>a</sub>(x)'],
+          ['wb-quotient-expand-2', '-'],
+          ['wb-quotient-expand-3', 'log<sub>a</sub>(y)']
         ],
-        answers: [
-          ['logaX', 'plus', 'logaY'],
-          ['logaY', 'plus', 'logaX']
+        [
+          ['wb-quotient-expand-1', 'wb-quotient-expand-2', 'wb-quotient-expand-3']
         ],
-        hints: ['Es entstehen zwei Logarithmen.', 'Zwischen beiden steht ein Pluszeichen.'],
-        solution: 'log<sub>a</sub>(x) + log<sub>a</sub>(y)',
-        explanation: 'Beim Zerlegen eines Produkts wächst die Summe der beiden Logarithmen.'
-      },
-      {
-        id: 't8',
-        kind: 'builder',
-        topic: 'Potenzregel',
-        prompt: 'Baue die rechte Seite der Potenzregel.',
-        tokens: [
-          { id: 'r', label: 'r' },
-          { id: 'dot', label: '·' },
-          { id: 'logaX2', label: 'log<sub>a</sub>(x)' }
+        [
+          'Beim Quotienten wird nicht addiert.',
+          'Der Nenner steht als zweiter Logarithmus mit Minuszeichen.'
         ],
-        answers: [
-          ['r', 'dot', 'logaX2'],
-          ['logaX2', 'dot', 'r']
+        'log<sub>a</sub>(x) - log<sub>a</sub>(y)',
+        'Das Quotientengesetz schreibt den Nenner als subtrahierten Logarithmus.'
+      ),
+      wordbankTask(
+        'wb-quotient-contract',
+        'quotient',
+        'Baue die kompakte Quotientenform wieder zusammen.',
+        'log<sub>a</sub>(x) - log<sub>a</sub>(y) = ?',
+        'Aus der Differenz soll wieder ein Quotient werden.',
+        [
+          ['wb-quotient-contract-1', 'log<sub>a</sub>('],
+          ['wb-quotient-contract-2', 'x'],
+          ['wb-quotient-contract-3', '/'],
+          ['wb-quotient-contract-4', 'y'],
+          ['wb-quotient-contract-5', ')']
         ],
-        hints: ['Der Exponent wird zum Faktor.', 'Die Logarithmenbasis bleibt erhalten.'],
-        solution: 'r · log<sub>a</sub>(x)',
-        explanation: 'Die Potenzregel zieht den Exponenten vor den Logarithmus.'
-      },
-      {
-        id: 't13',
-        kind: 'builder',
-        topic: 'Quotientengesetz',
-        prompt: 'Baue die zerlegte Form der Quotientenregel.',
-        tokens: [
-          { id: 'logaXq', label: 'log<sub>a</sub>(x)' },
-          { id: 'minus', label: '−' },
-          { id: 'logaYq', label: 'log<sub>a</sub>(y)' }
+        [
+          ['wb-quotient-contract-1', 'wb-quotient-contract-2', 'wb-quotient-contract-3', 'wb-quotient-contract-4', 'wb-quotient-contract-5']
         ],
-        answers: [['logaXq', 'minus', 'logaYq']],
-        hints: ['Der Nenner wird abgezogen.', 'Zwischen den Logarithmen steht ein Minuszeichen.'],
-        solution: 'log<sub>a</sub>(x) - log<sub>a</sub>(y)',
-        explanation: 'Beim Quotientengesetz wandert der Nenner als Subtrahend auf die rechte Seite.'
-      },
-      {
-        id: 't9',
-        kind: 'choice',
-        topic: 'Fehlerdiagnose',
-        prompt: 'Was ist an <code>log<sub>a</sub>(x + y)</code> problematisch?',
-        options: [
-          'Es gibt kein allgemeines Summegesetz.',
-          'Die Basis ist immer falsch.',
-          'Der Logarithmus darf nie positive Argumente haben.',
-          'Der Ausdruck ist nur bei y = 1 erlaubt.'
+        [
+          'Beide Zahlen gehören wieder unter ein gemeinsames log.',
+          'Innen entsteht ein Quotient.'
         ],
-        answer: 0,
-        hints: ['Die Regeln gelten nur für Produkt, Quotient und Potenz.', 'Eine Summe lässt sich nicht direkt zerlegen.'],
-        solution: 'Es gibt kein allgemeines Summegesetz.',
-        explanation: 'Für Summen gibt es im Schulstoff keine Logarithmusregel.'
-      },
-      {
-        id: 't10',
-        kind: 'choice',
-        topic: 'Domain',
-        prompt: 'Was ist an <code>log<sub>1</sub>(x)</code> falsch?',
-        options: [
-          'Die Basis 1 ist verboten, weil sie keine eindeutige Potenzfunktion ergibt.',
-          'x darf dann nicht positiv sein.',
-          'Der Quotient ist zu klein.',
-          'Man muss immer mit dem Exponenten starten.'
+        'log<sub>a</sub>(x / y)',
+        'Aus der Differenz wird innen wieder ein Quotient.'
+      ),
+      wordbankTask(
+        'wb-power-expand',
+        'power',
+        'Ordne die Bausteine zur rechten Seite des Potenzgesetzes.',
+        'log<sub>a</sub>(x<sup>r</sup>) = ?',
+        'Der Exponent wandert als Faktor vor den Logarithmus.',
+        [
+          ['wb-power-expand-1', 'log<sub>a</sub>(x)'],
+          ['wb-power-expand-2', '·'],
+          ['wb-power-expand-3', 'r']
         ],
-        answer: 0,
-        hints: ['Die Basis darf nicht 1 sein.', 'Sonst wäre die Umkehrfunktion nicht eindeutig.'],
-        solution: 'Die Basis 1 ist verboten.',
-        explanation: 'Bei Basis 1 ist der Logarithmus nicht sinnvoll definiert.'
-      },
-      {
-        id: 't11',
-        kind: 'choice',
-        topic: 'Zerlegen',
-        prompt: 'Welche Umformung passt zu <code>log<sub>3</sub>(81 / 9)</code>?',
-        options: [
-          'log<sub>3</sub>(81) - log<sub>3</sub>(9)',
-          'log<sub>3</sub>(81) + log<sub>3</sub>(9)',
-          '2 · log<sub>3</sub>(81)',
-          'log<sub>3</sub>(90)'
+        [
+          ['wb-power-expand-1', 'wb-power-expand-2', 'wb-power-expand-3'],
+          ['wb-power-expand-3', 'wb-power-expand-2', 'wb-power-expand-1']
         ],
-        answer: 0,
-        hints: ['Der Quotient wird zur Differenz.', 'Im Nenner steht ein Subtrahend.'],
-        solution: 'log<sub>3</sub>(81) - log<sub>3</sub>(9)',
-        explanation: 'Das Quotientengesetz erlaubt das Zerlegen eines Bruchs in eine Differenz.'
-      },
-      {
-        id: 't12',
-        kind: 'choice',
-        topic: 'Kombination',
-        prompt: 'Welcher Ausdruck entspricht <code>2 · log<sub>a</sub>(x)</code>?',
-        options: [
-          'log<sub>a</sub>(x<sup>2</sup>)',
-          'log<sub>a</sub>(2x)',
-          'log<sub>a</sub>(x + 2)',
-          'log<sub>a</sub>(x / 2)'
+        [
+          'Der Exponent wird zum Faktor.',
+          'Die Basis bleibt im Logarithmus stehen.'
         ],
-        answer: 0,
-        hints: ['Der Faktor wandert als Exponent ins Argument.', 'Die Zahl 2 gehört oben an x.'],
-        solution: 'log<sub>a</sub>(x<sup>2</sup>)',
-        explanation: 'Mit dem Potenzgesetz kann der Faktor 2 in einen Exponenten verwandelt werden.'
-      }
+        'r · log<sub>a</sub>(x)',
+        'Mit dem Potenzgesetz wird der Exponent zum Faktor vor dem Logarithmus.'
+      ),
+      wordbankTask(
+        'wb-power-contract',
+        'power',
+        'Baue die kompakte Potenzform wieder zusammen.',
+        'r · log<sub>a</sub>(x) = ?',
+        'Aus dem Faktor soll wieder ein Exponent werden.',
+        [
+          ['wb-power-contract-1', 'log<sub>a</sub>('],
+          ['wb-power-contract-2', 'x'],
+          ['wb-power-contract-3', '^'],
+          ['wb-power-contract-4', 'r'],
+          ['wb-power-contract-5', ')']
+        ],
+        [
+          ['wb-power-contract-1', 'wb-power-contract-2', 'wb-power-contract-3', 'wb-power-contract-4', 'wb-power-contract-5']
+        ],
+        [
+          'Der Faktor wandert hoch.',
+          'Aus dem Faktor wird ein Exponent.'
+        ],
+        'log<sub>a</sub>(x<sup>r</sup>)',
+        'Aus dem Faktor vor dem Logarithmus wird ein Exponent im Argument.'
+      ),
+      matchTask(
+        'match-formulas',
+        'mix',
+        'Verbinde die Formeln mit den passenden Gesetzen.',
+        'Vier Formeln, vier Namen',
+        'Klicke links und rechts die zusammengehörenden Karten an.',
+        [
+          ['match-formulas-left-1', 'log<sub>a</sub>(x · y)'],
+          ['match-formulas-left-2', 'log<sub>a</sub>(x / y)'],
+          ['match-formulas-left-3', 'log<sub>a</sub>(x<sup>r</sup>)'],
+          ['match-formulas-left-4', 'log<sub>a</sub>(x + y)']
+        ],
+        [
+          ['match-formulas-right-1', 'Produktgesetz'],
+          ['match-formulas-right-2', 'Quotientengesetz'],
+          ['match-formulas-right-3', 'Potenzgesetz'],
+          ['match-formulas-right-4', 'Kein Gesetz']
+        ],
+        [
+          ['match-formulas-left-1', 'match-formulas-right-1'],
+          ['match-formulas-left-2', 'match-formulas-right-2'],
+          ['match-formulas-left-3', 'match-formulas-right-3'],
+          ['match-formulas-left-4', 'match-formulas-right-4']
+        ],
+        [
+          'Produkt gehört zur Summe.',
+          'Quotient gehört zur Differenz.'
+        ],
+        'Produkt → Produktgesetz, Quotient → Quotientengesetz, Potenz → Potenzgesetz, Summe im Argument → kein Gesetz',
+        'Nur Produkt, Quotient und Potenz lassen sich direkt mit einem Logarithmengesetz umformen.'
+      ),
+      matchTask(
+        'match-meanings',
+        'mix',
+        'Ordne die Gesetze ihren Bedeutungen zu.',
+        'Bedeutungskarten',
+        'Links steht der Name, rechts die passende Erklärung.',
+        [
+          ['match-meanings-left-1', 'Produktgesetz'],
+          ['match-meanings-left-2', 'Quotientengesetz'],
+          ['match-meanings-left-3', 'Potenzgesetz'],
+          ['match-meanings-left-4', 'Kein Gesetz']
+        ],
+        [
+          ['match-meanings-right-1', 'Ein Produkt wird zur Summe.'],
+          ['match-meanings-right-2', 'Ein Quotient wird zur Differenz.'],
+          ['match-meanings-right-3', 'Ein Exponent wird zum Faktor.'],
+          ['match-meanings-right-4', 'Eine Summe im Argument ist nicht erlaubt.']
+        ],
+        [
+          ['match-meanings-left-1', 'match-meanings-right-1'],
+          ['match-meanings-left-2', 'match-meanings-right-2'],
+          ['match-meanings-left-3', 'match-meanings-right-3'],
+          ['match-meanings-left-4', 'match-meanings-right-4']
+        ],
+        [
+          'Die Form des Arguments entscheidet über das Gesetz.',
+          'Nur Produkt, Quotient und Potenz sind echte Umformungen.'
+        ],
+        'Produkt, Quotient und Potenz haben je ihre eigene Umformung.',
+        'Die drei Regeln beschreiben genau, wie sich das Argument verändert.'
+      ),
+      matchTask(
+        'match-examples',
+        'mix',
+        'Verbinde die Beispiele mit dem passenden Gesetz.',
+        'Rechenbeispiele',
+        'Links stehen Zahlenbeispiele, rechts die Gesetze.',
+        [
+          ['match-examples-left-1', 'log<sub>2</sub>(8 · 4)'],
+          ['match-examples-left-2', 'log<sub>3</sub>(81 / 9)'],
+          ['match-examples-left-3', 'log<sub>10</sub>(1000<sup>2</sup>)'],
+          ['match-examples-left-4', 'log<sub>5</sub>(25 + 5)']
+        ],
+        [
+          ['match-examples-right-1', 'Produktgesetz'],
+          ['match-examples-right-2', 'Quotientengesetz'],
+          ['match-examples-right-3', 'Potenzgesetz'],
+          ['match-examples-right-4', 'Kein Gesetz']
+        ],
+        [
+          ['match-examples-left-1', 'match-examples-right-1'],
+          ['match-examples-left-2', 'match-examples-right-2'],
+          ['match-examples-left-3', 'match-examples-right-3'],
+          ['match-examples-left-4', 'match-examples-right-4']
+        ],
+        [
+          'Die Zahlenbeispiele zeigen die drei Gesetze in Aktion.',
+          'Bei der Summe im Argument greift kein Gesetz.'
+        ],
+        '8 · 4 passt zum Produkt, 81 / 9 zum Quotienten, 1000<sup>2</sup> zur Potenz.',
+        'An den Zahlen sieht man direkt, welches Gesetz benutzt wird.'
+      ),
+      matchTask(
+        'match-conditions',
+        'mix',
+        'Verbinde die Voraussetzungen mit ihren Erklärungen.',
+        'Voraussetzungen',
+        'Die Logarithmusbasis und die Argumente müssen bestimmte Bedingungen erfüllen.',
+        [
+          ['match-conditions-left-1', 'a > 0'],
+          ['match-conditions-left-2', 'a ≠ 1'],
+          ['match-conditions-left-3', 'x > 0'],
+          ['match-conditions-left-4', 'log<sub>a</sub>(x + y)']
+        ],
+        [
+          ['match-conditions-right-1', 'Basis ist positiv.'],
+          ['match-conditions-right-2', 'Basis darf nicht 1 sein.'],
+          ['match-conditions-right-3', 'Argument muss positiv sein.'],
+          ['match-conditions-right-4', 'Die Summe im Argument ist kein Gesetz.']
+        ],
+        [
+          ['match-conditions-left-1', 'match-conditions-right-1'],
+          ['match-conditions-left-2', 'match-conditions-right-2'],
+          ['match-conditions-left-3', 'match-conditions-right-3'],
+          ['match-conditions-left-4', 'match-conditions-right-4']
+        ],
+        [
+          'Die Basis ist nie beliebig.',
+          'Eine Summe im Argument bleibt ein Fehlerfall.'
+        ],
+        'a > 0, a ≠ 1 und positive Argumente sind Pflicht.',
+        'Ohne diese Voraussetzungen ist der Logarithmus nicht definiert.'
+      ),
+      choiceTask(
+        'mc-sum-trap',
+        'mix',
+        'Welche Aussage ist im Allgemeinen falsch?',
+        'Der Summen-Fall',
+        'Nur eine Antwort ist falsch. Sie ist der Klassiker unter den Fehlvorstellungen.',
+        [
+          ['mc-sum-trap-1', 'log<sub>a</sub>(x + y) = log<sub>a</sub>(x) + log<sub>a</sub>(y)'],
+          ['mc-sum-trap-2', 'log<sub>a</sub>(x · y) = log<sub>a</sub>(x) + log<sub>a</sub>(y)'],
+          ['mc-sum-trap-3', 'log<sub>a</sub>(x / y) = log<sub>a</sub>(x) - log<sub>a</sub>(y)'],
+          ['mc-sum-trap-4', 'log<sub>a</sub>(x<sup>r</sup>) = r · log<sub>a</sub>(x)']
+        ],
+        ['mc-sum-trap-1'],
+        [
+          'Es gibt kein Logarithmengesetz für Summen im Argument.',
+          'Produkte, Quotienten und Potenzen funktionieren, Summen nicht.'
+        ],
+        'log<sub>a</sub>(x + y) ist im Allgemeinen falsch.',
+        'Nur Produkt, Quotient und Potenz lassen sich direkt mit Logarithmengesetzen umformen.'
+      ),
+      choiceTask(
+        'mc-base-condition',
+        'mix',
+        'Welche Bedingung muss für die Basis gelten?',
+        'Grundvoraussetzung',
+        'Die Basis ist positiv und darf nicht 1 sein.',
+        [
+          ['mc-base-condition-1', 'a > 0 und a ≠ 1'],
+          ['mc-base-condition-2', 'a < 0'],
+          ['mc-base-condition-3', 'a = 1'],
+          ['mc-base-condition-4', 'a = 0']
+        ],
+        ['mc-base-condition-1'],
+        [
+          'Die Basis muss positiv sein und darf nicht 1 sein.',
+          'Sonst ist der Logarithmus nicht sinnvoll definiert.'
+        ],
+        'a > 0 und a ≠ 1',
+        'Das ist die Standardvoraussetzung für die Logarithmusbasis.'
+      ),
+      choiceTask(
+        'mc-quotient-sign',
+        'quotient',
+        'Welche Umformung gehört zum Quotientengesetz?',
+        'Richtiges Minuszeichen',
+        'Das Minus steht zwischen den beiden Logarithmen.',
+        [
+          ['mc-quotient-sign-1', 'log<sub>a</sub>(x) - log<sub>a</sub>(y)'],
+          ['mc-quotient-sign-2', 'log<sub>a</sub>(x) + log<sub>a</sub>(y)'],
+          ['mc-quotient-sign-3', 'log<sub>a</sub>(y) - log<sub>a</sub>(x)'],
+          ['mc-quotient-sign-4', 'log<sub>a</sub>(x · y)']
+        ],
+        ['mc-quotient-sign-1'],
+        [
+          'Beim Quotientengesetz wird subtrahiert.',
+          'Der Nenner kommt als zweiter, abgezogener Logarithmus vor.'
+        ],
+        'log<sub>a</sub>(x) - log<sub>a</sub>(y)',
+        'Das ist die direkte Schreibweise des Quotientengesetzes.'
+      ),
+      choiceTask(
+        'mc-power-equivalence',
+        'power',
+        'Welche Schreibweise ist ebenfalls korrekt?',
+        'Gleiche Reihenfolge',
+        'Multiplikation darf vertauscht werden. Beide Wege sind richtig.',
+        [
+          ['mc-power-equivalence-1', 'r · log<sub>a</sub>(x)'],
+          ['mc-power-equivalence-2', 'log<sub>a</sub>(x) · r'],
+          ['mc-power-equivalence-3', 'r + log<sub>a</sub>(x)'],
+          ['mc-power-equivalence-4', 'log<sub>a</sub>(r) · x']
+        ],
+        ['mc-power-equivalence-1', 'mc-power-equivalence-2'],
+        [
+          'Multiplikation ist vertauschbar.',
+          'Der Faktor darf vor oder hinter dem Logarithmus stehen.'
+        ],
+        'r · log<sub>a</sub>(x) und log<sub>a</sub>(x) · r',
+        'Beide Reihenfolgen sind gleichwertig.'
+      )
     ];
 
     const state = {
       law: 'product',
       lab: { ...labTemplates.product.defaults },
-      taskOrder: shuffle(tasks.map((_, index) => index)),
-      taskPointer: 0,
+      queue: [],
+      currentIndex: 0,
       currentTask: null,
-      selectedChoice: null,
-      selectedTokens: [],
-      builderOrder: [],
-      hintsShown: 0,
-      locked: false,
-      solvedIds: new Set(),
+      selectedTiles: [],
+      selectedPairs: [],
+      selectedOption: null,
+      wordbankPoolOrder: [],
+      choiceOrder: [],
+      matchLeftOrder: [],
+      matchRightOrder: [],
+      matchLeftSelection: null,
+      hearts: MAX_HEARTS,
       attempts: 0,
       solved: 0,
-      hints: 0,
+      reviews: 0,
       streak: 0,
-      bestStreak: 0
+      bestStreak: 0,
+      hintIndex: 0,
+      locked: false,
+      completed: false,
+      lastOutcome: ''
     };
 
     const els = {
@@ -1477,26 +2012,32 @@
       labStatus: document.getElementById('lab-status'),
       labRandom: document.getElementById('lab-random'),
       labReset: document.getElementById('lab-reset'),
-      taskKind: document.getElementById('task-kind'),
-      taskCount: document.getElementById('task-count'),
-      taskTitle: document.getElementById('task-title'),
-      taskPrompt: document.getElementById('task-prompt'),
-      taskBody: document.getElementById('task-body'),
-      taskFeedback: document.getElementById('task-feedback'),
-      taskHints: document.getElementById('task-hints'),
-      taskCheck: document.getElementById('task-check'),
-      taskHint: document.getElementById('task-hint'),
-      taskSolution: document.getElementById('task-solution'),
-      taskNext: document.getElementById('task-next'),
-      sessionReset: document.getElementById('session-reset'),
-      statSolved: document.getElementById('stat-solved'),
-      statAttempts: document.getElementById('stat-attempts'),
-      statHints: document.getElementById('stat-hints'),
-      statStreak: document.getElementById('stat-streak'),
-      statRate: document.getElementById('stat-rate'),
+      taskCard: document.getElementById('taskCard'),
+      taskTypeLabel: document.getElementById('taskTypeLabel'),
+      taskLawLabel: document.getElementById('taskLawLabel'),
+      taskPrompt: document.getElementById('taskPrompt'),
+      taskFormula: document.getElementById('taskFormula'),
+      taskMount: document.getElementById('taskMount'),
+      checkBtn: document.getElementById('checkBtn'),
+      hintBtn: document.getElementById('hintBtn'),
+      clearBtn: document.getElementById('clearBtn'),
+      feedbackBanner: document.getElementById('feedbackBanner'),
+      hearts: document.getElementById('hearts'),
+      progressFill: document.getElementById('progressFill'),
+      progressLabel: document.getElementById('progressLabel'),
+      lessonStats: document.querySelector('.lesson-stats'),
+      completionCard: document.getElementById('completionCard'),
+      statSolved: document.getElementById('statSolved'),
+      statAttempts: document.getElementById('statAttempts'),
+      statReviews: document.getElementById('statReviews'),
+      statStreak: document.getElementById('statStreak'),
+      doneSolved: document.getElementById('doneSolved'),
+      doneAttempts: document.getElementById('doneAttempts'),
+      doneBestStreak: document.getElementById('doneBestStreak'),
+      doneReviews: document.getElementById('doneReviews'),
+      restartLessonBtn: document.getElementById('restartLessonBtn'),
       liveRegion: document.getElementById('live-region')
     };
-
     const announce = text => {
       els.liveRegion.textContent = text;
     };
@@ -1712,323 +2253,6 @@
       announce('Labor zurückgesetzt.');
     };
 
-    const currentTask = () => tasks[state.taskOrder[state.taskPointer]];
-
-    const scrambleBuilderOrder = task => {
-      const ids = task.tokens.map(token => token.id);
-      if (ids.length <= 1) return ids;
-      const accepted = (task.answers ?? []).map(answer => answer.join('|'));
-      let order = shuffle(ids);
-      let guard = 0;
-      while (accepted.includes(order.join('|')) && guard < 32) {
-        order = shuffle(ids);
-        guard += 1;
-      }
-      if (accepted.includes(order.join('|'))) {
-        order = [...ids.slice(1), ids[0]];
-      }
-      return order;
-    };
-
-    const clearTaskState = task => {
-      state.selectedChoice = null;
-      state.selectedTokens = task && task.kind === 'builder'
-        ? Array(task.tokens.length).fill(null)
-        : [];
-      state.builderOrder = task && task.kind === 'builder'
-        ? scrambleBuilderOrder(task)
-        : [];
-      state.hintsShown = 0;
-      state.locked = false;
-    };
-
-    const getTokenById = (task, tokenId) => task.tokens.find(token => token.id === tokenId);
-
-    const renderTaskBody = task => {
-      if (task.kind === 'choice' || task.kind === 'domain' || task.kind === 'error') {
-        els.taskBody.innerHTML = `
-          <div class="choice-grid">
-            ${task.options.map((option, index) => `
-              <button
-                type="button"
-                class="choice"
-                data-choice="${index}"
-                aria-pressed="${state.selectedChoice === index ? 'true' : 'false'}"
-              >
-                <strong>${String.fromCharCode(65 + index)}.</strong>
-                <small>${option}</small>
-              </button>
-            `).join('')}
-          </div>
-        `;
-        return;
-      }
-
-      const bankHtml = state.builderOrder.map(tokenId => {
-        const token = getTokenById(task, tokenId);
-        if (!token) return '';
-        const used = state.selectedTokens.includes(tokenId);
-        const plainLabel = token.label.replace(/<[^>]+>/g, '');
-        return `
-          <button
-            type="button"
-            class="builder-token"
-            data-bank-token
-            data-token-id="${token.id}"
-            aria-label="${plainLabel}"
-            draggable="${used || state.locked ? 'false' : 'true'}"
-            ${used ? 'hidden' : ''}
-          >${token.label}</button>
-        `;
-      }).join('');
-
-      const slotHtml = state.selectedTokens.map((tokenId, index) => {
-        const token = tokenId ? getTokenById(task, tokenId) : null;
-        const plainLabel = token ? token.label.replace(/<[^>]+>/g, '') : '';
-        return `
-          <button
-            type="button"
-            class="builder-slot"
-            data-slot="${index}"
-            data-filled="${token ? 'true' : 'false'}"
-            ${token ? `data-token-id="${token.id}" draggable="${state.locked ? 'false' : 'true'}"` : 'draggable="false"'}
-            aria-label="${token ? `Platz ${index + 1}, ${plainLabel}` : `Platz ${index + 1}, leer`}"
-          >
-            <span class="builder-slot__index">${index + 1}</span>
-            <span class="builder-slot__value">${token ? token.label : 'Ziehe hierher'}</span>
-          </button>
-        `;
-      }).join('');
-
-      els.taskBody.innerHTML = `
-        <div class="builder-bank" aria-label="Termbausteine">
-          ${bankHtml}
-        </div>
-        <p class="lab-form__hint">Ziehe die Bausteine in die Lücken. Ein Klick setzt sie in den nächsten freien Platz.</p>
-        <div class="builder-answer" id="builder-answer" aria-label="Deine Reihenfolge">
-          ${slotHtml}
-        </div>
-        <div class="lab-buttons">
-          <button type="button" class="button button--ghost button--tiny" id="builder-clear">Alles löschen</button>
-        </div>
-      `;
-    };
-
-    const placeBuilderToken = (task, tokenId, slotIndex) => {
-      if (!tokenId || state.locked) return false;
-      if (!task.tokens.some(token => token.id === tokenId)) return false;
-      const nextSlots = [...state.selectedTokens];
-      const sourceIndex = nextSlots.indexOf(tokenId);
-      if (sourceIndex !== -1) {
-        nextSlots[sourceIndex] = null;
-      }
-      const targetIndex = typeof slotIndex === 'number' && slotIndex >= 0 && slotIndex < nextSlots.length
-        ? slotIndex
-        : nextSlots.findIndex(value => value === null);
-      if (targetIndex === -1) return false;
-      nextSlots[targetIndex] = tokenId;
-      state.selectedTokens = nextSlots;
-      return true;
-    };
-
-    const clearBuilderSlot = slotIndex => {
-      if (state.locked) return false;
-      if (slotIndex < 0 || slotIndex >= state.selectedTokens.length) return false;
-      if (!state.selectedTokens[slotIndex]) return false;
-      const nextSlots = [...state.selectedTokens];
-      nextSlots[slotIndex] = null;
-      state.selectedTokens = nextSlots;
-      return true;
-    };
-
-    const clearBuilderAll = () => {
-      if (state.locked) return false;
-      state.selectedTokens = Array(state.selectedTokens.length).fill(null);
-      return true;
-    };
-
-    const answerMatches = task => {
-      if (task.kind !== 'builder') return false;
-      const selected = state.selectedTokens.filter(Boolean);
-      if (selected.length !== task.tokens.length) return false;
-      return (task.answers ?? []).some(answer =>
-        answer.length === selected.length && answer.every((tokenId, index) => tokenId === selected[index])
-      );
-    };
-
-    const renderTask = () => {
-      const task = currentTask();
-      state.currentTask = task;
-      clearTaskState(task);
-      els.taskKind.textContent = task.kind === 'builder'
-        ? 'Drag & Drop'
-        : task.kind === 'choice'
-          ? 'Auswahl'
-          : task.kind === 'domain'
-            ? 'Voraussetzung'
-            : 'Fehlerdiagnose';
-      els.taskKind.dataset.kind = task.kind;
-      els.taskCount.textContent = `${state.taskPointer + 1} / ${tasks.length}`;
-      els.taskTitle.textContent = task.topic;
-      els.taskPrompt.innerHTML = task.prompt;
-      renderTaskBody(task);
-      els.taskHints.innerHTML = '';
-      els.taskFeedback.dataset.tone = 'info';
-      els.taskFeedback.innerHTML = task.kind === 'builder'
-        ? '<strong>Bereit.</strong><p>Ziehe die Bausteine in die Lücken.</p>'
-        : '<strong>Bereit.</strong><p>Wähle eine Antwort oder stelle den Term zusammen.</p>';
-      els.taskCheck.disabled = false;
-      els.taskHint.disabled = false;
-      els.taskSolution.disabled = false;
-      els.taskNext.disabled = false;
-      updateTaskControls();
-      announce(`Neue Aufgabe: ${task.topic}.`);
-    };
-
-    const updateTaskControls = () => {
-      const task = state.currentTask;
-      if (!task) return;
-      const choiceButtons = els.taskBody.querySelectorAll('.choice');
-      choiceButtons.forEach(button => {
-        button.disabled = state.locked;
-        button.setAttribute('aria-pressed', state.selectedChoice === Number(button.dataset.choice) ? 'true' : 'false');
-      });
-
-      if (task.kind !== 'builder') return;
-
-      const usedTokens = new Set(state.selectedTokens.filter(Boolean));
-      const bankTokens = els.taskBody.querySelectorAll('[data-bank-token]');
-      bankTokens.forEach(button => {
-        const tokenId = button.dataset.tokenId;
-        const used = usedTokens.has(tokenId);
-        button.hidden = used;
-        button.disabled = state.locked || used;
-        button.draggable = !state.locked && !used;
-      });
-
-      const slots = els.taskBody.querySelectorAll('[data-slot]');
-      slots.forEach(slot => {
-        const filled = Boolean(slot.dataset.tokenId);
-        slot.disabled = state.locked;
-        slot.draggable = filled && !state.locked;
-        slot.dataset.filled = filled ? 'true' : 'false';
-        delete slot.dataset.over;
-      });
-
-      const builderClear = document.getElementById('builder-clear');
-      if (builderClear) {
-        builderClear.disabled = state.locked || state.selectedTokens.every(tokenId => tokenId === null);
-      }
-    };
-
-    const showFeedback = (tone, title, body = '') => {
-      els.taskFeedback.dataset.tone = tone;
-      els.taskFeedback.innerHTML = `<strong>${title}</strong>${body ? `<p>${body}</p>` : ''}`;
-    };
-
-    const revealHints = () => {
-      const task = state.currentTask;
-      if (state.hintsShown >= task.hints.length) return;
-      const hint = task.hints[state.hintsShown];
-      state.hintsShown += 1;
-      state.hints += 1;
-      const entry = document.createElement('div');
-      entry.className = 'hint-item';
-      entry.innerHTML = `<strong>Hinweis ${state.hintsShown}:</strong> ${hint}`;
-      els.taskHints.appendChild(entry);
-      if (state.hintsShown >= task.hints.length) {
-        els.taskHint.textContent = 'Keine weiteren Hinweise';
-        els.taskHint.disabled = true;
-      }
-      refreshStats();
-      announce(`Hinweis ${state.hintsShown} eingeblendet.`);
-    };
-
-    const revealSolution = () => {
-      const task = state.currentTask;
-      showFeedback('info', 'Lösung', `<p>${task.solution}</p><p>${task.explanation}</p>`);
-      announce('Lösung eingeblendet.');
-    };
-
-    const checkTask = () => {
-      const task = state.currentTask;
-      if (state.locked) return;
-
-      if (task.kind === 'builder') {
-        if (state.selectedTokens.every(tokenId => tokenId === null)) {
-          showFeedback('warn', 'Noch keine Bausteine gewählt.', 'Ziehe zuerst Bausteine in die Reihenfolge.');
-          return;
-        }
-        if (state.selectedTokens.some(tokenId => tokenId === null)) {
-          showFeedback('warn', 'Noch nicht vollständig.', 'Fülle alle Plätze oder lösche die Reihe noch einmal.');
-          return;
-        }
-      } else if (state.selectedChoice === null) {
-        showFeedback('warn', 'Noch keine Antwort gewählt.', 'Wähle eine Option, bevor du prüfst.');
-        return;
-      }
-
-      state.attempts += 1;
-      const correct = task.kind === 'builder'
-        ? answerMatches(task)
-        : state.selectedChoice === task.answer;
-
-      if (correct) {
-        state.locked = true;
-        if (!state.solvedIds.has(task.id)) {
-          state.solvedIds.add(task.id);
-          state.solved += 1;
-        }
-        state.streak += 1;
-        state.bestStreak = Math.max(state.bestStreak, state.streak);
-        showFeedback('good', 'Richtig.', `${task.solution} ${task.explanation}`);
-        els.taskCheck.disabled = true;
-        els.taskHint.disabled = true;
-        els.taskSolution.disabled = false;
-        refreshStats();
-        announce('Antwort richtig.');
-      } else {
-        state.streak = 0;
-        showFeedback('warn', 'Noch nicht richtig.', 'Nutze einen Hinweis oder überprüfe die Bausteine und die Eingaben.');
-        refreshStats();
-        announce('Antwort noch nicht richtig.');
-      }
-      updateTaskControls();
-    };
-
-    const nextTask = () => {
-      state.taskPointer += 1;
-      if (state.taskPointer >= state.taskOrder.length) {
-        state.taskOrder = shuffle(tasks.map((_, index) => index));
-        state.taskPointer = 0;
-      }
-      renderTask();
-      refreshStats();
-    };
-
-    const resetSession = () => {
-      state.taskOrder = shuffle(tasks.map((_, index) => index));
-      state.taskPointer = 0;
-      state.solvedIds.clear();
-      state.attempts = 0;
-      state.solved = 0;
-      state.hints = 0;
-      state.streak = 0;
-      state.bestStreak = 0;
-      renderTask();
-      refreshStats();
-      announce('Sitzung zurückgesetzt.');
-    };
-
-    const refreshStats = () => {
-      els.statSolved.textContent = state.solved;
-      els.statAttempts.textContent = state.attempts;
-      els.statHints.textContent = state.hints;
-      els.statStreak.textContent = state.streak;
-      const rate = state.attempts === 0 ? 0 : Math.round((state.solved / state.attempts) * 100);
-      els.statRate.textContent = `Trefferquote: ${rate} % · Beste Serie: ${state.bestStreak}`;
-    };
-
     const initLab = () => {
       renderLawTabs();
       renderLabHeading();
@@ -2065,139 +2289,691 @@
       els.labRandom.addEventListener('click', randomizeLab);
       els.labReset.addEventListener('click', resetLab);
     };
+    const currentTask = () => state.queue[state.currentIndex] ?? null;
 
-    const setupTaskInteractions = () => {
-      els.taskCheck.addEventListener('click', checkTask);
-      els.taskHint.addEventListener('click', revealHints);
-      els.taskSolution.addEventListener('click', revealSolution);
-      els.taskNext.addEventListener('click', nextTask);
-      els.sessionReset.addEventListener('click', resetSession);
+    const cloneReviewTask = task => {
+      const review = cloneTask(task);
+      review.id = `${task.id}-review-${state.attempts}-${Math.random().toString(36).slice(2, 8)}`;
+      review.isReview = true;
+      return review;
+    };
 
-      els.taskBody.addEventListener('click', event => {
-        const choice = event.target.closest('[data-choice]');
-        const bankToken = event.target.closest('[data-bank-token]');
-        const slot = event.target.closest('[data-slot]');
-        const clear = event.target.closest('#builder-clear');
-        if (!state.currentTask || state.locked) return;
+    const renderHearts = () => {
+      els.hearts.innerHTML = Array.from({ length: MAX_HEARTS }, (_, index) => `
+        <span class="heart ${index < state.hearts ? 'is-full' : ''}" aria-hidden="true">♥</span>
+      `).join('');
+      els.hearts.setAttribute('aria-label', `Herzen: ${state.hearts} von ${MAX_HEARTS}`);
+    };
 
-        if (choice) {
-          state.selectedChoice = Number(choice.dataset.choice);
-          renderTaskBody(state.currentTask);
-          updateTaskControls();
-          return;
+    const refreshLessonStats = () => {
+      els.statSolved.textContent = state.solved;
+      els.statAttempts.textContent = state.attempts;
+      els.statReviews.textContent = state.reviews;
+      els.statStreak.textContent = state.streak;
+    };
+
+    const refreshCompletionStats = () => {
+      els.doneSolved.textContent = state.solved;
+      els.doneAttempts.textContent = state.attempts;
+      els.doneBestStreak.textContent = state.bestStreak;
+      els.doneReviews.textContent = state.reviews;
+    };
+
+    const renderProgress = () => {
+      const total = Math.max(1, state.queue.length);
+      const completed = state.completed ? total : Math.min(total, state.currentIndex + 1);
+      els.progressFill.style.width = `${Math.round((completed / total) * 100)}%`;
+      els.progressLabel.textContent = state.completed
+        ? 'Lektion abgeschlossen'
+        : `Aufgabe ${Math.min(state.currentIndex + 1, total)} / ${total}`;
+    };
+
+    const showFeedback = (tone, title, body = '') => {
+      els.feedbackBanner.hidden = false;
+      els.feedbackBanner.className = `feedback-banner ${tone}`;
+      els.feedbackBanner.innerHTML = body
+        ? `<strong>${title}</strong><span>${body}</span>`
+        : `<strong>${title}</strong>`;
+    };
+
+    const scrambleWordbankPool = task => {
+      const ids = task.tiles.map(tile => tile.id);
+      if (ids.length <= 1) return ids;
+      const accepted = task.answers ?? [ids];
+      let order = shuffle(ids);
+      let guard = 0;
+      while (containsPattern(accepted, order) && guard < 32) {
+        order = shuffle(ids);
+        guard += 1;
+      }
+      if (containsPattern(accepted, order)) {
+        order = [...ids.slice(1), ids[0]];
+      }
+      return order;
+    };
+
+    const scrambleChoiceOrder = task => shuffle(task.options.map(option => option.id));
+
+    const scrambleMatchOrder = task => ({
+      left: shuffle(task.leftItems.map(item => item.id)),
+      right: shuffle(task.rightItems.map(item => item.id))
+    });
+
+    const getWordbankTile = (task, tileId) => task.tiles.find(tile => tile.id === tileId);
+    const getChoiceOption = (task, optionId) => task.options.find(option => option.id === optionId);
+    const getMatchItem = (task, side, itemId) => (side === 'left' ? task.leftItems : task.rightItems).find(item => item.id === itemId);
+
+    const getSelectedWordbankLength = () => state.selectedTiles.filter(Boolean).length;
+
+    const taskHasSelection = task => {
+      switch (task.type) {
+        case 'wordbank':
+          return getSelectedWordbankLength() > 0;
+        case 'match':
+          return state.selectedPairs.length > 0 || state.matchLeftSelection !== null;
+        case 'choice':
+          return state.selectedOption !== null;
+        default:
+          return false;
+      }
+    };
+
+    const taskReadyToCheck = task => {
+      switch (task.type) {
+        case 'wordbank':
+          return state.selectedTiles.length > 0 && state.selectedTiles.every(Boolean);
+        case 'match':
+          return state.selectedPairs.length === task.leftItems.length && state.matchLeftSelection === null;
+        case 'choice':
+          return state.selectedOption !== null;
+        default:
+          return false;
+      }
+    };
+
+    const resetTaskState = task => {
+      state.currentTask = task;
+      state.hintIndex = 0;
+      state.locked = false;
+      state.lastOutcome = '';
+      state.selectedTiles = [];
+      state.selectedPairs = [];
+      state.selectedOption = null;
+      state.wordbankPoolOrder = [];
+      state.choiceOrder = [];
+      state.matchLeftOrder = [];
+      state.matchRightOrder = [];
+      state.matchLeftSelection = null;
+
+      if (task.type === 'wordbank') {
+        state.selectedTiles = Array(task.tiles.length).fill(null);
+        state.wordbankPoolOrder = scrambleWordbankPool(task);
+      } else if (task.type === 'choice') {
+        state.selectedOption = null;
+        state.choiceOrder = scrambleChoiceOrder(task);
+      } else if (task.type === 'match') {
+        state.selectedPairs = [];
+        state.matchLeftSelection = null;
+        const order = scrambleMatchOrder(task);
+        state.matchLeftOrder = order.left;
+        state.matchRightOrder = order.right;
+      }
+    };
+
+    const renderTaskHeader = task => {
+      els.taskTypeLabel.textContent = taskTypeText(task);
+      els.taskLawLabel.textContent = taskLawText(task);
+      els.taskPrompt.innerHTML = task.prompt;
+      els.taskFormula.innerHTML = task.formula;
+    };
+
+    const renderWordbankMount = task => {
+      const poolHtml = state.wordbankPoolOrder
+        .filter(tileId => !state.selectedTiles.includes(tileId))
+        .map(tileId => {
+          const tile = getWordbankTile(task, tileId);
+          if (!tile) return '';
+          return `
+            <button
+              type="button"
+              class="term-tile"
+              data-pool-tile="true"
+              data-tile-id="${tile.id}"
+              draggable="${state.locked ? 'false' : 'true'}"
+              aria-label="${plainText(tile.label)}"
+              ${state.locked ? 'disabled' : ''}
+            >${tile.label}</button>
+          `;
+        }).join('');
+
+      const slotHtml = state.selectedTiles.map((tileId, index) => {
+        const tile = tileId ? getWordbankTile(task, tileId) : null;
+        return `
+          <button
+            type="button"
+            class="term-tile"
+            data-slot-index="${index}"
+            data-tile-id="${tile ? tile.id : ''}"
+            data-filled="${tile ? 'true' : 'false'}"
+            draggable="${tile && !state.locked ? 'true' : 'false'}"
+            aria-label="${tile ? `Platz ${index + 1}, ${plainText(tile.label)}` : `Platz ${index + 1}, leer`}"
+            ${state.locked ? 'disabled' : ''}
+          >${tile ? tile.label : `<span class="answer-zone__placeholder">Platz ${index + 1}</span>`}</button>
+        `;
+      }).join('');
+
+      els.taskMount.innerHTML = `
+        <div class="wordbank">
+          <p class="wordbank__hint">${task.instructions}</p>
+          <div class="wordbank__panels">
+            <div class="tile-pool" aria-label="Bausteine">
+              ${poolHtml || '<span class="pool__placeholder">Alle Bausteine sind verteilt.</span>'}
+            </div>
+            <div class="answer-zone" aria-label="Antwortreihenfolge">
+              ${slotHtml}
+            </div>
+          </div>
+        </div>
+      `;
+    };
+
+    const renderChoiceMount = task => {
+      const correctIds = new Set(task.correctOptionIds);
+      const optionsHtml = state.choiceOrder.map((optionId, index) => {
+        const option = getChoiceOption(task, optionId);
+        if (!option) return '';
+        const selected = state.selectedOption === option.id;
+        const correct = state.locked && correctIds.has(option.id);
+        return `
+          <button
+            type="button"
+            class="choice-card"
+            data-option-id="${option.id}"
+            data-selected="${selected ? 'true' : 'false'}"
+            data-correct="${correct ? 'true' : 'false'}"
+            aria-pressed="${selected ? 'true' : 'false'}"
+            ${state.locked ? 'disabled' : ''}
+          >
+            <strong>${String.fromCharCode(65 + index)}.</strong>
+            <small>${option.label}</small>
+          </button>
+        `;
+      }).join('');
+
+      els.taskMount.innerHTML = `
+        <div class="wordbank">
+          <p class="wordbank__hint">${task.instructions}</p>
+          <div class="choice-grid">
+            ${optionsHtml}
+          </div>
+        </div>
+      `;
+    };
+
+    const renderMatchMount = task => {
+      const selectedMap = new Map(state.selectedPairs.map(pair => [pair.leftId, pair.rightId]));
+      const pairedLeftIds = new Set(state.selectedPairs.map(pair => pair.leftId));
+      const pairedRightIds = new Set(state.selectedPairs.map(pair => pair.rightId));
+      const leftHtml = state.matchLeftOrder.map(itemId => {
+        const item = getMatchItem(task, 'left', itemId);
+        if (!item) return '';
+        const selected = state.matchLeftSelection === item.id;
+        const paired = pairedLeftIds.has(item.id);
+        return `
+          <button
+            type="button"
+            class="match-card"
+            data-match-side="left"
+            data-item-id="${item.id}"
+            data-selected="${selected ? 'true' : 'false'}"
+            data-paired="${paired ? 'true' : 'false'}"
+            aria-pressed="${selected ? 'true' : 'false'}"
+            ${state.locked ? 'disabled' : ''}
+          >${item.label}</button>
+        `;
+      }).join('');
+
+      const rightHtml = state.matchRightOrder.map(itemId => {
+        const item = getMatchItem(task, 'right', itemId);
+        if (!item) return '';
+        const paired = pairedRightIds.has(item.id);
+        return `
+          <button
+            type="button"
+            class="match-card"
+            data-match-side="right"
+            data-item-id="${item.id}"
+            data-paired="${paired ? 'true' : 'false'}"
+            aria-pressed="${paired ? 'true' : 'false'}"
+            ${state.locked ? 'disabled' : ''}
+          >${item.label}</button>
+        `;
+      }).join('');
+
+      const summaryHtml = state.selectedPairs.length
+        ? task.leftItems
+            .map(leftItem => {
+              const rightId = selectedMap.get(leftItem.id);
+              if (!rightId) return '';
+              const rightItem = getMatchItem(task, 'right', rightId);
+              if (!rightItem) return '';
+              return `<span class="pair-chip">${leftItem.label} ↔ ${rightItem.label}</span>`;
+            })
+            .filter(Boolean)
+            .join('')
+        : '<span class="pool__placeholder">Bilde links und rechts passende Paare.</span>';
+
+      els.taskMount.innerHTML = `
+        <div class="wordbank">
+          <p class="wordbank__hint">${task.instructions}</p>
+          <div class="matching-grid">
+            <div class="matching-column">
+              <h4>Links</h4>
+              ${leftHtml}
+            </div>
+            <div class="matching-column">
+              <h4>Rechts</h4>
+              ${rightHtml}
+            </div>
+          </div>
+          <div class="matching-summary" aria-live="polite">
+            ${summaryHtml}
+          </div>
+        </div>
+      `;
+    };
+
+    const renderTaskMount = task => {
+      if (!task) {
+        els.taskMount.innerHTML = '';
+        return;
+      }
+      if (task.type === 'wordbank') {
+        renderWordbankMount(task);
+        return;
+      }
+      if (task.type === 'match') {
+        renderMatchMount(task);
+        return;
+      }
+      renderChoiceMount(task);
+    };
+
+    const updateTaskControls = task => {
+      if (!task) {
+        els.checkBtn.disabled = true;
+        els.hintBtn.disabled = true;
+        els.clearBtn.disabled = true;
+        els.checkBtn.textContent = 'Prüfen';
+        els.hintBtn.textContent = 'Hinweis';
+        return;
+      }
+
+      const hintsTotal = task.hints?.length ?? 0;
+      els.checkBtn.textContent = state.locked ? 'Weiter' : 'Prüfen';
+      els.checkBtn.disabled = !state.locked && !taskReadyToCheck(task);
+      els.hintBtn.textContent = state.hintIndex < hintsTotal ? 'Hinweis' : 'Lösung';
+      els.hintBtn.disabled = state.locked || state.hintIndex > hintsTotal;
+      els.clearBtn.disabled = state.locked || !taskHasSelection(task);
+    };
+
+    const renderCurrentTask = () => {
+      const task = currentTask();
+      if (!task) {
+        renderCompletion();
+        return;
+      }
+
+      resetTaskState(task);
+      state.completed = false;
+      els.taskCard.hidden = false;
+      els.feedbackBanner.hidden = false;
+      els.lessonStats.hidden = false;
+      els.completionCard.hidden = true;
+      renderTaskHeader(task);
+      renderTaskMount(task);
+      showFeedback('hint', 'Bereit.', task.instructions);
+      refreshLessonStats();
+      renderProgress();
+      renderHearts();
+      updateTaskControls(task);
+      announce(`Neue Aufgabe: ${plainText(task.prompt)}`);
+      els.taskCard.focus();
+    };
+
+    const renderCompletion = () => {
+      state.completed = true;
+      refreshCompletionStats();
+      renderProgress();
+      renderHearts();
+      els.taskCard.hidden = true;
+      els.lessonStats.hidden = true;
+      els.feedbackBanner.hidden = true;
+      els.completionCard.hidden = false;
+      announce('Lektion abgeschlossen.');
+    };
+
+    const clearCurrentSelection = () => {
+      const task = currentTask();
+      if (!task || state.locked || state.completed) return;
+
+      if (task.type === 'wordbank') {
+        state.selectedTiles = Array(task.tiles.length).fill(null);
+      } else if (task.type === 'match') {
+        state.selectedPairs = [];
+        state.matchLeftSelection = null;
+      } else if (task.type === 'choice') {
+        state.selectedOption = null;
+      }
+
+      renderTaskMount(task);
+      updateTaskControls(task);
+      showFeedback('hint', 'Zurückgesetzt.', task.instructions);
+      announce('Auswahl zurückgesetzt.');
+    };
+
+    const addWordbankTile = (task, tileId, slotIndex = null) => {
+      if (!tileId || state.locked || state.completed) return false;
+      if (!task.tiles.some(tile => tile.id === tileId)) return false;
+      const next = [...state.selectedTiles];
+      const sourceIndex = next.indexOf(tileId);
+      const targetIndex = slotIndex === null || slotIndex === undefined
+        ? next.findIndex(value => value === null)
+        : slotIndex;
+      if (targetIndex < 0 || targetIndex >= next.length) return false;
+      if (next[targetIndex] && next[targetIndex] !== tileId && sourceIndex !== targetIndex) return false;
+      if (sourceIndex !== -1) next[sourceIndex] = null;
+      next[targetIndex] = tileId;
+      state.selectedTiles = next;
+      return true;
+    };
+
+    const removeWordbankTile = slotIndex => {
+      if (state.locked || state.completed) return false;
+      if (slotIndex < 0 || slotIndex >= state.selectedTiles.length) return false;
+      if (!state.selectedTiles[slotIndex]) return false;
+      const next = [...state.selectedTiles];
+      next[slotIndex] = null;
+      state.selectedTiles = next;
+      return true;
+    };
+
+    const toggleMatchingCard = (task, side, itemId) => {
+      if (state.locked || state.completed) return false;
+      if (side === 'left') {
+        state.matchLeftSelection = state.matchLeftSelection === itemId ? null : itemId;
+        return true;
+      }
+
+      const existing = state.selectedPairs.find(pair => pair.rightId === itemId);
+      if (state.matchLeftSelection) {
+        const leftId = state.matchLeftSelection;
+        state.selectedPairs = state.selectedPairs.filter(pair => pair.leftId !== leftId && pair.rightId !== itemId);
+        state.selectedPairs.push({ leftId, rightId: itemId });
+        state.matchLeftSelection = null;
+        return true;
+      }
+
+      if (existing) {
+        state.selectedPairs = state.selectedPairs.filter(pair => pair.rightId !== itemId);
+        return true;
+      }
+
+      showFeedback('hint', 'Erst links wählen.', 'Wähle zuerst links eine Karte und dann rechts das passende Gegenstück.');
+      return false;
+    };
+
+    const chooseOption = (task, optionId) => {
+      if (state.locked || state.completed) return false;
+      state.selectedOption = state.selectedOption === optionId ? null : optionId;
+      return true;
+    };
+
+    const checkWordbankAnswer = task => state.selectedTiles.every(Boolean) && containsPattern(task.answers, state.selectedTiles);
+
+    const checkMatchAnswer = task => {
+      if (state.selectedPairs.length !== task.leftItems.length) return false;
+      const map = new Map(state.selectedPairs.map(pair => [pair.leftId, pair.rightId]));
+      return task.pairs.every(pair => map.get(pair.leftId) === pair.rightId);
+    };
+
+    const checkChoiceAnswer = task => task.correctOptionIds.includes(state.selectedOption);
+
+    const isTaskCorrect = task => {
+      if (task.type === 'wordbank') return checkWordbankAnswer(task);
+      if (task.type === 'match') return checkMatchAnswer(task);
+      if (task.type === 'choice') return checkChoiceAnswer(task);
+      return false;
+    };
+
+    const handleCorrect = task => {
+      state.attempts += 1;
+      state.solved += 1;
+      state.streak += 1;
+      state.bestStreak = Math.max(state.bestStreak, state.streak);
+      state.locked = true;
+      state.lastOutcome = 'correct';
+      showFeedback('success', 'Richtig!', `${task.solution}<br>${task.explanation}`);
+      announce('Antwort richtig.');
+    };
+
+    const handleIncorrect = task => {
+      state.attempts += 1;
+      state.streak = 0;
+      state.hearts = Math.max(0, state.hearts - 1);
+      state.reviews += 1;
+      state.queue.push(cloneReviewTask(task));
+      state.locked = true;
+      state.lastOutcome = 'incorrect';
+      showFeedback('error', 'Noch nicht richtig.', `Richtig ist: ${task.solution}<br>${task.explanation}`);
+      announce('Antwort noch nicht richtig.');
+    };
+
+    const checkCurrentTask = () => {
+      const task = currentTask();
+      if (!task || state.locked || state.completed) return;
+      if (!taskReadyToCheck(task)) {
+        showFeedback('hint', 'Noch nicht vollständig.', task.instructions);
+        announce('Antwort noch nicht vollständig.');
+        return;
+      }
+
+      if (isTaskCorrect(task)) {
+        handleCorrect(task);
+      } else {
+        handleIncorrect(task);
+      }
+
+      renderTaskMount(task);
+      updateTaskControls(task);
+      refreshLessonStats();
+      renderProgress();
+      renderHearts();
+    };
+
+    const advanceLesson = () => {
+      if (!state.locked || state.completed) return;
+      state.currentIndex += 1;
+      state.locked = false;
+      state.currentTask = null;
+      if (state.currentIndex >= state.queue.length) {
+        renderCompletion();
+        return;
+      }
+      renderCurrentTask();
+    };
+
+    const handlePrimaryAction = () => {
+      if (state.completed) return;
+      if (state.locked) {
+        advanceLesson();
+        return;
+      }
+      checkCurrentTask();
+    };
+
+    const handleHint = () => {
+      const task = currentTask();
+      if (!task || state.locked || state.completed) return;
+      const hintsTotal = task.hints?.length ?? 0;
+      if (state.hintIndex < hintsTotal) {
+        const hint = task.hints[state.hintIndex];
+        state.hintIndex += 1;
+        showFeedback('hint', `Hinweis ${state.hintIndex}`, hint);
+        announce(`Hinweis ${state.hintIndex} angezeigt.`);
+      } else {
+        state.hintIndex = hintsTotal + 1;
+        showFeedback('hint', 'Lösung', `${task.solution}<br>${task.explanation}`);
+        announce('Lösung angezeigt.');
+      }
+      updateTaskControls(task);
+    };
+
+    const setupLessonInteractions = () => {
+      els.checkBtn.addEventListener('click', handlePrimaryAction);
+      els.hintBtn.addEventListener('click', handleHint);
+      els.clearBtn.addEventListener('click', clearCurrentSelection);
+      els.restartLessonBtn.addEventListener('click', initLesson);
+
+      els.taskCard.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          clearCurrentSelection();
         }
-
-        if (state.currentTask.kind !== 'builder') return;
-
-        if (clear) {
-          clearBuilderAll();
-          renderTaskBody(state.currentTask);
-          updateTaskControls();
-          announce('Alle Bausteine entfernt.');
-          return;
-        }
-
-        if (bankToken) {
-          const placed = placeBuilderToken(state.currentTask, bankToken.dataset.tokenId);
-          if (!placed) {
-            showFeedback('warn', 'Kein freier Platz.', 'Ziehe den Baustein direkt auf einen Slot oder lösche zuerst einen Platz.');
-            return;
-          }
-          renderTaskBody(state.currentTask);
-          updateTaskControls();
-          announce('Baustein eingefügt.');
-          return;
-        }
-
-        if (slot) {
-          const slotIndex = Number(slot.dataset.slot);
-          if (clearBuilderSlot(slotIndex)) {
-            renderTaskBody(state.currentTask);
-            updateTaskControls();
-            announce(`Platz ${slotIndex + 1} geleert.`);
-          }
-        }
       });
 
-      els.taskBody.addEventListener('dragstart', event => {
-        const source = event.target.closest('[data-bank-token], [data-slot]');
-        if (!state.currentTask || state.locked || state.currentTask.kind !== 'builder' || !source) return;
-        const tokenId = source.dataset.tokenId;
-        if (!tokenId || !event.dataTransfer) return;
-        event.dataTransfer.effectAllowed = 'move';
-        event.dataTransfer.setData('text/plain', tokenId);
-        source.dataset.dragging = 'true';
-      });
+      els.taskMount.addEventListener('click', event => {
+        const task = currentTask();
+        if (!task || state.locked || state.completed) return;
 
-      els.taskBody.addEventListener('dragend', event => {
-        const source = event.target.closest('[data-bank-token], [data-slot]');
-        if (source) delete source.dataset.dragging;
-        els.taskBody.querySelectorAll('[data-slot]').forEach(slotElement => delete slotElement.dataset.over);
-      });
-
-      els.taskBody.addEventListener('dragover', event => {
-        if (!state.currentTask || state.locked || state.currentTask.kind !== 'builder') return;
-        const slotElement = event.target.closest('[data-slot]');
-        if (!slotElement) return;
-        event.preventDefault();
-        slotElement.dataset.over = 'true';
-      });
-
-      els.taskBody.addEventListener('dragleave', event => {
-        const slotElement = event.target.closest('[data-slot]');
-        if (slotElement) delete slotElement.dataset.over;
-      });
-
-      els.taskBody.addEventListener('drop', event => {
-        if (!state.currentTask || state.locked || state.currentTask.kind !== 'builder') return;
-        const slotElement = event.target.closest('[data-slot]');
-        if (!slotElement || !event.dataTransfer) return;
-        event.preventDefault();
-        const tokenId = event.dataTransfer.getData('text/plain');
-        const slotIndex = Number(slotElement.dataset.slot);
-        if (placeBuilderToken(state.currentTask, tokenId, slotIndex)) {
-          renderTaskBody(state.currentTask);
-          updateTaskControls();
-          announce(`Baustein in Platz ${slotIndex + 1} abgelegt.`);
-        }
-        delete slotElement.dataset.over;
-      });
-
-      els.taskBody.addEventListener('keydown', event => {
-        if (!state.currentTask || state.locked) return;
-        if (state.currentTask.kind !== 'builder') return;
-        if (event.key === 'Backspace' || event.key === 'Delete') {
-          const slotElement = event.target.closest('[data-slot]');
-          if (slotElement) {
-            const slotIndex = Number(slotElement.dataset.slot);
-            if (clearBuilderSlot(slotIndex)) {
-              renderTaskBody(state.currentTask);
-              updateTaskControls();
+        if (task.type === 'wordbank') {
+          const poolButton = event.target.closest('button[data-pool-tile]');
+          const slotButton = event.target.closest('button[data-slot-index]');
+          if (poolButton) {
+            const placed = addWordbankTile(task, poolButton.dataset.tileId);
+            if (placed) {
+              renderTaskMount(task);
+              updateTaskControls(task);
+              announce('Baustein eingefügt.');
+            } else {
+              showFeedback('hint', 'Kein freier Platz.', 'Lösche zuerst einen Platz oder setze den Baustein auf einen freien Slot.');
             }
             return;
           }
-          const lastFilled = [...state.selectedTokens]
-            .map((tokenId, index) => ({ tokenId, index }))
-            .reverse()
-            .find(entry => entry.tokenId);
-          if (lastFilled && clearBuilderSlot(lastFilled.index)) {
-            renderTaskBody(state.currentTask);
-            updateTaskControls();
+          if (slotButton) {
+            const slotIndex = Number(slotButton.dataset.slotIndex);
+            if (removeWordbankTile(slotIndex)) {
+              renderTaskMount(task);
+              updateTaskControls(task);
+              announce(`Platz ${slotIndex + 1} geleert.`);
+            }
+            return;
+          }
+        }
+
+        if (task.type === 'match') {
+          const matchButton = event.target.closest('button[data-match-side]');
+          if (!matchButton) return;
+          if (toggleMatchingCard(task, matchButton.dataset.matchSide, matchButton.dataset.itemId)) {
+            renderTaskMount(task);
+            updateTaskControls(task);
+          }
+          return;
+        }
+
+        if (task.type === 'choice') {
+          const choiceButton = event.target.closest('button[data-option-id]');
+          if (!choiceButton) return;
+          if (chooseOption(task, choiceButton.dataset.optionId)) {
+            renderTaskMount(task);
+            updateTaskControls(task);
+            announce('Antwort ausgewählt.');
           }
         }
       });
+
+      els.taskMount.addEventListener('dragstart', event => {
+        const task = currentTask();
+        if (!task || state.locked || state.completed || task.type !== 'wordbank' || !event.dataTransfer) return;
+        const source = event.target.closest('button[data-tile-id]');
+        if (!source || !source.dataset.tileId) return;
+        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.setData('text/plain', source.dataset.tileId);
+        source.dataset.dragging = 'true';
+      });
+
+      els.taskMount.addEventListener('dragend', event => {
+        const source = event.target.closest('button[data-tile-id]');
+        if (source) delete source.dataset.dragging;
+        els.taskMount.querySelectorAll('[data-slot-index]').forEach(slot => delete slot.dataset.over);
+      });
+
+      els.taskMount.addEventListener('dragover', event => {
+        const task = currentTask();
+        if (!task || state.locked || state.completed || task.type !== 'wordbank') return;
+        const slotButton = event.target.closest('button[data-slot-index]');
+        if (!slotButton) return;
+        event.preventDefault();
+        slotButton.dataset.over = 'true';
+      });
+
+      els.taskMount.addEventListener('dragleave', event => {
+        const slotButton = event.target.closest('button[data-slot-index]');
+        if (slotButton) delete slotButton.dataset.over;
+      });
+
+      els.taskMount.addEventListener('drop', event => {
+        const task = currentTask();
+        if (!task || state.locked || state.completed || task.type !== 'wordbank' || !event.dataTransfer) return;
+        const slotButton = event.target.closest('button[data-slot-index]');
+        if (!slotButton) return;
+        event.preventDefault();
+        const slotIndex = Number(slotButton.dataset.slotIndex);
+        const tileId = event.dataTransfer.getData('text/plain');
+        if (addWordbankTile(task, tileId, slotIndex)) {
+          renderTaskMount(task);
+          updateTaskControls(task);
+          announce(`Baustein in Platz ${slotIndex + 1} abgelegt.`);
+        } else {
+          showFeedback('hint', 'Platz belegt.', 'Ziehe den Baustein auf einen freien Platz.');
+        }
+        delete slotButton.dataset.over;
+      });
     };
 
-    const renderTaskShell = () => {
-      renderTask();
-      refreshStats();
+    const initLesson = () => {
+      state.queue = shuffle(LESSON_TASKS.map(cloneTask));
+      state.currentIndex = 0;
+      state.currentTask = null;
+      state.selectedTiles = [];
+      state.selectedPairs = [];
+      state.selectedOption = null;
+      state.wordbankPoolOrder = [];
+      state.choiceOrder = [];
+      state.matchLeftOrder = [];
+      state.matchRightOrder = [];
+      state.matchLeftSelection = null;
+      state.hearts = MAX_HEARTS;
+      state.attempts = 0;
+      state.solved = 0;
+      state.reviews = 0;
+      state.streak = 0;
+      state.bestStreak = 0;
+      state.hintIndex = 0;
+      state.locked = false;
+      state.completed = false;
+      state.lastOutcome = '';
+      renderCurrentTask();
+      announce('Lektion neu gestartet.');
     };
 
     renderRules();
     initLab();
     setupLabInteractions();
-    setupTaskInteractions();
-    renderTaskShell();
+    initLesson();
+    setupLessonInteractions();
   </script>
 </body>
 </html>
+
+
