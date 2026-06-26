@@ -68,6 +68,16 @@
     button, input {
       font: inherit;
     }
+    .button,
+    .tab,
+    .term-tile,
+    .choice-card,
+    .match-card {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+    }
 
     :focus-visible {
       outline: 3px solid var(--focus);
@@ -237,6 +247,26 @@
       color: var(--ink);
       border-color: rgba(23, 49, 60, 0.14);
       background: rgba(255,255,255,0.72);
+    }
+    .lab-actions {
+      display: grid;
+      gap: 0.8rem;
+      margin-top: 0.8rem;
+    }
+    .lab-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      width: fit-content;
+      font-weight: 700;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .lab-toggle input {
+      width: 1.05rem;
+      height: 1.05rem;
+      accent-color: var(--blue);
+      flex: 0 0 auto;
     }
 
     .hero__aside {
@@ -582,6 +612,13 @@
     .step-list strong {
       color: var(--ink);
     }
+    .step-sublist {
+      margin: 0.35rem 0 0;
+      padding-left: 1rem;
+      display: grid;
+      gap: 0.25rem;
+      color: var(--muted);
+    }
     .lab-summary {
       display: grid;
       gap: 0.5rem;
@@ -605,6 +642,18 @@
       font-size: 1.1rem;
       margin-top: 0.25rem;
       word-break: break-word;
+    }
+    .summary-card small {
+      display: block;
+      margin-top: 0.3rem;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+    .summary-card[data-tone="good"] {
+      background: var(--emerald-soft);
+    }
+    .summary-card[data-tone="warn"] {
+      background: var(--rose-soft);
     }
 
     .training-top {
@@ -916,6 +965,7 @@
       align-items: center;
     }
     .task-type-pill,
+    .task-stage-pill,
     .task-law-pill {
       display: inline-flex;
       align-items: center;
@@ -930,6 +980,10 @@
       background: var(--teal-soft);
       color: #0f6665;
     }
+    .task-stage-pill {
+      background: rgba(23, 49, 60, 0.08);
+      color: var(--ink);
+    }
     .task-law-pill {
       background: var(--gold-soft);
       color: #8a531c;
@@ -941,6 +995,13 @@
       color: var(--ink);
       font-family: var(--font-display);
       font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+    }
+    .task-goal {
+      margin: -0.2rem 0 0;
+      padding: 0.75rem 0.9rem;
+      border-radius: 14px;
+      background: rgba(47, 94, 168, 0.06);
+      color: var(--muted);
     }
     .task-actions {
       display: flex;
@@ -1153,7 +1214,8 @@
     }
     .completion-card button {
       justify-self: start;
-    }    .visually-hidden {
+    }
+    .visually-hidden {
       position: absolute;
       width: 1px;
       height: 1px;
@@ -1183,6 +1245,35 @@
         grid-template-columns: 1fr;
       }
     }
+    @media (max-width: 900px) {
+      .hero,
+      .lab-grid,
+      .training-top,
+      .matching-grid {
+        grid-template-columns: 1fr;
+      }
+      .field-grid,
+      .lab-summary,
+      .session-grid,
+      .choice-grid,
+      .lesson-stats,
+      .law-tabs {
+        grid-template-columns: 1fr;
+      }
+      .lab-actions,
+      .task-actions,
+      .builder-actions,
+      .lab-buttons,
+      .task-buttons {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+      .task-actions .button,
+      .lab-buttons .button,
+      .builder-actions .button {
+        width: 100%;
+      }
+    }
     @media (max-width: 760px) {
       .topbar__inner {
         flex-direction: column;
@@ -1193,9 +1284,6 @@
       .session-grid,
       .choice-grid,
       .field-grid {
-        grid-template-columns: 1fr;
-      }
-      .law-tabs {
         grid-template-columns: 1fr;
       }
       .math-row {
@@ -1369,26 +1457,22 @@
                 <input id="lab-r" type="number" step="1" min="-6" max="6" inputmode="numeric">
               </label>
             </div>
-            <div class="lab-buttons">
-              <button class="button button--primary button--tiny" type="button" id="lab-random">Zufallswert</button>
-              <button class="button button--secondary button--tiny" type="button" id="lab-reset">Zurücksetzen</button>
+            <div class="lab-actions">
+              <label class="lab-toggle" for="lab-detail-toggle">
+                <input type="checkbox" id="lab-detail-toggle">
+                <span>Zwischenschritte anzeigen</span>
+              </label>
+              <div class="lab-buttons">
+                <button class="button button--primary button--tiny" type="button" id="lab-random">Zufallswert</button>
+                <button class="button button--secondary button--tiny" type="button" id="lab-reset">Zurücksetzen</button>
+              </div>
             </div>
           </form>
           <div class="lab-output" aria-live="polite">
             <div class="lab-summary" id="lab-summary"></div>
             <div class="lab-output__status" id="lab-status" data-tone="info">Bereit für einen ersten Vergleich.</div>
-            <div class="math-row">
-              <div class="math-box">
-                <span>Linke Seite</span>
-                <strong id="lab-left" class="big-number">—</strong>
-              </div>
-              <div class="math-box">
-                <span>Rechte Seite</span>
-                <strong id="lab-right" class="big-number">—</strong>
-              </div>
-            </div>
             <div class="math-box">
-              <span>Rechenschritte</span>
+              <span>Seitenbezogene Schritte</span>
               <ol class="step-list" id="lab-steps"></ol>
             </div>
           </div>
@@ -1424,11 +1508,13 @@
 
         <article class="task-card" id="taskCard" tabindex="-1" aria-labelledby="taskPrompt">
           <div class="task-topline">
+            <span class="task-stage-pill" id="taskStageLabel">Phase</span>
             <span class="task-type-pill" id="taskTypeLabel">Aufgabe</span>
             <span class="task-law-pill" id="taskLawLabel">Logarithmengesetz</span>
           </div>
           <h3 id="taskPrompt">Aufgabe wird geladen …</h3>
           <div class="formula-display" id="taskFormula"></div>
+          <p class="task-goal" id="taskGoal"></p>
           <div id="taskMount"></div>
           <div class="task-actions">
             <button type="button" id="checkBtn" class="button button--primary">Prüfen</button>
@@ -1563,6 +1649,12 @@
       match: "Zuordnen",
       choice: "Auswahl"
     };
+    const STAGE_LABELS = {
+      recognize: 'Erkennen',
+      transform: 'Umformen',
+      conditions: 'Bedingungen',
+      transfer: 'Gemischt'
+    };
 
     const MAX_HEARTS = 3;
 
@@ -1573,11 +1665,22 @@
     const arraysEqual = (left, right) => left.length === right.length && left.every((value, index) => value === right[index]);
     const containsPattern = (patterns, candidate) => patterns.some(pattern => arraysEqual(pattern, candidate));
     const taskTypeText = task => TASK_TYPE_LABELS[task.type] ?? 'Aufgabe';
+    const taskStageText = task => STAGE_LABELS[task.stage] ?? 'Phase';
     const taskLawText = task => LAW_LABELS[task.law] ?? LAW_LABELS.mix;
     const makeTile = (id, label) => ({ id, label });
     const makeItem = (id, label) => ({ id, label });
     const makeOption = (id, label) => ({ id, label });
     const makePair = (leftId, rightId) => ({ leftId, rightId });
+    const getWordbankSlotCount = task => task.slotCount ?? task.tiles.length;
+    const getWordbankSolutionIds = task => new Set((task.answers ?? []).flat());
+    const projectOrder = (order, ids) => order.filter(id => ids.has(id));
+    const isAcceptedWordbankOrder = (order, task) => {
+      const accepted = task.answers ?? [];
+      if (!accepted.length) return false;
+      const ids = getWordbankSolutionIds(task);
+      const projected = projectOrder(order, ids);
+      return containsPattern(accepted, projected);
+    };
 
     const wordbankTask = (id, law, prompt, formula, instructions, tiles, answers, hints, solution, explanation) => ({
       id,
@@ -1621,6 +1724,224 @@
       solution,
       explanation
     });
+
+    const TASK_OVERRIDES = {
+      'wb-product-expand': {
+        stage: 'transform',
+        learningGoal: 'Produktgesetz von innen nach außen anwenden.',
+        difficulty: 2,
+        slotCount: 3,
+        prompt: 'Forme die Produktseite in eine Summe um.',
+        instructions: 'Tippe oder ziehe die Bausteine in die drei Antwortplätze.',
+        tiles: [
+          ['wb-product-expand-1', 'log<sub>a</sub>(x)'],
+          ['wb-product-expand-2', '+'],
+          ['wb-product-expand-3', 'log<sub>a</sub>(y)'],
+          ['wb-product-expand-4', 'log<sub>a</sub>(x · y)']
+        ]
+      },
+      'wb-product-contract': {
+        stage: 'transform',
+        learningGoal: 'Produktgesetz von außen nach innen anwenden.',
+        difficulty: 2,
+        slotCount: 5,
+        prompt: 'Baue die kompakte Produktform wieder zusammen.',
+        instructions: 'Tippe oder ziehe die Bausteine in die richtige Reihenfolge.',
+        tiles: [
+          ['wb-product-contract-1', 'log<sub>a</sub>('],
+          ['wb-product-contract-2', 'x'],
+          ['wb-product-contract-3', '·'],
+          ['wb-product-contract-4', 'y'],
+          ['wb-product-contract-5', ')'],
+          ['wb-product-contract-6', '+']
+        ]
+      },
+      'wb-quotient-expand': {
+        stage: 'transform',
+        learningGoal: 'Quotientengesetz von innen nach außen anwenden.',
+        difficulty: 2,
+        slotCount: 3,
+        prompt: 'Forme die Quotientenseite in eine Differenz um.',
+        instructions: 'Tippe oder ziehe die Bausteine in die drei Antwortplätze.',
+        tiles: [
+          ['wb-quotient-expand-1', 'log<sub>a</sub>(x)'],
+          ['wb-quotient-expand-2', '-'],
+          ['wb-quotient-expand-3', 'log<sub>a</sub>(y)'],
+          ['wb-quotient-expand-4', 'log<sub>a</sub>(x / y)']
+        ]
+      },
+      'wb-quotient-contract': {
+        stage: 'transform',
+        learningGoal: 'Quotientengesetz von außen nach innen anwenden.',
+        difficulty: 2,
+        slotCount: 5,
+        prompt: 'Baue die kompakte Quotientenform wieder zusammen.',
+        instructions: 'Tippe oder ziehe die Bausteine in die richtige Reihenfolge.',
+        tiles: [
+          ['wb-quotient-contract-1', 'log<sub>a</sub>('],
+          ['wb-quotient-contract-2', 'x'],
+          ['wb-quotient-contract-3', '/'],
+          ['wb-quotient-contract-4', 'y'],
+          ['wb-quotient-contract-5', ')'],
+          ['wb-quotient-contract-6', '·']
+        ]
+      },
+      'wb-power-expand': {
+        stage: 'transform',
+        learningGoal: 'Potenzgesetz von innen nach außen anwenden.',
+        difficulty: 2,
+        slotCount: 3,
+        prompt: 'Forme die Potenzseite in einen Faktor um.',
+        instructions: 'Tippe oder ziehe die Bausteine in die drei Antwortplätze.',
+        tiles: [
+          ['wb-power-expand-1', 'log<sub>a</sub>(x)'],
+          ['wb-power-expand-2', '·'],
+          ['wb-power-expand-3', 'r'],
+          ['wb-power-expand-4', 'log<sub>a</sub>(r)']
+        ]
+      },
+      'wb-power-contract': {
+        stage: 'transform',
+        learningGoal: 'Potenzgesetz von außen nach innen anwenden.',
+        difficulty: 2,
+        slotCount: 5,
+        prompt: 'Baue die kompakte Potenzform wieder zusammen.',
+        instructions: 'Tippe oder ziehe die Bausteine in die richtige Reihenfolge.',
+        tiles: [
+          ['wb-power-contract-1', 'log<sub>a</sub>('],
+          ['wb-power-contract-2', 'x'],
+          ['wb-power-contract-3', '^'],
+          ['wb-power-contract-4', 'r'],
+          ['wb-power-contract-5', ')'],
+          ['wb-power-contract-6', '·']
+        ]
+      },
+      'match-formulas': {
+        stage: 'recognize',
+        learningGoal: 'Die Formeln den drei Gesetzen sicher zuordnen.',
+        difficulty: 1,
+        prompt: 'Ordne jede Formel dem passenden Gesetz zu.',
+        instructions: 'Klicke links und rechts die zusammengehörenden Karten an.'
+      },
+      'match-meanings': {
+        stage: 'recognize',
+        learningGoal: 'Die Bedeutung der drei Gesetze erkennen.',
+        difficulty: 1,
+        prompt: 'Ordne jedes Gesetz seiner Bedeutung zu.',
+        instructions: 'Klicke links und rechts die zusammengehörenden Karten an.'
+      },
+      'match-examples': {
+        stage: 'recognize',
+        learningGoal: 'Zahlenbeispiele dem passenden Gesetz zuordnen.',
+        difficulty: 1,
+        prompt: 'Ordne die Zahlenbeispiele dem passenden Gesetz zu.',
+        instructions: 'Links stehen die Beispiele, rechts die Gesetze.'
+      },
+      'mc-sum-trap': {
+        stage: 'recognize',
+        learningGoal: 'Die Summenfalle als Fehlvorstellung erkennen.',
+        difficulty: 1,
+        prompt: 'Welche Aussage ist im Allgemeinen falsch?',
+        instructions: 'Nur eine Antwort ist falsch.'
+      },
+      'match-conditions': {
+        stage: 'conditions',
+        learningGoal: 'Voraussetzungen und Fehlerfälle sicher erkennen.',
+        difficulty: 1,
+        prompt: 'Ordne die Voraussetzungen den passenden Erklärungen zu.',
+        instructions: 'Die Logarithmusbasis und die Argumente müssen bestimmte Bedingungen erfüllen.'
+      },
+      'mc-base-condition': {
+        stage: 'conditions',
+        learningGoal: 'Die Bedingung an die Logarithmusbasis erkennen.',
+        difficulty: 1,
+        prompt: 'Welche Bedingung muss für die Basis gelten?',
+        instructions: 'Die Basis ist positiv und darf nicht 1 sein.'
+      },
+      'mc-quotient-sign': {
+        stage: 'transfer',
+        learningGoal: 'Die richtige Umformung beim Quotientengesetz auswählen.',
+        difficulty: 2,
+        prompt: 'Welche Umformung gehört zum Quotientengesetz?',
+        instructions: 'Das Minus steht zwischen den beiden Logarithmen.'
+      },
+      'mc-power-equivalence': {
+        stage: 'transfer',
+        learningGoal: 'Äquivalente Schreibweisen beim Potenzgesetz erkennen.',
+        difficulty: 2,
+        prompt: 'Welche Schreibweise ist ebenfalls korrekt?',
+        instructions: 'Multiplikation darf vertauscht werden.'
+      },
+      'mc-error-product': {
+        stage: 'conditions',
+        learningGoal: 'Eine falsche Produkt-Umformung korrigieren.',
+        difficulty: 2,
+        prompt: 'Ein Schüler schreibt eine Produktregel falsch. Welche Korrektur ist richtig?',
+        instructions: 'Nur eine Antwort korrigiert die Schülerlösung.'
+      },
+      'mc-error-power': {
+        stage: 'conditions',
+        learningGoal: 'Eine falsche Potenz-Umformung korrigieren.',
+        difficulty: 2,
+        prompt: 'Ein Schüler schreibt eine Potenzregel falsch. Welche Korrektur ist richtig?',
+        instructions: 'Nur eine Antwort korrigiert die Schülerlösung.'
+      },
+      'mc-transfer-number': {
+        stage: 'transfer',
+        learningGoal: 'Ein Zahlenbeispiel mit dem Produktgesetz lösen.',
+        difficulty: 2,
+        prompt: 'Wie groß ist der Wert von log<sub>2</sub>(8 · 4)?',
+        instructions: 'Rechne die linke Seite aus.'
+      },
+      'wb-transfer-combine': {
+        stage: 'transfer',
+        learningGoal: 'Zwei Logarithmen wieder zu einem Term zusammenfassen.',
+        difficulty: 2,
+        slotCount: 5,
+        prompt: 'Fasse die beiden Logarithmen zu einem einzigen Term zusammen.',
+        instructions: 'Tippe oder ziehe den einzelnen Logarithmus aus den Bausteinen.',
+        tiles: [
+          ['wb-transfer-combine-1', 'log<sub>2</sub>('],
+          ['wb-transfer-combine-2', '8'],
+          ['wb-transfer-combine-3', '·'],
+          ['wb-transfer-combine-4', '4'],
+          ['wb-transfer-combine-5', ')'],
+          ['wb-transfer-combine-6', '+']
+        ]
+      }
+    };
+
+    const configureTask = task => {
+      const override = TASK_OVERRIDES[task.id] ?? {};
+      const next = cloneTask(task);
+      if (override.prompt) next.prompt = override.prompt;
+      if (override.instructions) next.instructions = override.instructions;
+      if (override.solution) next.solution = override.solution;
+      if (override.explanation) next.explanation = override.explanation;
+      if (override.hints) next.hints = override.hints;
+      if (override.learningGoal) next.learningGoal = override.learningGoal;
+      if (override.stage) next.stage = override.stage;
+      next.difficulty = override.difficulty ?? next.difficulty ?? 1;
+
+      if (override.tiles) {
+        const tiles = Array.isArray(override.tiles[0]) ? override.tiles : [];
+        const tileObjects = tiles.map(([tileId, label]) => makeTile(tileId, label));
+        const existing = next.tiles ?? [];
+        const existingIds = new Set(existing.map(tile => tile.id));
+        next.tiles = [...existing];
+        for (const tile of tileObjects) {
+          if (!existingIds.has(tile.id)) next.tiles.push(tile);
+        }
+      }
+
+      if (override.answers) next.answers = override.answers;
+      if (override.correctOptionIds) next.correctOptionIds = override.correctOptionIds;
+      if (override.leftItems) next.leftItems = override.leftItems.map(([itemId, label]) => makeItem(itemId, label));
+      if (override.rightItems) next.rightItems = override.rightItems.map(([itemId, label]) => makeItem(itemId, label));
+      if (override.options) next.options = override.options.map(([optionId, label]) => makeOption(optionId, label));
+      next.slotCount = override.slotCount ?? next.slotCount ?? (next.type === 'wordbank' ? next.tiles.length : undefined);
+      return next;
+    };
 
     const LESSON_TASKS = [
       wordbankTask(
@@ -1960,12 +2281,96 @@
         ],
         'r · log<sub>a</sub>(x) und log<sub>a</sub>(x) · r',
         'Beide Reihenfolgen sind gleichwertig.'
+      ),
+      choiceTask(
+        'mc-error-product',
+        'product',
+        'Ein Schüler behauptet: log<sub>a</sub>(x · y) = log<sub>a</sub>(x) · log<sub>a</sub>(y). Welche Korrektur ist richtig?',
+        'log<sub>a</sub>(x · y) = log<sub>a</sub>(x) · log<sub>a</sub>(y)',
+        'Nur eine Antwort korrigiert die Schülerlösung.',
+        [
+          ['mc-error-product-1', 'log<sub>a</sub>(x · y) = log<sub>a</sub>(x) + log<sub>a</sub>(y)'],
+          ['mc-error-product-2', 'log<sub>a</sub>(x · y) = log<sub>a</sub>(x) · log<sub>a</sub>(y)'],
+          ['mc-error-product-3', 'log<sub>a</sub>(x · y) = log<sub>a</sub>(x) - log<sub>a</sub>(y)'],
+          ['mc-error-product-4', 'log<sub>a</sub>(x + y) = log<sub>a</sub>(x) + log<sub>a</sub>(y)']
+        ],
+        ['mc-error-product-1'],
+        [
+          'Das Produktgesetz führt zu einer Summe.',
+          'Ein Produkt im Argument wird nicht mit zwei Logarithmen multipliziert.'
+        ],
+        'log<sub>a</sub>(x · y) = log<sub>a</sub>(x) + log<sub>a</sub>(y)',
+        'Nur die Summe der beiden Logarithmen ist korrekt.'
+      ),
+      choiceTask(
+        'mc-error-power',
+        'power',
+        'Ein Schüler behauptet: log<sub>a</sub>(x<sup>r</sup>) = log<sub>a</sub>(x)<sup>r</sup>. Welche Korrektur ist richtig?',
+        'log<sub>a</sub>(x<sup>r</sup>) = log<sub>a</sub>(x)<sup>r</sup>',
+        'Nur eine Antwort korrigiert die Schülerlösung.',
+        [
+          ['mc-error-power-1', 'log<sub>a</sub>(x<sup>r</sup>) = r · log<sub>a</sub>(x)'],
+          ['mc-error-power-2', 'log<sub>a</sub>(x<sup>r</sup>) = log<sub>a</sub>(x)<sup>r</sup>'],
+          ['mc-error-power-3', 'log<sub>a</sub>(x<sup>r</sup>) = log<sub>a</sub>(r · x)'],
+          ['mc-error-power-4', 'log<sub>a</sub>(x<sup>r</sup>) = r + log<sub>a</sub>(x)']
+        ],
+        ['mc-error-power-1'],
+        [
+          'Beim Potenzgesetz wird der Exponent zum Faktor.',
+          'Er bleibt nicht im Logarithmus stehen und wandert auch nicht in die Basis.'
+        ],
+        'log<sub>a</sub>(x<sup>r</sup>) = r · log<sub>a</sub>(x)',
+        'Der Exponent wird vor den Logarithmus gezogen.'
+      ),
+      choiceTask(
+        'mc-transfer-number',
+        'product',
+        'Wie groß ist der Wert von log<sub>2</sub>(8 · 4)?',
+        'log<sub>2</sub>(8 · 4)',
+        'Rechne die linke Seite aus.',
+        [
+          ['mc-transfer-number-1', '4'],
+          ['mc-transfer-number-2', '5'],
+          ['mc-transfer-number-3', '6'],
+          ['mc-transfer-number-4', '7']
+        ],
+        ['mc-transfer-number-2'],
+        [
+          '8 · 4 = 32 und log<sub>2</sub>(32) = 5.',
+          'Das Produktgesetz führt hier direkt zum Zahlenwert 5.'
+        ],
+        '5',
+        '8 · 4 = 32 und damit log<sub>2</sub>(32) = 5.'
+      ),
+      wordbankTask(
+        'wb-transfer-combine',
+        'product',
+        'Fasse die beiden Logarithmen zu einem einzigen Term zusammen.',
+        'log<sub>2</sub>(8) + log<sub>2</sub>(4) = ?',
+        'Baue den einzelnen Logarithmus aus den Bausteinen.',
+        [
+          ['wb-transfer-combine-1', 'log<sub>2</sub>('],
+          ['wb-transfer-combine-2', '8'],
+          ['wb-transfer-combine-3', '·'],
+          ['wb-transfer-combine-4', '4'],
+          ['wb-transfer-combine-5', ')']
+        ],
+        [
+          ['wb-transfer-combine-1', 'wb-transfer-combine-2', 'wb-transfer-combine-3', 'wb-transfer-combine-4', 'wb-transfer-combine-5']
+        ],
+        [
+          'Zwei Logarithmen mit gleicher Basis werden zu einem Produkt im Argument.',
+          'Die Summe wandert nach innen als Produkt.'
+        ],
+        'log<sub>2</sub>(8 · 4)',
+        'Aus der Summe wird innen ein Produkt.'
       )
-    ];
+    ].map(configureTask);
 
     const state = {
       law: 'product',
       lab: { ...labTemplates.product.defaults },
+      labShowDetails: false,
       queue: [],
       currentIndex: 0,
       currentTask: null,
@@ -1999,6 +2404,7 @@
       labR: document.getElementById('lab-r'),
       labYWrap: document.getElementById('lab-y-wrap'),
       labRWrap: document.getElementById('lab-r-wrap'),
+      labDetailToggle: document.getElementById('lab-detail-toggle'),
       labelBase: document.getElementById('label-base'),
       labelX: document.getElementById('label-x'),
       labelY: document.getElementById('label-y'),
@@ -2006,17 +2412,17 @@
       labHeadingLabel: document.getElementById('lab-heading-label'),
       labHeadingFormula: document.getElementById('lab-heading-formula'),
       labSummary: document.getElementById('lab-summary'),
-      labLeft: document.getElementById('lab-left'),
-      labRight: document.getElementById('lab-right'),
       labSteps: document.getElementById('lab-steps'),
       labStatus: document.getElementById('lab-status'),
       labRandom: document.getElementById('lab-random'),
       labReset: document.getElementById('lab-reset'),
       taskCard: document.getElementById('taskCard'),
+      taskStageLabel: document.getElementById('taskStageLabel'),
       taskTypeLabel: document.getElementById('taskTypeLabel'),
       taskLawLabel: document.getElementById('taskLawLabel'),
       taskPrompt: document.getElementById('taskPrompt'),
       taskFormula: document.getElementById('taskFormula'),
+      taskGoal: document.getElementById('taskGoal'),
       taskMount: document.getElementById('taskMount'),
       checkBtn: document.getElementById('checkBtn'),
       hintBtn: document.getElementById('hintBtn'),
@@ -2089,26 +2495,33 @@
       els.labelR.textContent = template.labels[3];
       els.labYWrap.hidden = !template.visible.includes('y');
       els.labRWrap.hidden = !template.visible.includes('r');
+      els.labDetailToggle.checked = state.labShowDetails;
       els.labBase.value = state.lab.a;
       els.labX.value = state.lab.x;
       els.labY.value = state.lab.y;
       els.labR.value = state.lab.r;
     };
 
-    const renderLabSummary = () => {
-      const template = labTemplates[state.law];
-      const cards = [
-        { label: 'Gesetz', value: template.title },
-        { label: 'Basis', value: `a = ${pretty(state.lab.a)}` },
-        { label: 'Argumente', value: state.law === 'power'
-          ? `x = ${pretty(state.lab.x)}, r = ${pretty(state.lab.r)}`
-          : `x = ${pretty(state.lab.x)}, y = ${pretty(state.lab.y)}` }
-      ];
+    const renderLabSummary = cards => {
       els.labSummary.innerHTML = cards.map(card => `
-        <div class="summary-card">
+        <div class="summary-card" data-tone="${card.tone ?? 'neutral'}">
           <span>${card.label}</span>
           <strong>${card.value}</strong>
+          ${card.note ? `<small>${card.note}</small>` : ''}
         </div>
+      `).join('');
+    };
+
+    const renderLabSteps = sections => {
+      els.labSteps.innerHTML = sections.map(section => `
+        <li>
+          <strong>${section.label}:</strong> ${section.summary}
+          ${state.labShowDetails && section.details.length ? `
+            <ul class="step-sublist">
+              ${section.details.map(detail => `<li>${detail}</li>`).join('')}
+            </ul>
+          ` : ''}
+        </li>
       `).join('');
     };
 
@@ -2119,94 +2532,162 @@
       const xValid = Number.isFinite(x) && x > 0;
       const yValid = Number.isFinite(y) && y > 0;
 
+      const invalidResult = (status, detail) => ({
+        tone: 'warn',
+        status,
+        summaryCards: [
+          { label: 'Linke Seite', value: '—', note: detail, tone: 'warn' },
+          { label: 'Rechte Seite', value: '—', note: detail, tone: 'warn' },
+          { label: 'Vergleich', value: '—', note: 'Vergleich erst nach gültigen Werten.', tone: 'warn' }
+        ],
+        sections: [
+          { label: 'Linke Seite', summary: 'Nicht berechenbar.', details: [detail] },
+          { label: 'Rechte Seite', summary: 'Nicht berechenbar.', details: [detail] },
+          { label: 'Vergleich', summary: 'Abbruch wegen fehlender Voraussetzungen.', details: [detail] }
+        ]
+      });
+
       if (!baseValid) {
-        return {
-          tone: 'warn',
-          status: 'Die Basis muss größer als 0 und ungleich 1 sein.',
-          left: '—',
-          right: '—',
-          steps: ['<strong>Prüfen:</strong> a > 0 und a ≠ 1 sind Pflicht.'],
-          error: true
-        };
+        return invalidResult(
+          'Die Basis muss größer als 0 und ungleich 1 sein.',
+          'Prüfe a > 0 und a ≠ 1.'
+        );
       }
       if (law !== 'power' && (!xValid || !yValid)) {
-        return {
-          tone: 'warn',
-          status: 'Für Produkt und Quotient müssen x und y positiv sein.',
-          left: '—',
-          right: '—',
-          steps: ['<strong>Prüfen:</strong> x > 0 und y > 0 sind Pflicht.'],
-          error: true
-        };
+        return invalidResult(
+          'Für Produkt und Quotient müssen x und y positiv sein.',
+          'Prüfe x > 0 und y > 0.'
+        );
       }
       if (law === 'power' && !xValid) {
-        return {
-          tone: 'warn',
-          status: 'Für die Potenzregel muss x positiv sein.',
-          left: '—',
-          right: '—',
-          steps: ['<strong>Prüfen:</strong> x > 0 ist Pflicht.'],
-          error: true
-        };
+        return invalidResult(
+          'Für die Potenzregel muss x positiv sein.',
+          'Prüfe x > 0.'
+        );
       }
 
-      let inner;
+      const sections = [];
+      let lhs;
       let rhs;
-      let lhsLabel;
-      let rhsLabel;
-      const steps = [];
+      let lhsFormula;
+      let rhsFormula;
+      let leftSummary;
+      let rightSummary;
+      let compareSummary;
+      let leftDetails = [];
+      let rightDetails = [];
+      let compareDetails = [];
 
       if (law === 'product') {
-        inner = x * y;
-        lhsLabel = `log<sub>${pretty(a)}</sub>(${pretty(x)} · ${pretty(y)})`;
+        const inner = x * y;
+        lhs = logBase(a, inner);
         rhs = logBase(a, x) + logBase(a, y);
-        rhsLabel = `${pretty(logBase(a, x))} + ${pretty(logBase(a, y))}`;
-        steps.push(`<strong>1.</strong> Produkt bilden: ${pretty(x)} · ${pretty(y)} = ${pretty(inner)}.`);
-        steps.push(`<strong>2.</strong> Links: ${lhsLabel} = ${pretty(logBase(a, inner))}.`);
-        steps.push(`<strong>3.</strong> Rechts: ${pretty(logBase(a, x))} + ${pretty(logBase(a, y))} = ${pretty(rhs)}.`);
+        lhsFormula = `log<sub>${pretty(a)}</sub>(${pretty(x)} · ${pretty(y)})`;
+        rhsFormula = `log<sub>${pretty(a)}</sub>(${pretty(x)}) + log<sub>${pretty(a)}</sub>(${pretty(y)})`;
+        leftSummary = `Innere Zahl: ${pretty(x)} · ${pretty(y)} = ${pretty(inner)}.`;
+        rightSummary = `Einzelwerte: ${pretty(logBase(a, x))} + ${pretty(logBase(a, y))}.`;
+        compareSummary = 'Die beiden Seiten stimmen überein.';
+        leftDetails = [
+          `Produkt im Argument: ${pretty(x)} · ${pretty(y)} = ${pretty(inner)}`,
+          `Logarithmus: ${lhsFormula} = ${pretty(lhs)}`
+        ];
+        rightDetails = [
+          `Einzelwerte: ${pretty(logBase(a, x))} und ${pretty(logBase(a, y))}`,
+          `Summe: ${pretty(logBase(a, x))} + ${pretty(logBase(a, y))} = ${pretty(rhs)}`
+        ];
+        compareDetails = [
+          `Linke Seite: ${pretty(lhs)}`,
+          `Rechte Seite: ${pretty(rhs)}`
+        ];
       } else if (law === 'quotient') {
-        inner = x / y;
-        lhsLabel = `log<sub>${pretty(a)}</sub>(${pretty(x)} / ${pretty(y)})`;
+        const inner = x / y;
+        lhs = logBase(a, inner);
         rhs = logBase(a, x) - logBase(a, y);
-        rhsLabel = `${pretty(logBase(a, x))} - ${pretty(logBase(a, y))}`;
-        steps.push(`<strong>1.</strong> Quotient bilden: ${pretty(x)} / ${pretty(y)} = ${pretty(inner)}.`);
-        steps.push(`<strong>2.</strong> Links: ${lhsLabel} = ${pretty(logBase(a, inner))}.`);
-        steps.push(`<strong>3.</strong> Rechts: ${pretty(logBase(a, x))} - ${pretty(logBase(a, y))} = ${pretty(rhs)}.`);
+        lhsFormula = `log<sub>${pretty(a)}</sub>(${pretty(x)} / ${pretty(y)})`;
+        rhsFormula = `log<sub>${pretty(a)}</sub>(${pretty(x)}) - log<sub>${pretty(a)}</sub>(${pretty(y)})`;
+        leftSummary = `Innere Zahl: ${pretty(x)} / ${pretty(y)} = ${pretty(inner)}.`;
+        rightSummary = `Einzelwerte: ${pretty(logBase(a, x))} - ${pretty(logBase(a, y))}.`;
+        compareSummary = 'Die beiden Seiten stimmen überein.';
+        leftDetails = [
+          `Quotient im Argument: ${pretty(x)} / ${pretty(y)} = ${pretty(inner)}`,
+          `Logarithmus: ${lhsFormula} = ${pretty(lhs)}`
+        ];
+        rightDetails = [
+          `Einzelwerte: ${pretty(logBase(a, x))} und ${pretty(logBase(a, y))}`,
+          `Differenz: ${pretty(logBase(a, x))} - ${pretty(logBase(a, y))} = ${pretty(rhs)}`
+        ];
+        compareDetails = [
+          `Linke Seite: ${pretty(lhs)}`,
+          `Rechte Seite: ${pretty(rhs)}`
+        ];
       } else {
-        inner = Math.pow(x, r);
-        lhsLabel = `log<sub>${pretty(a)}</sub>(${pretty(x)}<sup>${pretty(r)}</sup>)`;
+        const inner = Math.pow(x, r);
+        lhs = logBase(a, inner);
         rhs = r * logBase(a, x);
-        rhsLabel = `${pretty(r)} · ${pretty(logBase(a, x))}`;
-        steps.push(`<strong>1.</strong> Potenz bilden: ${pretty(x)}<sup>${pretty(r)}</sup> = ${pretty(inner)}.`);
-        steps.push(`<strong>2.</strong> Links: ${lhsLabel} = ${pretty(logBase(a, inner))}.`);
-        steps.push(`<strong>3.</strong> Rechts: ${pretty(r)} · ${pretty(logBase(a, x))} = ${pretty(rhs)}.`);
+        lhsFormula = `log<sub>${pretty(a)}</sub>(${pretty(x)}<sup>${pretty(r)}</sup>)`;
+        rhsFormula = `${pretty(r)} · log<sub>${pretty(a)}</sub>(${pretty(x)})`;
+        leftSummary = `Potenz im Argument: ${pretty(x)}<sup>${pretty(r)}</sup> = ${pretty(inner)}.`;
+        rightSummary = `Faktor vor dem Logarithmus: ${pretty(r)} · ${pretty(logBase(a, x))}.`;
+        compareSummary = 'Die beiden Seiten stimmen überein.';
+        leftDetails = [
+          `Potenz im Argument: ${pretty(x)}<sup>${pretty(r)}</sup> = ${pretty(inner)}`,
+          `Logarithmus: ${lhsFormula} = ${pretty(lhs)}`
+        ];
+        rightDetails = [
+          `Einzelwert: log<sub>${pretty(a)}</sub>(${pretty(x)}) = ${pretty(logBase(a, x))}`,
+          `Faktor: ${pretty(r)} · ${pretty(logBase(a, x))} = ${pretty(rhs)}`
+        ];
+        compareDetails = [
+          `Linke Seite: ${pretty(lhs)}`,
+          `Rechte Seite: ${pretty(rhs)}`
+        ];
       }
 
-      const lhs = logBase(a, inner);
-      const rightValue = rhs;
-      const ok = Number.isFinite(lhs) && Number.isFinite(rightValue) && approxEqual(lhs, rightValue);
+      const ok = Number.isFinite(lhs) && Number.isFinite(rhs) && approxEqual(lhs, rhs);
+      const difference = Number.isFinite(lhs) && Number.isFinite(rhs) ? Math.abs(lhs - rhs) : null;
+
+      sections.push(
+        {
+          label: 'Linke Seite',
+          summary: leftSummary,
+          details: leftDetails
+        },
+        {
+          label: 'Rechte Seite',
+          summary: rightSummary,
+          details: rightDetails
+        },
+        {
+          label: 'Vergleich',
+          summary: ok ? compareSummary : 'Die beiden Seiten stimmen noch nicht überein.',
+          details: [
+            ...compareDetails,
+            difference === null ? 'Keine sichere Differenz berechenbar.' : `Differenz: ${roundTo(difference)}`
+          ]
+        }
+      );
+
       return {
         tone: ok ? 'good' : 'warn',
         status: ok
           ? `Beide Seiten stimmen überein: ${roundTo(lhs)}.`
           : 'Die Zahlen passen nicht zusammen. Prüfe Basis, Argumente und Exponent.',
-        left: `${lhsLabel} = ${pretty(lhs)}`,
-        right: `${rhsLabel} = ${pretty(rightValue)}`,
-        steps,
-        error: !ok,
-        equal: ok
+        summaryCards: [
+          { label: 'Linke Seite', value: `${lhsFormula} = ${pretty(lhs)}`, note: leftSummary, tone: ok ? 'good' : 'warn' },
+          { label: 'Rechte Seite', value: `${rhsFormula} = ${pretty(rhs)}`, note: rightSummary, tone: ok ? 'good' : 'warn' },
+          { label: 'Vergleich', value: ok ? 'stimmt' : `Δ = ${roundTo(difference ?? 0)}`, note: ok ? 'Beide Werte sind gleich.' : 'Prüfe, ob eine Eingabe falsch ist.', tone: ok ? 'good' : 'warn' }
+        ],
+        sections
       };
     };
 
     const renderLab = () => {
       renderLabHeading();
-      renderLabSummary();
       const comp = buildLabComputation();
       els.labStatus.dataset.tone = comp.tone;
       els.labStatus.textContent = comp.status;
-      els.labLeft.innerHTML = comp.left;
-      els.labRight.innerHTML = comp.right;
-      els.labSteps.innerHTML = comp.steps.map(step => `<li>${step}</li>`).join('');
+      renderLabSummary(comp.summaryCards);
+      renderLabSteps(comp.sections);
     };
 
     const updateLab = () => {
@@ -2248,6 +2729,7 @@
 
     const resetLab = () => {
       state.lab = { ...labTemplates[state.law].defaults };
+      state.labShowDetails = false;
       syncLabInputs();
       renderLab();
       announce('Labor zurückgesetzt.');
@@ -2286,10 +2768,18 @@
       ['input', 'change'].forEach(type => {
         [els.labBase, els.labX, els.labY, els.labR].forEach(input => input.addEventListener(type, updateLab));
       });
+      els.labDetailToggle.addEventListener('change', event => {
+        state.labShowDetails = event.target.checked;
+        renderLab();
+      });
       els.labRandom.addEventListener('click', randomizeLab);
       els.labReset.addEventListener('click', resetLab);
     };
     const currentTask = () => state.queue[state.currentIndex] ?? null;
+    const LESSON_STAGE_ORDER = ['recognize', 'transform', 'conditions', 'transfer'];
+    const buildLessonQueue = tasks => LESSON_STAGE_ORDER.flatMap(stage => shuffle(
+      tasks.filter(task => task.stage === stage)
+    ).map(cloneTask));
 
     const cloneReviewTask = task => {
       const review = cloneTask(task);
@@ -2339,14 +2829,13 @@
     const scrambleWordbankPool = task => {
       const ids = task.tiles.map(tile => tile.id);
       if (ids.length <= 1) return ids;
-      const accepted = task.answers ?? [ids];
       let order = shuffle(ids);
       let guard = 0;
-      while (containsPattern(accepted, order) && guard < 32) {
+      while (isAcceptedWordbankOrder(order, task) && guard < 32) {
         order = shuffle(ids);
         guard += 1;
       }
-      if (containsPattern(accepted, order)) {
+      if (isAcceptedWordbankOrder(order, task)) {
         order = [...ids.slice(1), ids[0]];
       }
       return order;
@@ -2381,7 +2870,7 @@
     const taskReadyToCheck = task => {
       switch (task.type) {
         case 'wordbank':
-          return state.selectedTiles.length > 0 && state.selectedTiles.every(Boolean);
+          return state.selectedTiles.length === getWordbankSlotCount(task) && state.selectedTiles.every(Boolean);
         case 'match':
           return state.selectedPairs.length === task.leftItems.length && state.matchLeftSelection === null;
         case 'choice':
@@ -2406,7 +2895,7 @@
       state.matchLeftSelection = null;
 
       if (task.type === 'wordbank') {
-        state.selectedTiles = Array(task.tiles.length).fill(null);
+        state.selectedTiles = Array(getWordbankSlotCount(task)).fill(null);
         state.wordbankPoolOrder = scrambleWordbankPool(task);
       } else if (task.type === 'choice') {
         state.selectedOption = null;
@@ -2422,9 +2911,11 @@
 
     const renderTaskHeader = task => {
       els.taskTypeLabel.textContent = taskTypeText(task);
+      els.taskStageLabel.textContent = taskStageText(task);
       els.taskLawLabel.textContent = taskLawText(task);
       els.taskPrompt.innerHTML = task.prompt;
       els.taskFormula.innerHTML = task.formula;
+      els.taskGoal.textContent = task.learningGoal ? `Lernziel: ${task.learningGoal}` : '';
     };
 
     const renderWordbankMount = task => {
@@ -2658,7 +3149,7 @@
       if (!task || state.locked || state.completed) return;
 
       if (task.type === 'wordbank') {
-        state.selectedTiles = Array(task.tiles.length).fill(null);
+        state.selectedTiles = Array(getWordbankSlotCount(task)).fill(null);
       } else if (task.type === 'match') {
         state.selectedPairs = [];
         state.matchLeftSelection = null;
@@ -2729,7 +3220,7 @@
       return true;
     };
 
-    const checkWordbankAnswer = task => state.selectedTiles.every(Boolean) && containsPattern(task.answers, state.selectedTiles);
+    const checkWordbankAnswer = task => state.selectedTiles.length === getWordbankSlotCount(task) && state.selectedTiles.every(Boolean) && containsPattern(task.answers, state.selectedTiles);
 
     const checkMatchAnswer = task => {
       if (state.selectedPairs.length !== task.leftItems.length) return false;
@@ -2942,7 +3433,7 @@
     };
 
     const initLesson = () => {
-      state.queue = shuffle(LESSON_TASKS.map(cloneTask));
+      state.queue = buildLessonQueue(LESSON_TASKS);
       state.currentIndex = 0;
       state.currentTask = null;
       state.selectedTiles = [];
@@ -2975,5 +3466,3 @@
   </script>
 </body>
 </html>
-
-
